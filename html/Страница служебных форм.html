@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>$TITLE$ - $MODULE_NAME$ - $SITE_NAME$</title>
+
+    <link href='https://fonts.googleapis.com/css?family=PT+Sans+Caption:400,700&subset=latin,cyrillic' rel='stylesheet'
+          type='text/css'>
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.css">
+
+    $GLOBAL_HEAD$
+</head>
+<body id="body">
+<div id="loader"></div>
+<div id="wrapper">
+
+    $GLOBAL_AHEADER$
+
+    <!-- хлебные крошки -->
+    <div class="path cnt clr">
+        $SHOP_PATH$
+    </div>
+
+    <!-- основная часть -->
+    <div id="middle">
+        <div class="cnt clr">
+            <!-- <middle> -->
+            <div id="content">
+
+                <!-- <body> -->
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <?if($ADD_ENTRY_LINK$)?>
+                        <td align="right" style="white-space: nowrap;">[ <?if($PAGE_ID$=='invoices')?><a
+                                href="/panel/?a=shop;l=order" target=_blank><!--<s5457>-->Настройки
+                            <!--</s>--></a><?else?><a href="$ADD_ENTRY_LINK$"><!--<s4391>-->Добавить товар
+                            <!--</s>--></a><?endif?> ]
+                        </td>
+                        <?endif?>
+                    </tr>
+                </table>
+
+                <div id="cont-$MODULE_ID$-$PAGE_ID$"
+                <?if($PAGE_ID$!='invoices')?> style="position:relative;"<?endif?>>
+
+                <?if($ORDERS_GEOMAP$)?>
+                <div style="float:right;">$ORDERS_GEOMAP$</div>
+                <?endif?>
+                <?if($ORDERS_EXPORT$)?>
+                <div style="float:right; padding:0 3px;">$ORDERS_EXPORT$</div>
+                <?endif?>
+
+                <h1>$TITLE$</h1>
+
+                <?if($ORDER_NOTICE$)?>$ORDER_NOTICE$<?endif?>
+
+                <?if($PAGE_ID$=='invoices')?>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td><!--<s4532>-->Заказов<!--</s>-->: <b>$NUM_ENTRIES$</b> | <!--<s4538>-->Оборот<!--</s>-->:
+                            <b>$TOTAL$</b> <?if($PROFIT$)?>| <!--<s4546>-->Прибыль<!--</s>-->: <b>$PROFIT$</b><?endif?>
+                        <td>
+                        <td align="right"><!--<s4535>-->Со статусом<!--</s>-->: $STATUS_SELECTOR$</td>
+                    </tr>
+                </table>
+                <hr/>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td>$DATE_SELECTOR$</td>
+                        <td>$SUM_SELECTOR$</td>
+                        <td style="width:1%; text-align:right; padding-right:4px;">$ARCHIVE_SELECTOR$</td>
+                        <?if($USER_SELECTOR$)?>
+                        <td width="1%" align="right" nowrap>$USER_SELECTOR$</td>
+                        <?endif?></tr>
+                </table>
+                <hr/>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td>$ORDERS_SEARCH$</td>
+                        <td align="right">$PAYMENT_SELECTOR$ $DELIVERY_SELECTOR$</td>
+                    </tr>
+                </table>
+                <?if($DELIVDATE_SELECTOR$)?>
+                <hr/>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td>$DELIVDATE_SELECTOR$</td>
+                        <?if($COURIER_SELECTOR$)?>
+                        <td align="right">$COURIER_SELECTOR$</td>
+                        <?endif?></tr>
+                </table>
+                <?endif?>
+                <hr/>
+                <?endif?>
+
+                <?if($PAGE_ID$=='price')?>
+                <?if($NUM_PAGES$>1)?>
+                <div style="text-align:right; padding-bottom:3px;"><!--<s3015>-->Страницы<!--</s>-->:
+                    <?$DRAW_BLOCK$('PAGE_PREV','pprev')?>
+                    <?$DRAW_BLOCK$('PAGE_SELECTOR','plist')?>
+                    <?$DRAW_BLOCK$('PAGE_NEXT','pnext')?>
+                </div>
+                <?endif?>
+                <form id="shop-price-form" action="" onsubmit="return price2Basket()">
+                    <input type="hidden" name="mode" value="grp-add">
+                    <table id="shop-price-list" class="gTable" width="100%" border="0" cellspacing="1" cellpadding="2">
+                        <tr>
+                            <td class="gTableTop"><!--<s4374>-->Наименование<!--</s>--></td>
+                            <td class="gTableTop" width="1%"><!--<s4371>-->Цена<!--</s>--></td>
+                            <td class="gTableTop" width="1%"><!--<s4504>-->Количество<!--</s>--></td>
+                        </tr>
+                        <?endif?>
+
+                        $BODY$
+
+                        <?if($PAGE_ID$=='price')?>
+                    </table>
+                    <div id="shop-price-buttons" class="shop-page-wrap shop-more-scroll"><input type="submit"
+                                                                                                class="pinput"
+                                                                                                value="Добавить в корзину">
+                        <input type="button" class="pinput" onclick="location.href='/shop/checkout'"
+                               value="Оформить заказ"> <a class="shop-more-scroll-close" href=""
+                                                          onclick="return shopPageScrollClose(this)"
+                                                          title="Закрыть"></a></div>
+                </form>
+                <?endif?>
+
+                <?if($PAGE_ID$=='checkout')?>
+                <?if($NUM_ENTRIES$)?>
+                <form enctype="text/plain" id="checkout-form" method="POST" action="" class="methods-list" onsubmit="return shopCheckOut();">
+                    <input type="hidden" name="mode" value="order" id="checkout-form-mode">
+                    <input type="hidden" name="ssid" id="checkout-form-ssid" value="<?$SSID$?>">
+                    <input type="hidden" name="payment_id" value="1" id="payment_id">
+                    <input type="hidden" name="delivery_id" value="2" id="delivery_id">
+                    <input type="hidden" name="custom_delivery_tax" value="" id="custom_delivery_tax">
+
+                    <button type="button" class="accordion" id="ch_contact">Контактная информация</button>
+                    <div class="panel">
+                        <div class="wrapper">
+                            <p class="description">Заполните все поля</p>
+                            <div id="order-field-4-block">
+                                <span class="label">$ORDER_FNAME_4$</span>
+                                <span class="field_required">*</span>:
+                                $ORDER_FIELD_4$
+                            </div>
+                            <div id="order-field-1-block">
+                                <span class="label">$ORDER_FNAME_1$</span>
+                                <span class="field_required">*</span>:
+                                $ORDER_FIELD_1$
+                            </div>
+                            <div id="order-field-6-block">
+                                <span class="label">$ORDER_FNAME_6$</span>
+                                <span class="field_required">*</span>:
+                                $ORDER_FIELD_6$
+                            </div>
+                            <div id="order-field-8-block">
+                                <span class="label">$ORDER_FNAME_8$:</span>
+                                <input type="text" class="fw text" name="fld8" id="order-fld-8" value="Санкт-Петербург">
+                            </div>
+                        </div>
+
+                        <button type="button" onclick="Page.nextDelivery()">Далее</button>
+                    </div>
+
+                    <?if($DELIVERY_LIST$)?>
+                    <button type="button" class="accordion" id="ch_delivery"><!--<s4454>-->Способ доставки<!--</s>--></button>
+                    <div class="panel">
+                        <p class="description">Выберете удобный способ доставки</p>
+
+                        <table id="delivery-list" class="methods-list">
+                            <tbody>
+                            <tr id="delivery-block-2" valign="top">
+                                <th>
+                                    <input type="radio" id="del-type-2" name="delivery" value="2" class="delivery-item" onclick="shEvOrd('delivery',this,1)">
+                                </th>
+                                <td>
+                                    <label class="label" for="del-type-2">Доставка курьером</label>
+                                    <div id="delivery-descr-2">
+                                        <p class="order_field_descr">
+                                            Доставка курьером к вам домой.
+                                            При выборе данного способа доставки вам необходимо указать ваш город и адрес.
+                                        </p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr id="delivery-block-1" valign="top">
+                                <th>
+                                    <input type="radio" id="del-type-1" name="delivery" value="1" class="delivery-item" onclick="shEvOrd('delivery',this,1)" checked="">
+                                </th>
+                                <td>
+                                    <label class="label" for="del-type-1">Самовывоз</label>
+                                    <div id="delivery-descr-1">
+                                        <p class="order_field_descr">
+                                            Заказ вы можете получить самостоятельно на одном из пунктов выдачи, выбрав его на карте ниже.
+                                        </p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr id="delivery-block-3" valign="top">
+                                <th>
+                                    <input type="radio" id="del-type-3" name="delivery" value="3" class="delivery-item" onclick="shEvOrd('delivery',this,1)">
+                                </th>
+                                <td>
+                                    <label class="label" for="del-type-3">Почтой России</label>
+                                    <div id="delivery-descr-3">
+                                        <p class="order_field_descr">
+                                            Вы можете самостоятельно получить ваш заказ в любом отделении Почты России.
+                                            При выборе данного способа доставки не забудьте указать индекс, область,
+                                            населенный пункт и ваш адрес.
+                                        </p>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="checkout_cols_wrap">
+                            <div class="checkout_left">
+                                $GLOBAL_DELIVEINFO$
+                            </div>
+                            <div class="checkout_right">
+                                <div id="order-field-2-block">
+                                    <span class="label">$ORDER_FNAME_2$</span>
+                                    <span class="field_required">*</span>:
+                                    $ORDER_FIELD_2$
+                                </div>
+                            </div>
+                        </div>
+                        <div class="checkout_delivery_footer">
+                            <button type="button" onclick="Page.backContact()">Назад</button>
+                            <button type="button" onclick="Page.nextAddress()">Далее</button>
+                        </div>
+                    </div>
+                    <?endif?>
+
+                    <button type="button" class="accordion" id="ch_address">Укажите адрес</button>
+                    <div class="panel">
+                        <div class="wrapper address-wrapper">
+                            <div id="delivery-1" class="delivery_address">
+                                поля доставки 1 (самовывоз)
+                                <div id="glavPunktMap"></div>
+                            </div>
+                            <div id="delivery-2" class="delivery_address">
+                                поля доставки 2 (курьер)
+                                <input type="text" id="js_d_2_street" placeholder="Улица" />
+                                <input type="text" id="js_d_2_house" placeholder="Дом" />
+                                <input type="text" id="js_d_2_block" placeholder="Корпус" />
+                                <input type="text" id="js_d_2_apartment" placeholder="Квартира" />
+                            </div>
+                            <div id="delivery-3" class="delivery_address">
+                                поля доставки 3 (почта)
+                                <input type="text" id="js_d_3_street" placeholder="Улица" />
+                                <input type="text" id="js_d_3_house" placeholder="Дом" />
+                                <input type="text" id="js_d_3_block" placeholder="Корпус" />
+                                <input type="text" id="js_d_3_apartment" placeholder="Квартира" />
+                                <input type="text" id="js_d_3_post" placeholder="Почтовый индекс" />
+                            </div>
+                        </div>
+                        <div class="checkout_delivery_footer">
+                            <button type="button" onclick="Page.backDelivery()">Назад</button>
+                            <button type="button" onclick="Page.nextPayment()">Далее</button>
+                        </div>
+                    </div>
+
+                    <button type="button" class="accordion" id="ch_payment">Способ оплаты</button>
+                    <div class="panel">
+                        <div class="wrapper">
+                            <p class="description">Выберете удобный способ оплаты</p>
+                            $PAYMENT_LIST$
+                        </div>
+                        <div class="checkout_delivery_footer">
+                            <button type="button" onclick="Page.backAddress()">Назад</button>
+                            <button type="button" onclick="Page.nextTotal()">Далее</button>
+                        </div>
+                    </div>
+
+                    <button type="button" class="accordion" id="ch_total">Подтверждение</button>
+                    <div class="panel">
+                        <div id="order-field-5-block">
+                            <span class="label">$ORDER_FNAME_5$</span>
+                            $ORDER_FIELD_5$
+                        </div>
+
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%" id="total-sum">
+                            <tr valign="top" id="deliveryAmount">
+                                <td>
+                                    <h4><!--<s4607>-->Стоимость доставки<!--</s>--></h4>
+                                    $ORDER_TAX$
+                                </td>
+                            </tr>
+                            <?if($ORDER_DISCOUNT$)?>
+                            <tr valign="top">
+                                <td><h4><!--<s4608>-->Скидка по дисконту<!--</s>--></h4> <strike>$ORDER_TOTAL$</strike>
+                                    ($ORDER_DISCOUNT$)
+                                </td>
+                            </tr>
+                            <?endif?>
+                            <tr valign="top">
+                                <td>
+                                    <h4 class="order_total_pay_title">Стоимость заказа</h4>
+                                    <h4 class="order_total_pay_title_no_delivery" style="display: none;"><!--<s4570>-->Сумма к оплате (без стоимости доставки)<!--</s>--></h4>
+                                    $ORDER_TOPAY_CURR$
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div id="order-field-7-block">
+                            <input type="checkbox" class="checkbox" id="order-fld-7" name="fld7" value="1" checked="checked">
+                            <label for="order-fld-7">Нажимая на кнопку «Оформить заказ», я соглашаюсь с <a href="javascript://" class="window-offer">договором оферты</a>, <a href="javascript://" class="window-policy">политикой конфиденциальности сайта</a> и даю <a href="javascript://" class="window-pd">согласие на обработку персональных данных</a>.</label>
+                        </div>
+
+                        $ORDER_INFO$
+                        <div id="order-submit">
+                            <button type="button" onclick="Page.backPayment()">Назад</button>
+                            $ORDER_BUTTON$
+                        </div>
+                    </div>
+                </form>
+                <!--
+                <script type="text/javascript" src="/js/delivery/calculator.js"></script>
+                <script type="text/javascript">myCalculator($DAY$);</script>
+                -->
+                <!-- end checkout -->
+                <?else?>
+                <div style="text-align:center; line-height:30px; padding-bottom:30px;"><h3><!--<s5434>-->Ваша корзина
+                    пуста<!--</s>--></h3>[ <a href="/shop"><!--<s4451>-->Продолжить покупки<!--</s>--></a> ]
+                </div>
+                <!-- end checkout 2 -->
+                <?endif?>
+                <!-- end checkout 3 -->
+                <?endif?>
+
+                <?if($PAGE_SELECTOR$)?>
+                <div class="shop-page-wrap">
+                    $PAGE_MORE$ <?$DRAW_BLOCK$('PAGE_PREV','pprev')?> <?$DRAW_BLOCK$('PAGE_SELECTOR','plist')?> <?$DRAW_BLOCK$('PAGE_NEXT','pnext')?></div>
+                <?endif?>
+
+            </div>
+            <!-- </body> -->
+
+        </div>
+
+        <!-- сайдбар -->
+        <aside id="sidebar">
+
+            $GLOBAL_CATEGORIES$
+
+            $GLOBAL_BANNER$
+
+            $GLOBAL_CLEFTER$
+
+        </aside>
+
+        <!-- </middle> -->
+    </div>
+</div>
+
+<!-- нижняя часть -->
+$GLOBAL_BFOOTER$
+
+</div>
+
+<div id="map" style="display:none;width: 500px;height: 400px;"></div>
+
+<!-- qv -->
+<div id="qv_container">
+    <div id="qv_overlay"></div>
+    <div id="qv_window"></div>
+    <span id="qv_close" class="fa fa-close" title="Закрыть"></span></div>
+<!-- /qv -->
+
+<script type="text/javascript" src="/js/plugins.js"></script>
+<script type="text/javascript" src="/js/scripts.js"></script>
+
+<?if($PAGE_ID$ == 'checkout')?>
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+<script type="text/javascript" src="/js/courier.js"></script>
+<script type="text/javascript" src="/js/page/CheckoutPage.js"></script>
+<style type="text/css">#content {
+    float: none;
+    width: initial;
+}</style>
+<?if($NUM_ENTRIES$)?>
+<script type="text/javascript">Page.setOrderInfo($ORDER_WEIGHT$, $ORDER_AMOUNT_RAW$);</script>
+<?endif?>
+<!--
+<script type="text/javascript" src="/js/giftForOrder.js"></script>
+-->
+<!--
+ <script type="text/javascript" src="/js/order/createOrder.js"></script>
+ <script type="text/javascript" src="/js/delivery/pickupPoints.js"></script>
+<script type="text/javascript">deliverySpb('map_button', true);</script>
+ <script type="text/javascript" src="http://lk.pro-cour.ru/map.js?v=1.3"></script>
+-->
+
+<?endif?>
+
+</body>
+</html>

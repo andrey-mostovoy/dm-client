@@ -1,0 +1,254 @@
+<html>
+<head>
+    <meta name="robots" content="noindex, nofollow">
+    <title>$TITLE$ - $MODULE_NAME$ - $SITE_NAME$</title>
+
+    <link href='https://fonts.googleapis.com/css?family=PT+Sans+Caption:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.css">
+
+    $GLOBAL_HEAD$
+
+    <style type="text/css">
+        .tinkoffPayRow{display:block;min-width:200px;}
+        .toPayTable{
+            margin: 10px 0;
+            padding-top: 10px;
+            border-top: 1px dashed grey;
+            border-bottom: 1px dashed grey;
+        }
+        .toPayTable h3 {font-size:16px;margin:0 0 10px;}
+        #order_topay {line-height: 16px;}
+        .orderPay h3 {font-size:20px;margin:0 0 10px;}
+    </style>
+</head>
+<body id="body">
+<div id="loader"></div>
+<div id="wrapper">
+
+    $GLOBAL_AHEADER$
+
+    <!-- хлебные крошки -->
+    <div class="path cnt clr">
+        <i class="fa fa-home"></i>
+        $SHOP_PATH$
+    </div>
+
+    <!-- основная часть -->
+    <div id="middle">
+        <div class="cnt clr">
+            <!-- <middle> -->
+            <div id="content">
+
+                <!-- <body> -->
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td align="right" nowrap>
+                            <b><!--<s4521>-->Статус<!--</s>-->:</b> $ORDER_STATUS$
+                        </td>
+                    </tr>
+                </table>
+                <h1>
+                    <!--<s4717>-->Заказ<!--</s>--> <!--<s4453>-->№<!--</s>--> $ORDER_CODE$
+                    <?if(!$USER_ID$)?>
+                    успешно оформлен
+                    <?endif?>
+                </h1>
+                <?if(!$USER_ID$)?>
+                <div class="order_thank_you">
+                    <p>Наш менеджер свяжется с Вами для уточнений деталей оплаты и доставки заказа</p>
+                    <h2>БЛАГОДАРИМ, ЧТО ВЫБРАЛИ НАС!</h2>
+                    <hr />
+                </div>
+                <?endif?>
+                $BODY$
+                <?if($DIGITAL_ITEM_1$)?>
+                <div style="text-align:center; font-size:1.6em; padding:15px; line-height:150%;"><?$DIGITAL_GOODS$('<!--<s5481>-->Получить<!--</s>--> %NAME% %SIZE%')?></div>
+                <?endif?>
+                $ORDER_PRINT$ $ORDER_PDF$
+                <?if($DELIVERY$)?>
+                <h3 style="margin:25px 0 10px 0;"><!--<s4454>-->Способ доставки<!--</s>--></h3>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td width="20">&nbsp;</td>
+                        <td>
+                            <b>$DELIVERY$</b><div style="padding-top:5px">$DELIVERY_DESCR$</div>
+                        </td>
+                        <?if($ORDER_TAX_RAW$ || $GROUP_ID$ == 4)?>
+                        <td style="text-align:right;padding-left:20px; font-size:16px;">
+                            <?if($ORDER_TAX_EDIT$)?>$ORDER_TAX_EDIT$<?else?>$ORDER_TAX$<?endif?>
+                        </td>
+                        <?endif?>
+                    </tr>
+                </table>
+                <?endif?>
+
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" class="toPayTable">
+                    <?if($ORDER_DISCOUNT$)?><tr><td><h3><!--<s4608>-->Скидка по дисконту<!--</s>--></h3></td><td id="order_discount" style="text-align:right;padding-left:20px; font-size:16px;">$ORDER_DISCOUNT$</td></tr><?endif?>
+                    <tr valign="top">
+                        <td><h3><!--<s4513>-->К оплате<!--</s>--><?if(!$ORDER_TAX_RAW$)?> (без учета стоимости доставки)<?endif?></h3></td>
+                        <td id="order_topay" style="text-align:right;padding-left:20px; font-size:16px;"><?if($ORDER_DISCOUNT$)?><strike>$ORDER_TOTAL$</strike><br><?endif?>$ORDER_TOPAY$</td>
+                    </tr>
+                </table>
+
+                <form name="TinkoffPayForm" class="TinkoffPayForm" onsubmit="pay(this); return false;">
+
+                <h2><!--<s4604>-->Оплата заказа<!--</s>--></h2>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" class="orderPay"><tr valign="top">
+                    <td width="20">&nbsp;</td><td><b>$PAYMENT$</b><div style="padding-top:5px">$PAYMENT_DESCR$</div></td>
+                    <?if($PAY_NOW$)?><td style="text-align:right;padding-left:20px;"><h3>$ORDER_TOPAY_CURR$</h3>$PAY_NOW$</td><?endif?>
+
+                    <? if($ORDER_ID$ == 309 && ($ORDER_STATUS$ == 'Оплачивается' || $ORDER_STATUS$ == 'В обработке')) ?>
+                    <td style="text-align:right;padding-left:20px;">
+                        <h3>$ORDER_TOTAL$</h3>
+                        <input class="tinkoffPayRow" type="submit" value="Оплатить" style="width:160px;display:inline-block;">
+                    </td>
+                    <?endif?>
+                </tr></table>
+
+                <?if($ORDER_FIELDS$)?>
+                <div id="order-info" class="commFl" style="margin-top:20px;">
+                    <!-- $PAYMENT$ == 'Онлайн' -->
+                    <? if($ORDER_ID$ == 309 && ($ORDER_STATUS$ == 'Оплачивается' || $ORDER_STATUS$ == 'В обработке')) ?>
+                        <script src="https://securepay.tinkoff.ru/html/payForm/js/tinkoff.js"></script>
+
+                        <input class="tinkoffPayRow" type="hidden" name="terminalkey" value="TinkoffBankTest" />
+                        <input class="tinkoffPayRow" type="hidden" name="frame" value="false" />
+                        <input class="tinkoffPayRow" type="hidden" name="language" value="ru" />
+                        <input class="tinkoffPayRow" type="hidden" placeholder="Сумма заказа" name="amount" required value="<?$ORDER_TOTAL_RAW$?>" />
+                        <input class="tinkoffPayRow" type="hidden" placeholder="Номер заказа" name="order" value="<?$ORDER_CODE$?>" />
+                        <input class="tinkoffPayRow" type="hidden" placeholder="Описание заказа" name="description" value="Оплата заказа №<?$ORDER_CODE$?>" />
+
+                        <div class="order-fname"><?$ORDER_FNAME_4$?></div>
+                        <div class="order-field">
+                            <? if($GROUP_ID$ == 4) ?>
+                                $ORDER_FIELD_EDIT_4$
+                            <?else?>
+                                <input class="tinkoffPayRow" type="text" placeholder="ФИО плательщика" name="name" value="<?$ORDER_FIELD_4$?>" />
+                            <? endif ?>
+                        </div>
+
+                        <div class="order-fname"><?$ORDER_FNAME_6$?></div>
+                        <div class="order-field">
+                            <? if($GROUP_ID$ == 4) ?>
+                                $ORDER_FIELD_EDIT_6$
+                            <?else?>
+                                <input class="tinkoffPayRow" type="text" placeholder="E-mail" name="email" value="<?$ORDER_FIELD_6$?>" />
+                            <? endif ?>
+                        </div>
+
+                        <div class="order-fname"><?$ORDER_FNAME_1$?></div>
+                        <div class="order-field">
+                            <? if($GROUP_ID$ == 4) ?>
+                                $ORDER_FIELD_EDIT_1$
+                            <?else?>
+                                <input class="tinkoffPayRow" type="text" placeholder="Контактный телефон" name="phone" value="<?$ORDER_FIELD_1$?>" />
+                            <? endif ?>
+                        </div>
+                    <?else?>
+                        <div class="order-fname"><?$ORDER_FNAME_4$?></div>
+                        <div class="order-field">
+                            <? if($GROUP_ID$ == 4) ?>
+                                $ORDER_FIELD_EDIT_4$
+                            <?else?>
+                                $ORDER_FIELD_4$
+                            <? endif ?>
+                        </div>
+                        <div class="order-fname"><?$ORDER_FNAME_1$?></div>
+                        <div class="order-field">
+                            <? if($GROUP_ID$ == 4) ?>
+                                $ORDER_FIELD_EDIT_1$
+                            <?else?>
+                                $ORDER_FIELD_1$
+                            <? endif ?>
+                        </div>
+                        <div class="order-fname"><?$ORDER_FNAME_6$?></div>
+                        <div class="order-field">
+                            <? if($GROUP_ID$ == 4) ?>
+                                $ORDER_FIELD_EDIT_6$
+                            <?else?>
+                                $ORDER_FIELD_6$
+                            <? endif ?>
+                        </div>
+                    <?endif?>
+
+                    <div class="order-fname"><?$ORDER_FNAME_8$?></div>
+                    <div class="order-field">
+                        <? if($GROUP_ID$ == 4) ?>
+                            $ORDER_FIELD_EDIT_8$
+                        <?else?>
+                            $ORDER_FIELD_8$
+                        <? endif ?>
+                    </div>
+                    <div class="order-fname"><?$ORDER_FNAME_2$?></div>
+                    <div class="order-field">
+                        <? if($GROUP_ID$ == 4) ?>
+                            $ORDER_FIELD_EDIT_2$
+                        <?else?>
+                            $ORDER_FIELD_2$
+                        <? endif ?>
+                    </div>
+                    <? if($ORDER_FIELD_3$ || $GROUP_ID$ == 4) ?>
+                        <div class="order-fname"><?$ORDER_FNAME_3$?></div>
+                        <div class="order-field">
+                            <? if($GROUP_ID$ == 4) ?>
+                                $ORDER_FIELD_EDIT_3$
+                            <?else?>
+                                $ORDER_FIELD_3$
+                            <? endif ?>
+                        </div>
+                    <?endif?>
+                    <div class="order-fname"><?$ORDER_FNAME_5$?></div>
+                    <div class="order-field">
+                        <? if($GROUP_ID$ == 4) ?>
+                            $ORDER_FIELD_EDIT_5$
+                        <?else?>
+                            $ORDER_FIELD_5$
+                        <? endif ?>
+                    </div>
+                    <!--
+                    <div class="order-fname"><?$ORDER_FNAME_7$?></div>
+                    <div class="order-field"><?$ORDER_FIELD_7$?></div>
+                    -->
+                </div>
+                <?endif?>
+
+                </form>
+                <div style="padding:20px 0; text-align:right; font-style: italic;"><b><!--<s4522>-->Добавлен<!--</s>-->:</b> $ADD_DATE$, $ADD_TIME$ <?if($MOD_TIME$)?> <b><!--<s4523>-->Изменён<!--</s>-->:</b> $MOD_DATE$, $MOD_TIME$<?endif?></div>
+                <!-- </body> -->
+
+            </div>
+
+            <!-- сайдбар -->
+            <aside id="sidebar">
+
+                $GLOBAL_CATEGORIES$
+
+                $GLOBAL_BANNER$
+
+                $GLOBAL_CLEFTER$
+
+            </aside>
+
+            <!-- </middle> -->
+        </div>
+    </div>
+
+    <!-- нижняя часть -->
+    $GLOBAL_BFOOTER$
+
+</div>
+
+
+<!-- qv -->
+<div id="qv_container"><div id="qv_overlay"></div><div id="qv_window"></div><span id="qv_close" class="fa fa-close" title="Закрыть"></span></div>
+<!-- /qv -->
+
+<script src="/js/plugins.js"></script>
+<script src="/js/scripts.js"></script>
+<script type="text/javascript">
+    $('.order_field_descr').remove();
+</script>
+
+</body>
+</html>

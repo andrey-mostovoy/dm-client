@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /*Time for the CSS*/
+        * {margin: 0; padding: 0;}
+        body {background: #ccc;}
+
+        .slider{
+            /*width: 320px; !*Same as width of the large image*!*/
+            /*position: relative;*/
+            height: 400px;
+            /*Instead of height we will use padding*/
+            padding-left: 320px; /*That helps bring the labels down*/
+
+            /*margin: 100px auto;*/
+
+            /*Lets add a shadow*/
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.75);
+        }
+
+
+        /*Last thing remaining is to add transitions*/
+        .slider>img{
+            position: absolute;
+            left: 0; top: 0;
+            transition: all 0.5s;
+        }
+
+        .slider input[name='slide_switch'] {
+            display: none;
+        }
+
+        .slider label {
+            /*Lets add some spacing for the thumbnails*/
+            margin: 18px 0 0 18px;
+            border: 3px solid #999;
+
+            float: left;
+            cursor: pointer;
+            transition: all 0.5s;
+
+            /*Default style = low opacity*/
+            opacity: 0.6;
+        }
+
+        .slider label img{
+            display: block;
+        }
+
+        /*Time to add the click effects*/
+        .slider input[name='slide_switch']:checked+label {
+            border-color: #666;
+            opacity: 1;
+        }
+        /*Clicking any thumbnail now should change its opacity(style)*/
+        /*Time to work on the main images*/
+        .slider input[name='slide_switch'] ~ img {
+            opacity: 0;
+            transform: scale(1.1);
+        }
+        /*That hides all main images at a 110% size
+        On click the images will be displayed at normal size to complete the effect
+        */
+        .slider input[name='slide_switch']:checked+label+img {
+            opacity: 1;
+            transform: scale(1);
+        }
+        /*Clicking on any thumbnail now should activate the image related to it*/
+
+        /*We are done :)*/
+    </style>
+</head>
+<body>
+<div class="slider">
+    <!-- Кукла-малышка с ванной, Забияка -->
+    <input type="radio" name="slide_switch" id="id1" checked="checked"/>
+    <label for="id1">
+        <img src="http://домик-мечты.рф/_sh/00/19s.jpg" width="100"/>
+    </label>
+    <img src="http://домик-мечты.рф/_sh/00/19.jpg" width="320"/>
+    <input type="radio" name="slide_switch" id="id2"/>
+    <label for="id2">
+        <img src="http://домик-мечты.рф/_sh/00/19s_1.jpg" width="100"/>
+    </label>
+    <img src="http://домик-мечты.рф/_sh/00/19_1.jpg" width="320"/>
+    <input type="radio" name="slide_switch" id="id3"/>
+    <label for="id3">
+        <img src="http://домик-мечты.рф/_sh/00/19s_2.jpg" width="100"/>
+    </label>
+    <img src="http://домик-мечты.рф/_sh/00/19_2.jpg" width="320"/>
+
+    <!-- Кукла "Марианна", Забияка -->
+    <input type="radio" name="slide_switch" id="id4"/>
+    <label for="id4">
+        <img src="http://домик-мечты.рф/_sh/00/22s.jpg" width="100"/>
+    </label>
+    <img src="http://домик-мечты.рф/_sh/00/22.jpg" width="320"/>
+    <input type="radio" name="slide_switch" id="id6"/>
+    <label for="id6">
+        <img src="http://домик-мечты.рф/_sh/00/22s_2.jpg" width="100"/>
+    </label>
+    <img src="http://домик-мечты.рф/_sh/00/22_2.jpg" width="320"/>
+
+    <!-- Кукла "Принцесса", Забияка -->
+    <input type="radio" name="slide_switch" id="id10"/>
+    <label for="id10">
+        <img src="http://домик-мечты.рф/_sh/00/20s_1.jpg" width="100"/>
+    </label>
+    <img src="http://домик-мечты.рф/_sh/00/20_1.jpg" width="320"/>
+    <input type="radio" name="slide_switch" id="id11"/>
+    <label for="id11">
+        <img src="http://домик-мечты.рф/_sh/00/20s_2.jpg" width="100"/>
+    </label>
+    <img src="http://домик-мечты.рф/_sh/00/20_2.jpg" width="320"/>
+
+    <!-- Кукла мини "Ollie", Shantou Gepai -->
+    <input type="radio" name="slide_switch" id="id12"/>
+    <label for="id12">
+        <img src="http://домик-мечты.рф/_sh/00/23s.jpg" width="100"/>
+    </label>
+    <img src="http://домик-мечты.рф/_sh/00/23.jpg" width="320"/>
+
+    <!-- Кукла "Маленький доктор", Забияка -->
+    <input type="radio" name="slide_switch" id="id13"/>
+    <label for="id13">
+        <img src="http://домик-мечты.рф/_sh/00/21s_3.jpg" width="100"/>
+    </label>
+    <img src="http://домик-мечты.рф/_sh/00/21_3.jpg" width="320"/>
+</div>
+
+<!-- We will use PrefixFree - a script that takes care of CSS3 vendor prefixes
+You can download it from http://leaverou.github.com/prefixfree/ -->
+<script src="http://thecodeplayer.com/uploads/js/prefixfree.js" type="text/javascript"></script>
+</body>
+</html>

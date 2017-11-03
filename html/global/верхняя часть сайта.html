@@ -1,0 +1,103 @@
+<?if($GROUP_ID$ != '4')?>
+<style type="text/css">
+    .uadm * {display:none !important;}
+</style>
+<?endif?>
+
+<!-- верхняя часть -->
+<div id="top">
+    <div class="cnt clr">
+        <!--
+        <div class="top_left">Приветствуем на нашем сайте!</div>
+        -->
+        <?if($GROUP_ID$ == '4' && !$USER_AGENT_PDA$)?>
+        <div class="top_left"><a href="/index/specialnaja-stranica/0-7" target="_blank">Та самая страница</a></div>
+        <?endif?>
+        <?if($NMENU_2$)?>
+        <div class="top_nav">
+            <nav id="top_nav">
+                <div class="top_nav_content clr">
+                    <a class="menu-icon" href="javascript:void(0)"><i class="fa fa-bars"></i> меню</a>
+                    <!-- <sblock_top_nmenu> -->
+                    <?if($NMENU_2$)?><!-- <bc> -->$NMENU_2$<!-- </bc> --><?endif?>
+                    <!-- </sblock_top_nmenu> -->
+                </div>
+            </nav>
+        </div>
+        <?endif?>
+
+        <?if($GROUP_ID$ == '4')?>
+        <span class="top_account">
+ Мой аккаунт <i class="fa fa-angle-down"></i>
+ <ul>
+ <?if(!$USER_LOGGED_IN$)?>
+     <li><a href="$LOGIN_LINK$"><i class="fa fa-unlock-alt"></i> Вход</a></li>
+ <li><a href="$REGISTER_LINK$"><i class="fa fa-user-plus"></i> Регистрация</a></li>
+     <?else?>
+     <!--
+      <li><a href="$PERSONAL_PAGE_LINK$"><i class="fa fa-user"></i> Мой профиль</a></li>
+     -->
+ <li><a href="$LOGOUT_LINK$"><i class="fa fa-sign-out"></i> Выход</a></li>
+     <?endif?>
+     <li><a href="/shop/wishlist"><i class="fa fa-heart-o"></i> Список желаний</a></li>
+ <li><a href="/shop/checkout"><i class="fa fa-shopping-basket"></i> Корзина</a></li>
+ </ul>
+ </span>
+        <?endif?>
+
+    </div>
+</div>
+
+<!-- шапка -->
+<header id="header">
+    <div class="header_content cnt clr">
+        <div id="logo">
+            <a href="/">
+                <span>Домик</span>Мечты
+                <span class="phrase" style="letter-spacing:1.8pt">&nbsp;&nbsp;Кукольные домики и мебель</span>
+            </a>
+        </div>
+        <div class="header_right">
+
+            <form id="search-form" onsubmit="this.sfSbm.disabled=true" method="post" action="/shop/search">
+                <input type="text" class="search_keyword" name="query" placeholder="Поиск по магазину...">
+                <input type="submit" class="search_submit" value="&#xf002;" name="sfSbm">
+            </form>
+            <!--
+            <div class="delivery_promo">
+            </div>
+            -->
+
+
+            <div class="header_phone">
+                <i class="fa fa-phone"></i>
+                <p>
+                    <b>8 (800) 222-67-12</b>
+                </p>
+                <div class="free_call">Звонок бесплатный по России</div>
+                <div class="work_time" style="display: none;">мы на связи с 9 до 20</div>
+
+                <!-- Обратная связь -->
+                <a class="back_call" title="Заказать обратный звонок" href="javascript:;" onclick="openchat();">Заказать звонок</a>
+                <script type="text/javascript">
+                    function openchat(){new _uWnd('chat','Заказать обратный звонок',400,260,{align:0,shadow:0,close:1,autosize:1,maxh:700,minh:150,modal:1,resize:0,nomove:1}, $("#chat").html() )}
+                </script>
+                <div style="display:none;" id="chat">$MFORM_3$</div>
+                <!-- Обратная связь -->
+
+            </div>
+
+            $BASKET$
+        </div>
+    </div>
+</header>
+
+<!-- меню сайта -->
+<nav id="nav">
+    <div class="nav_content cnt clr">
+        <a class="menu-icon" href="javascript:void(0)"><i class="fa fa-bars"></i> каталог</a>
+        <!-- <sblock_nmenu> -->
+        <?if($NMENU_1$)?><!-- <bc> -->$NMENU_1$<!-- </bc> --><?endif?>
+        <!-- </sblock_nmenu> -->
+    </div>
+</nav>
