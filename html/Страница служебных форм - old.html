@@ -9,6 +9,17 @@
     <link rel="stylesheet" href="/css/owl.carousel.css">
 
     $GLOBAL_HEAD$
+
+    <?if($PAGE_ID$ == 'checkout')?>
+    <style type="text/css">
+        #content {
+            width: initial;
+        }
+        #sidebar {
+            display: none;
+        }
+    </style>
+    <?endif?>
 </head>
 <body id="body">
 <div id="loader"></div>
@@ -303,10 +314,6 @@ $GLOBAL_BFOOTER$
 <script type="text/javascript" src="/js/courier.js"></script>
 <script type="text/javascript" src="/js/deliveryMap.js"></script>
 <script type="text/javascript" src="/js/page/CheckoutPage.js"></script>
-<style type="text/css">#content {
-    float: none;
-    width: initial;
-}</style>
 <?if($NUM_ENTRIES$)?>
 <script type="text/javascript">setTotal($ORDER_WEIGHT$, $ORDER_AMOUNT_RAW$);</script>
 <?endif?>

@@ -399,6 +399,7 @@ var CourierGlavPunkt = function() {
      * <pre>
      * {
      *    pvz: {
+     *      code: 'msk',
      *      cost: {
      *        text: '120 - 160 руб.',
      *        raw: 0, // будет значение в том случае, если только 1 оператор
@@ -445,12 +446,20 @@ var CourierGlavPunkt = function() {
 
         this._getPvzInfoByCity(city, order, onDone);
         this._getCourierInfoByCity(city, order, onDone);
-        this._getPostInfoByCity(city, onDone);
+        this._getPostInfoByCity(city, order, onDone);
     };
 
+    /**
+     * Возвращает информацию по доставке в пункты самовывоза для указанного города.
+     * @param {string} city Город
+     * @param {{amount: number, weight: number}} order Информация о заказе - сумма, вес.
+     * @param {function} callback Функция, в которую будет передан результат.
+     * @private
+     */
     this._getPvzInfoByCity = function(city, order, callback) {
         var result = {
             pvz: {
+                code: '',
                 cost: {
                     text: '',
                     raw: 0,
@@ -474,107 +483,104 @@ var CourierGlavPunkt = function() {
                 result.pvz.cost.raw = 150;
             }
             result.pvz.period.text = t._getDeliveryPeriodString(1, 2);
+            result.pvz.code = 'spb';
             callback(result);
         } else {
             t.getCityList(function(cityList) {
-                for (var cityCode in cityList) {
-                    if (cityList.hasOwnProperty(cityCode) && cityList[cityCode] === city) {
-                        t.getPickupPoints(cityCode, function(pickupPointList) {
-                            if (city === 'Москва') {
-                                t.getDeliveryCost({
-                                    punktId: pickupPointList[0].id,
-                                    cityTo: city
-                                }, function (info) {
-                                    result.pvz.cost.text = t._getDeliveryCostString(info.price);
-                                    result.pvz.cost.raw = info.price;
-                                    result.pvz.period.text = t._getDeliveryPeriodString(info.period);
-                                    callback(result);
-                                }, function() {
-                                    // если ошибка или еще что-то
-                                    callback({});
-                                });
-                            } else {
-                                const pointIds = [];
-                                const operatorById = [];
-                                var pickupPoint;
-                                const receivedInfo = [];
-
-                                // @todo увы нужно 2 цикла, сначала собрать точки по оператору, а затем стоимость
-                                // считать. Иначе теряем доставку с 1м пунктом в городе
-
-                                for (var ppIndex in pickupPointList) {
-                                    if (!pickupPointList.hasOwnProperty(ppIndex)) {
-                                        continue;
-                                    }
-                                    pickupPoint = pickupPointList[ppIndex];
-                                    if (pointIds[pickupPoint['operator']]) {
-                                        continue;
-                                    }
-
-                                    pointIds[pickupPoint['operator']] = pickupPoint['id'];
-                                    operatorById[pickupPoint['id']] = pickupPoint['operator'];
-
-                                    t.getDeliveryCost({
-                                        punktId: pickupPoint['id'],
-                                        cityTo: city,
-                                    }, function (info, punktId) {
-                                        receivedInfo.push(info);
-
-                                        var additionalInfo = {
-                                            text: t._getDeliveryCostString(info.price),
-                                            raw: info.price,
-                                        };
-                                        result.pvz.cost[operatorById[punktId]] = additionalInfo;
-                                        result.pvz.period[operatorById[punktId]] = t._getDeliveryPeriodString(info.period);
-
-                                        // на случай, если будет всего 1 пункт
-                                        result.pvz.cost.text = t._getDeliveryCostString(info.price);
-                                        result.pvz.cost.raw = info.price;
-                                        result.pvz.period.text = t._getDeliveryPeriodString(info.period);
-
-                                        if (receivedInfo.length === 2) {
-                                            var minCost = receivedInfo[0].price;
-                                            var maxCost = receivedInfo[1].price;
-                                            if (minCost > maxCost) {
-                                                minCost = receivedInfo[1].price;
-                                                maxCost = receivedInfo[0].price;
-                                            }
-
-                                            const period1 = t._parsePeriod(receivedInfo[0].period);
-                                            const period2 = t._parsePeriod(receivedInfo[1].period);
-                                            const minLength = period1.min < period2.min ? period1.min : period2.min;
-                                            const maxLength = period1.max > period2.max ? period1.max : period2.max;
-
-                                            result.pvz.cost.text = t._getDeliveryCostString(minCost, maxCost);
-                                            result.pvz.period.text = t._getDeliveryPeriodString(minLength, maxLength);
-
-                                            callback(result);
-                                        }
-                                    }, function() {
-                                        callback({});
-                                    });
-
-                                    if (pointIds.length === 2) {
-                                        break;
-                                    }
-                                }
-
-                                if (pointIds.length === 0) {
-                                    // нет пвз...
-                                    callback({});
-                                } else if (pointIds.length === 1) {
-                                    // всего 1 пункт в городе
-                                    callback(result);
-                                }
-                            }
-                        });
+                var cityCode;
+                for (var i in cityList) {
+                    if (cityList.hasOwnProperty(i) && cityList[i] === city) {
+                        cityCode = i;
                         break;
                     }
                 }
+
+                if (!cityCode) {
+                    callback({});
+                    return;
+                }
+
+                // нужен только выбранный город.
+                result.pvz.code = cityCode;
+
+                t.getPickupPoints(cityCode, function(pickupPointList) {
+                    if (city === 'Москва') {
+                        t.getDeliveryCost({
+                            punktId: pickupPointList[0].id,
+                            cityTo: city
+                        }, function (info) {
+                            result.pvz.cost.text = t._getDeliveryCostString(info.price);
+                            result.pvz.cost.raw = info.price;
+                            result.pvz.period.text = t._getDeliveryPeriodString(info.period);
+                            callback(result);
+                        }, function() {
+                            // если ошибка или еще что-то
+                            callback({});
+                        });
+                    } else {
+                        var mapByOperator = [];
+                        var mapForDelivery = [];
+                        $.each(pickupPointList, function(index, pickupPoint) {
+                            if (!mapByOperator[pickupPoint['operator']]) {
+                                mapByOperator[pickupPoint['operator']] = pickupPoint['id'];
+                                mapForDelivery.push(pickupPoint);
+                            }
+                        });
+
+                        var pvzCosts = [];
+                        var pvzMinPeriods = [];
+                        var pvzMaxPeriods = [];
+                        var doneCount = 0;
+                        var onDone = function() {
+                            doneCount += 1;
+                            if (doneCount === mapForDelivery.length) {
+                                var minCost = Math.min.apply(null, pvzCosts);
+                                var maxCost = Math.max.apply(null, pvzCosts);
+                                result.pvz.cost.text = t._getDeliveryCostString(minCost, maxCost);
+
+                                var minLength = Math.min.apply(null, pvzMinPeriods);
+                                var maxLength = Math.max.apply(null, pvzMaxPeriods);
+                                result.pvz.period.text = t._getDeliveryPeriodString(minLength, maxLength);
+
+                                typeof callback === 'function' && callback(result);
+                            }
+                        };
+
+                        $.each(mapForDelivery, function(index, pickupPoint) {
+                            t.getDeliveryCost({
+                                punktId: pickupPoint['id'],
+                                cityTo: city,
+                            }, function (info, punktId) {
+                                console.log(punktId, pickupPoint['id']);
+                                result.pvz.cost[pickupPoint['operator']] = {
+                                    text: t._getDeliveryCostString(info.price),
+                                    raw: info.price,
+                                };
+                                result.pvz.period[pickupPoint['operator']] = t._getDeliveryPeriodString(info.period);
+
+                                pvzCosts.push(info.price);
+                                var parsedPeriod = t._parsePeriod(info.period);
+                                pvzMinPeriods.push(parsedPeriod.min);
+                                pvzMaxPeriods.push(parsedPeriod.max);
+
+                                onDone();
+                            }, function() {
+                                onDone();
+                            });
+                        });
+                    }
+                });
             });
         }
     };
 
+    /**
+     * Возвращает информацию по доставке курьером для указанного города.
+     * @param {string} city Город
+     * @param {{amount: number, weight: number}} order Информация о заказе - сумма, вес.
+     * @param {function} callback Функция, в которую будет передан результат.
+     * @private
+     */
     this._getCourierInfoByCity = function(city, order, callback) {
         var result = {
             courier: {
@@ -616,10 +622,18 @@ var CourierGlavPunkt = function() {
         }
     };
 
-    this._getPostInfoByCity = function(city, callback) {
+    /**
+     * Возвращает информацию по доставке почтой РФ для указанного города.
+     * @param {string} city Город
+     * @param {{amount: number, weight: number}} order Информация о заказе - сумма, вес.
+     * @param {function} callback Функция, в которую будет передан результат.
+     * @private
+     */
+    this._getPostInfoByCity = function(city, order, callback) {
         var result = {
             post: {
                 cost: {
+                    raw: 0,
                     text: 'Уточняйте у менеджера',
                 },
             },
@@ -627,6 +641,12 @@ var CourierGlavPunkt = function() {
         callback(result);
     };
 
+    /**
+     * Возвращает плюральную форму слова день.
+     * @param {number} dayCount
+     * @return {string}
+     * @private
+     */
     this._pluralDayName = function(dayCount) {
         if (dayCount === 1) {
             return 'день';
@@ -637,6 +657,12 @@ var CourierGlavPunkt = function() {
         }
     };
 
+    /**
+     * Парсит период доставки
+     * @param {string} period
+     * @return {{min: *, max: *}}
+     * @private
+     */
     this._parsePeriod = function(period) {
         const splited = period.split('-');
         var min = splited[0];
@@ -648,6 +674,11 @@ var CourierGlavPunkt = function() {
         return { min: min, max: max };
     };
 
+    /**
+     * Возвращает строку стоимости в зависимости от количества переданных параметров.
+     * @return {string}
+     * @private
+     */
     this._getDeliveryCostString = function() {
         var costString;
         if (arguments.length === 1) {
@@ -655,11 +686,20 @@ var CourierGlavPunkt = function() {
         } else {
             const min = arguments[0];
             const max = arguments[1];
-            costString = min + ' - ' + max;
+            if (min === max) {
+                costString = min;
+            } else {
+                costString = min + ' - ' + max;
+            }
         }
         return costString + ' руб.';
     };
 
+    /**
+     * Возвращает строку периода доставки в зависимости от количества переданных параметров.
+     * @return {string}
+     * @private
+     */
     this._getDeliveryPeriodString = function() {
         var min;
         var max;

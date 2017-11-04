@@ -9,6 +9,17 @@
     <link rel="stylesheet" href="/css/owl.carousel.css">
 
     $GLOBAL_HEAD$
+
+    <?if($PAGE_ID$ == 'checkout')?>
+    <style type="text/css">
+        #content {
+            width: initial;
+        }
+        #sidebar {
+            display: none;
+        }
+    </style>
+    <?endif?>
 </head>
 <body id="body">
 <div id="loader"></div>
@@ -167,65 +178,93 @@
                     <div class="panel">
                         <p class="description">Выберете удобный способ доставки</p>
 
-                        <table id="delivery-list" class="methods-list">
-                            <tbody>
-                            <tr id="delivery-block-2" valign="top">
-                                <th>
+                        <div class="delivery-list-wrapper">
+                            <div class="delivery-row" id="delivery-block-courier">
+                                <div class="delivery-row-input">
                                     <input type="radio" id="del-type-2" name="delivery" value="2" class="delivery-item" onclick="shEvOrd('delivery',this,1)">
-                                </th>
-                                <td>
                                     <label class="label" for="del-type-2">Доставка курьером</label>
-                                    <div id="delivery-descr-2">
-                                        <p class="order_field_descr">
-                                            Доставка курьером к вам домой.
-                                            При выборе данного способа доставки вам необходимо указать ваш город и адрес.
-                                        </p>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr id="delivery-block-1" valign="top">
-                                <th>
-                                    <input type="radio" id="del-type-1" name="delivery" value="1" class="delivery-item" onclick="shEvOrd('delivery',this,1)" checked="">
-                                </th>
-                                <td>
-                                    <label class="label" for="del-type-1">Самовывоз</label>
-                                    <div id="delivery-descr-1">
-                                        <p class="order_field_descr">
-                                            Заказ вы можете получить самостоятельно на одном из пунктов выдачи, выбрав его на карте ниже.
-                                        </p>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr id="delivery-block-3" valign="top">
-                                <th>
-                                    <input type="radio" id="del-type-3" name="delivery" value="3" class="delivery-item" onclick="shEvOrd('delivery',this,1)">
-                                </th>
-                                <td>
-                                    <label class="label" for="del-type-3">Почтой России</label>
-                                    <div id="delivery-descr-3">
-                                        <p class="order_field_descr">
-                                            Вы можете самостоятельно получить ваш заказ в любом отделении Почты России.
-                                            При выборе данного способа доставки не забудьте указать индекс, область,
-                                            населенный пункт и ваш адрес.
-                                        </p>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-
-                        <div class="checkout_cols_wrap">
-                            <div class="checkout_left">
-                                $GLOBAL_DELIVEINFO$
-                            </div>
-                            <div class="checkout_right">
-                                <div id="order-field-2-block">
-                                    <span class="label">$ORDER_FNAME_2$</span>
-                                    <span class="field_required">*</span>:
-                                    $ORDER_FIELD_2$
+                                </div>
+                                <div class="delivery-row-cost">
+                                    <span id="courier_cost"></span>
+                                </div>
+                                <div class="delivery-row-period">
+                                    <span id="courier_period"></span>
+                                </div>
+                                <div class="delivery-row-description">
+                                    <p class="delivery-shipping">
+                                        Передача в доставку <span class="delivery-shipping-date"></span>
+                                    </p>
+                                    <p class="order_field_descr">
+                                        Доставка курьером к вам домой.
+                                        При выборе данного способа доставки вам необходимо указать ваш город и адрес.
+                                    </p>
                                 </div>
                             </div>
+                            <div class="delivery-row not-available" id="delivery-block-no-courier">
+                                Доставка курьером не осуществляется
+                            </div>
+                            <div class="delivery-row" id="delivery-block-pvz">
+                                <div class="delivery-row-input">
+                                    <input type="radio" id="del-type-1" name="delivery" value="1" class="delivery-item" onclick="shEvOrd('delivery',this,1)">
+                                    <label class="label" for="del-type-1">Самовывоз</label>
+                                </div>
+                                <div class="delivery-row-cost operator-cost operator-raw">
+                                    <span id="raw_cost"></span>
+                                </div>
+                                <div class="delivery-row-period operator-period operator-raw">
+                                    <span id="raw_period"></span>
+                                </div>
+                                <div class="delivery-row-cost operator-cost operator-boxberry">
+                                    Boxberry <span id="boxberry_cost"></span>
+                                </div>
+                                <div class="delivery-row-period operator-period operator-boxberry">
+                                    <span id="boxberry_period"></span>
+                                </div>
+                                <div class="delivery-row-cost operator-cost operator-cdek">
+                                    CDEK <span id="cdek_cost"></span>
+                                </div>
+                                <div class="delivery-row-period operator-period operator-cdek">
+                                    <span id="cdek_period"></span>
+                                </div>
+                                <div class="delivery-row-description">
+                                    <p class="delivery-shipping">
+                                        Передача в доставку <span class="delivery-shipping-date"></span>
+                                    </p>
+                                    <p class="order_field_descr">
+                                        Заказ вы можете получить самостоятельно на одном из пунктов выдачи, выбрав его на карте в следующем шаге.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="delivery-row not-available" id="delivery-block-no-pvz">
+                                Забор из пункта самовывоза недоступен
+                            </div>
+                            <div class="delivery-row" id="delivery-block-post">
+                                <div class="delivery-row-input">
+                                    <input type="radio" id="del-type-3" name="delivery" value="3" class="delivery-item" onclick="shEvOrd('delivery',this,1)">
+                                    <label class="label" for="del-type-3">Почтой России</label>
+                                </div>
+                                <div class="delivery-row-cost">
+                                    <span id="post_cost"></span>
+                                </div>
+                                <div class="delivery-row-period">
+                                    <span id="post_period"></span>
+                                </div>
+                                <div class="delivery-row-description">
+                                    <p class="delivery-shipping">
+                                        Передача в доставку <span class="delivery-shipping-date"></span>
+                                    </p>
+                                    <p class="order_field_descr">
+                                        Вы можете самостоятельно получить ваш заказ в любом отделении Почты России.
+                                        При выборе данного способа доставки не забудьте указать индекс, область,
+                                        населенный пункт и ваш адрес.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="delivery-row not-available" id="delivery-block-no-post">
+                                Доставка почтой России недоступна
+                            </div>
                         </div>
+
                         <div class="checkout_delivery_footer">
                             <button type="button" onclick="Page.backContact()">Назад</button>
                             <button type="button" onclick="Page.nextAddress()">Далее</button>
@@ -236,19 +275,18 @@
                     <button type="button" class="accordion" id="ch_address">Укажите адрес</button>
                     <div class="panel">
                         <div class="wrapper address-wrapper">
-                            <div id="delivery-1" class="delivery_address">
-                                поля доставки 1 (самовывоз)
+                            <input type="hidden" id="order-fld-2" name="fld2" value=""/>
+
+                            <div id="address-delivery-1" class="delivery_address">
                                 <div id="glavPunktMap"></div>
                             </div>
-                            <div id="delivery-2" class="delivery_address">
-                                поля доставки 2 (курьер)
+                            <div id="address-delivery-2" class="delivery_address">
                                 <input type="text" id="js_d_2_street" placeholder="Улица" />
                                 <input type="text" id="js_d_2_house" placeholder="Дом" />
                                 <input type="text" id="js_d_2_block" placeholder="Корпус" />
                                 <input type="text" id="js_d_2_apartment" placeholder="Квартира" />
                             </div>
-                            <div id="delivery-3" class="delivery_address">
-                                поля доставки 3 (почта)
+                            <div id="address-delivery-3" class="delivery_address">
                                 <input type="text" id="js_d_3_street" placeholder="Улица" />
                                 <input type="text" id="js_d_3_house" placeholder="Дом" />
                                 <input type="text" id="js_d_3_block" placeholder="Корпус" />
@@ -376,10 +414,6 @@ $GLOBAL_BFOOTER$
 <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
 <script type="text/javascript" src="/js/courier.js"></script>
 <script type="text/javascript" src="/js/page/CheckoutPage.js"></script>
-<style type="text/css">#content {
-    float: none;
-    width: initial;
-}</style>
 <?if($NUM_ENTRIES$)?>
 <script type="text/javascript">Page.setOrderInfo($ORDER_WEIGHT$, $ORDER_AMOUNT_RAW$);</script>
 <?endif?>
