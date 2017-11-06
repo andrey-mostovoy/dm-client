@@ -303,34 +303,53 @@ var CheckoutPage = function () {
      * @return {boolean}
      */
     this.validate = function($field) {
+        var result;
+
+        $field.removeClass('error');
+
         switch ($field.attr('id')) {
             case this.fieldIds.userName:
-                return this.validateUserName($field.val());
+                result = this.validateUserName($field.val());
+                break;
             case this.fieldIds.phone:
-                return this.validatePhone($field.val());
+                result = this.validatePhone($field.val());
+                break;
             case this.fieldIds.email:
-                return this.validateEmail($field.val());
+                result = this.validateEmail($field.val());
+                break;
             case this.fieldIds.city:
-                return this.validateCity($field.val());
+                result = this.validateCity($field.val());
+                break;
             case this.fieldIds.d2street:
             case this.fieldIds.d3street:
-                return this.validateStreet($field.val());
+                result = this.validateStreet($field.val());
+                break;
             case this.fieldIds.d2house:
             case this.fieldIds.d3house:
-                return this.validateHouse($field.val());
+                result = this.validateHouse($field.val());
+                break;
             case this.fieldIds.d2block:
             case this.fieldIds.d3block:
-                return this.validateBlock($field.val());
+                result = this.validateBlock($field.val());
+                break;
             case this.fieldIds.d2apartment:
             case this.fieldIds.d3apartment:
-                return this.validateApartment($field.val());
+                result = this.validateApartment($field.val());
+                break;
             case this.fieldIds.d3post:
-                return this.validatePost($field.val());
+                result = this.validatePost($field.val());
+                break;
             default:
                 console.error('No validate method for ' . $field.attr('id'));
                 // @todo мб false...
                 return true;
         }
+
+        if (!result) {
+            $field.addClass('error');
+        }
+
+        return result;
     };
 
     /**
@@ -339,7 +358,7 @@ var CheckoutPage = function () {
      * @return {boolean}
      */
     this.validateUserName = function(name) {
-        return true;
+        return !!name.length;
     };
 
     /**
@@ -348,7 +367,8 @@ var CheckoutPage = function () {
      * @return {boolean}
      */
     this.validateEmail = function(email) {
-        return true;
+        var validateReg = /^.*@.*\.\w{2,}$/;
+        return !!email.length && validateReg.test(email);
     };
 
     /**
@@ -357,7 +377,7 @@ var CheckoutPage = function () {
      * @return {boolean}
      */
     this.validatePhone = function(phone) {
-        return true;
+        return !!phone.length;
     };
 
     /**
@@ -366,7 +386,7 @@ var CheckoutPage = function () {
      * @return {boolean}
      */
     this.validateCity = function(city) {
-        return true;
+        return !!city.length;
     };
 
     /**
@@ -411,7 +431,7 @@ var CheckoutPage = function () {
      * @return {boolean}
      */
     this.validatePost = function(post) {
-        return !!post.length && parseInt(post) == post;
+        return !!post.length && post.length == 6 && parseInt(post) == post;
     };
 
     /**
@@ -601,8 +621,9 @@ var CheckoutPage = function () {
     /**
      * Переключение панели аккордиона из свернутого в развернутое состояние и обратно.
      * @param {string} panelId
+     * @param {function} callback
      */
-    this.accordionPanelToggle = function(panelId) {
+    this.accordionPanelToggle = function(panelId, callback) {
         var $element = $('#' + panelId);
         $element.toggleClass('active');
         $element.next('.panel').slideToggle(200, function() {
@@ -611,6 +632,8 @@ var CheckoutPage = function () {
                     scrollTop: $element.offset().top
                 }, 300);
             }
+
+            typeof callback === 'function' && callback();
         });
     };
 
@@ -625,7 +648,7 @@ var CheckoutPage = function () {
         // валидируем поля контактных данных
         this.getField('ch_contact').next('.panel').find('input:visible').each(function() {
             t.setState($(this));
-            result = result && t.validate($(this));
+            result = t.validate($(this)) && result;
         });
 
         if (!result) {
@@ -634,7 +657,10 @@ var CheckoutPage = function () {
 
         this.beforeShowDeliveryBlock(function() {
             t.accordionPanelToggle('ch_contact');
-            t.accordionPanelToggle('ch_delivery');
+            t.accordionPanelToggle('ch_delivery', function() {
+                // необходимо именно затригерить событие, ибо на это завязана логика другая
+                $('.delivery-item:visible').eq(0).click();
+            });
         });
 
         return false;
@@ -671,7 +697,7 @@ var CheckoutPage = function () {
             // валидируем поля адреса
             this.getField('ch_address').next('.panel').find('input:visible').each(function() {
                 t.setState($(this));
-                result = result && t.validate($(this));
+                result = t.validate($(this)) && result;
             });
 
             if (!result) {

@@ -878,6 +878,10 @@ ul.cinf_list li p {
     margin-top: 15px;
 }
 
+#checkout-form input.error {
+    border-color: red;
+}
+
 .addInfo {
     font-size: 15px;
 }
@@ -950,6 +954,7 @@ button.accordion.active {
     width: 30%;
     min-width: 212px;
     margin: 0 0 1% 1%;
+    text-align: right;
 }
 
 .delivery-row input[type=radio] {
@@ -982,9 +987,6 @@ button.accordion.active {
     margin: 5px 0 0 16px;
 }
 
-.delivery-row-period.operator-cdek, .delivery-row-period.operator-boxberry {
-    margin-left: 80px;
-}
 .delivery-row-period.operator-boxberry {
     margin-bottom: 8px;
 }
@@ -1064,7 +1066,7 @@ button.accordion.active {
         width: 100%;
     }
     .delivery-row-more-info {
-        margin: 10px 0 0 32px;
+        margin: 10px 0 0 0;
     }
 }
 

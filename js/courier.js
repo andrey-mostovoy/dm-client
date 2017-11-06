@@ -641,7 +641,7 @@ var CourierGlavPunkt = function() {
             post: {
                 cost: {
                     raw: 0,
-                    text: 'Уточняйте у менеджера',
+                    text: 'от 350 руб.',
                 },
             },
         };
