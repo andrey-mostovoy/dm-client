@@ -23,7 +23,6 @@ window.DataStorage = new (function() {
      * @param {number} [expirationMin] время жизни данных в минутах - по умолчанию 1ч.
      */
     this.set = function(key, value, expirationMin) {
-        return;
         var expirationMs = (expirationMin || 60) * 60 * 1000;
         var record = {value: value, exp: (new Date().getTime() + expirationMs)};
         localStorage.setItem(key, JSON.stringify(record));
@@ -35,7 +34,6 @@ window.DataStorage = new (function() {
      * @return {*}
      */
     this.get = function(key) {
-        return null;
         var record = JSON.parse(localStorage.getItem(key));
         if (!record) {
             return null;
@@ -224,7 +222,7 @@ $(document).ready(function() {
     _func_newGood();
     _func_bindLinkClick();
 
-    if (addCookiePrivacyInfoPanel()) {
+    if (addCookiePrivacyInfoPanel() && _tmpl_isMobile) {
         $('#vk_community_messages').addClass('widget_with_cookie_panel');
     }
 
@@ -535,21 +533,20 @@ function addCookiePrivacyInfoPanel() {
         return false;
     }
     var text = [
-        'Сайт использует cookie, данные об IP-адресе и местоположении. ',
-        'Если вы не хотите предоставлять эти данные, покиньте сайт.'
+        'Используя данный сайт, Вы даете согласие на использование файлов cookie, помогающих нам сделать его удобнее для Вас.'
     ].join('');
     var $div = $('<div>').addClass('cookie_privacy_panel');
     var $p = $('<p>').text(text);
-    var $a = $('<a>').text('Согласен');
-    $a.on({
-        click: function() {
-            DataStorage.set(key, 1, 60 * 24 * 365 * 10); // 10 лет, wow...
-            $div.remove();
-        }
-    });
+    // var $a = $('<a>').text('Хорошо');
+    // $a.on({
+    //     click: function() {
+    //         DataStorage.set(key, 1, 60 * 24 * 365 * 10); // 10 лет, wow...
+    //         $div.remove();
+    //     }
+    // });
     $div.append($p);
-    $div.append($a);
-    $('body').append($div);
+    // $div.append($a);
+    $('#footer').append($div);
     return true;
 }
 

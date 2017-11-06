@@ -189,31 +189,23 @@
 
 /* панель про куки и про приваси */
 .cookie_privacy_panel {
-    display: none;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    min-height: 50px;
     width: 100%;
-    border-top: 1px solid #ccc;
-    background-color: white;
-    opacity: 0.8;
-}
-
-.cookie_privacy_panel p {
-    margin: 7px 80px 7px 20px;
+    color: black;
+    text-align: center;
+    background-color: mediumpurple;
 }
 
 .cookie_privacy_panel a {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 13px 5px 0 0;
     cursor: pointer;
     padding: 5px;
-    border: 1px solid;
+    border: 1px solid #d126cb;
+    color: white;
     border-radius: 7px;
+    background-color: #d126cb;
+}
+
+.cookie_privacy_panel a:hover {
+    background-color: #d1269b;
 }
 
 /* ---- */
@@ -1196,7 +1188,10 @@ button.accordion.active {
     }
 
     #nav .uMenuRoot > li {
-        width: 213px;
+        width: 19%;
+    }
+    #nav .uMenuRoot > li:first-child {
+        min-width: 190px;
     }
     #nav .uMenuRoot > li > a {
         padding: 0;
