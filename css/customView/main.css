@@ -977,10 +977,11 @@ button.accordion.active {
 }
 
 .delivery-row-cost span {
-    background-color: #d126cb;
+    display: inline-block;
+    padding: 3px 15px;
     color: white;
     border-radius: 20px;
-    padding: 5px 15px;
+    background-color: #d126cb;
 }
 
 .delivery-row-period {
@@ -989,10 +990,6 @@ button.accordion.active {
 
 .delivery-row-period.operator-boxberry {
     margin-bottom: 8px;
-}
-
-.operator-boxberry {
-    margin-bottom: 10px;
 }
 
 #cdek_cost {

@@ -511,7 +511,8 @@ var CourierGlavPunkt = function() {
                             weight: order.weight,
                             price: order.amount,
                         }, function (info) {
-                            result.pvz.cost.text = t._getDeliveryCostString(info.price);
+                            var price = info.price >= 200 ? info.price : 200;
+                            result.pvz.cost.text = t._getDeliveryCostString(price);
                             result.pvz.cost.raw = info.price;
                             result.pvz.period.text = t._getDeliveryPeriodString(info.period);
                             callback(result);
