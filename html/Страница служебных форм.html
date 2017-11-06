@@ -13,6 +13,7 @@
     <?if($PAGE_ID$ == 'checkout')?>
     <style type="text/css">
         #content {
+            float: none;
             width: initial;
         }
         #sidebar {
@@ -138,6 +139,9 @@
 
                 <?if($PAGE_ID$=='checkout')?>
                 <?if($NUM_ENTRIES$)?>
+                <p class="our_work">
+                    Для Вашего удобства мы улучшаем наш сайт! Если у Вас возникли сложности с оформлением заказа, пожалуйста, позвоните по номеру 8(800) 222-67-12 (звонок бесплатный)
+                </p>
                 <form enctype="text/plain" id="checkout-form" method="POST" action="" class="methods-list" onsubmit="return shopCheckOut();">
                     <input type="hidden" name="mode" value="order" id="checkout-form-mode">
                     <input type="hidden" name="ssid" id="checkout-form-ssid" value="<?$SSID$?>">
@@ -165,12 +169,15 @@
                                 $ORDER_FIELD_6$
                             </div>
                             <div id="order-field-8-block">
-                                <span class="label">$ORDER_FNAME_8$:</span>
+                                <span class="label">$ORDER_FNAME_8$</span>
+                                <span class="field_required">*</span>:
                                 <input type="text" class="fw text" name="fld8" id="order-fld-8" value="Санкт-Петербург">
                             </div>
                         </div>
 
-                        <button type="button" onclick="Page.nextDelivery()">Далее</button>
+                        <div class="checkout_form_block_button">
+                            <button type="button" onclick="Page.nextDelivery()">Далее</button>
+                        </div>
                     </div>
 
                     <?if($DELIVERY_LIST$)?>
@@ -180,121 +187,167 @@
 
                         <div class="delivery-list-wrapper">
                             <div class="delivery-row" id="delivery-block-courier">
-                                <div class="delivery-row-input">
-                                    <input type="radio" id="del-type-2" name="delivery" value="2" class="delivery-item" onclick="shEvOrd('delivery',this,1)">
-                                    <label class="label" for="del-type-2">Доставка курьером</label>
+                                <div class="delivery-row-info">
+                                    <div class="delivery-row-input">
+                                        <input type="radio" id="del-type-2" name="delivery" value="2" class="delivery-item" onclick="shEvOrd('delivery',this,1)">
+                                        <label class="label" for="del-type-2">Доставка курьером</label>
+                                    </div>
+                                    <div class="delivery-row-description">
+                                        <p class="delivery-shipping">
+                                            Передача в курьерскую службу: <span class="delivery-shipping-date"></span>
+                                        </p>
+                                        <p class="order_field_descr">
+                                            Доставка курьером к вам домой.
+                                            При выборе данного способа доставки вам необходимо указать ваш город и адрес.
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="delivery-row-cost">
-                                    <span id="courier_cost"></span>
-                                </div>
-                                <div class="delivery-row-period">
-                                    <span id="courier_period"></span>
-                                </div>
-                                <div class="delivery-row-description">
-                                    <p class="delivery-shipping">
-                                        Передача в доставку <span class="delivery-shipping-date"></span>
-                                    </p>
-                                    <p class="order_field_descr">
-                                        Доставка курьером к вам домой.
-                                        При выборе данного способа доставки вам необходимо указать ваш город и адрес.
-                                    </p>
+                                <div class="delivery-row-more-info">
+                                    <div class="delivery-row-cost">
+                                        <span id="courier_cost"></span>
+                                    </div>
+                                    <div class="delivery-row-period">
+                                        <span id="courier_period"></span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="delivery-row not-available" id="delivery-block-no-courier">
-                                Доставка курьером не осуществляется
+                                <p>Доставка курьером не осуществляется</p>
                             </div>
                             <div class="delivery-row" id="delivery-block-pvz">
-                                <div class="delivery-row-input">
-                                    <input type="radio" id="del-type-1" name="delivery" value="1" class="delivery-item" onclick="shEvOrd('delivery',this,1)">
-                                    <label class="label" for="del-type-1">Самовывоз</label>
+                                <div class="delivery-row-info">
+                                    <div class="delivery-row-input">
+                                        <input type="radio" id="del-type-1" name="delivery" value="1" class="delivery-item" onclick="shEvOrd('delivery',this,1)">
+                                        <label class="label" for="del-type-1">Самовывоз</label>
+                                    </div>
+                                    <div class="delivery-row-description">
+                                        <p class="delivery-shipping">
+                                            Передача в курьерскую службу: <span class="delivery-shipping-date"></span>
+                                        </p>
+                                        <p class="order_field_descr">
+                                            Заказ вы можете получить самостоятельно на одном из пунктов выдачи, выбрав его на карте в следующем шаге.
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="delivery-row-cost operator-cost operator-raw">
-                                    <span id="raw_cost"></span>
-                                </div>
-                                <div class="delivery-row-period operator-period operator-raw">
-                                    <span id="raw_period"></span>
-                                </div>
-                                <div class="delivery-row-cost operator-cost operator-boxberry">
-                                    Boxberry <span id="boxberry_cost"></span>
-                                </div>
-                                <div class="delivery-row-period operator-period operator-boxberry">
-                                    <span id="boxberry_period"></span>
-                                </div>
-                                <div class="delivery-row-cost operator-cost operator-cdek">
-                                    CDEK <span id="cdek_cost"></span>
-                                </div>
-                                <div class="delivery-row-period operator-period operator-cdek">
-                                    <span id="cdek_period"></span>
-                                </div>
-                                <div class="delivery-row-description">
-                                    <p class="delivery-shipping">
-                                        Передача в доставку <span class="delivery-shipping-date"></span>
-                                    </p>
-                                    <p class="order_field_descr">
-                                        Заказ вы можете получить самостоятельно на одном из пунктов выдачи, выбрав его на карте в следующем шаге.
-                                    </p>
+                                <div class="delivery-row-more-info">
+                                    <div class="delivery-row-cost operator-cost operator-raw">
+                                        <span id="raw_cost"></span>
+                                    </div>
+                                    <div class="delivery-row-period operator-period operator-raw">
+                                        <span id="raw_period"></span>
+                                    </div>
+                                    <div class="delivery-row-cost operator-cost operator-boxberry">
+                                        Boxberry <span id="boxberry_cost"></span>
+                                    </div>
+                                    <div class="delivery-row-period operator-period operator-boxberry">
+                                        <span id="boxberry_period"></span>
+                                    </div>
+                                    <div class="delivery-row-cost operator-cost operator-cdek">
+                                        CDEK <span id="cdek_cost"></span>
+                                    </div>
+                                    <div class="delivery-row-period operator-period operator-cdek">
+                                        <span id="cdek_period"></span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="delivery-row not-available" id="delivery-block-no-pvz">
-                                Забор из пункта самовывоза недоступен
+                                <p>Забор из пункта самовывоза недоступен</p>
                             </div>
                             <div class="delivery-row" id="delivery-block-post">
-                                <div class="delivery-row-input">
-                                    <input type="radio" id="del-type-3" name="delivery" value="3" class="delivery-item" onclick="shEvOrd('delivery',this,1)">
-                                    <label class="label" for="del-type-3">Почтой России</label>
+                                <div class="delivery-row-info">
+                                    <div class="delivery-row-input">
+                                        <input type="radio" id="del-type-3" name="delivery" value="3" class="delivery-item" onclick="shEvOrd('delivery',this,1)">
+                                        <label class="label" for="del-type-3">Почтой России</label>
+                                    </div>
+                                    <div class="delivery-row-description">
+                                        <p class="delivery-shipping">
+                                            Передача в курьерскую службу: <span class="delivery-shipping-date"></span>
+                                        </p>
+                                        <p class="order_field_descr">
+                                            Вы можете самостоятельно получить ваш заказ в любом отделении Почты России.
+                                            При выборе данного способа доставки не забудьте указать индекс, область,
+                                            населенный пункт и ваш адрес.
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="delivery-row-cost">
-                                    <span id="post_cost"></span>
-                                </div>
-                                <div class="delivery-row-period">
-                                    <span id="post_period"></span>
-                                </div>
-                                <div class="delivery-row-description">
-                                    <p class="delivery-shipping">
-                                        Передача в доставку <span class="delivery-shipping-date"></span>
-                                    </p>
-                                    <p class="order_field_descr">
-                                        Вы можете самостоятельно получить ваш заказ в любом отделении Почты России.
-                                        При выборе данного способа доставки не забудьте указать индекс, область,
-                                        населенный пункт и ваш адрес.
-                                    </p>
+                                <div class="delivery-row-more-info">
+                                    <div class="delivery-row-cost">
+                                        <span id="post_cost"></span>
+                                    </div>
+                                    <div class="delivery-row-period">
+                                        <span id="post_period"></span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="delivery-row not-available" id="delivery-block-no-post">
-                                Доставка почтой России недоступна
+                                <p>Доставка почтой России недоступна</p>
                             </div>
                         </div>
 
-                        <div class="checkout_delivery_footer">
+                        <div class="checkout_form_block_button">
                             <button type="button" onclick="Page.backContact()">Назад</button>
                             <button type="button" onclick="Page.nextAddress()">Далее</button>
                         </div>
                     </div>
                     <?endif?>
 
-                    <button type="button" class="accordion" id="ch_address">Укажите адрес</button>
+                    <button type="button" class="accordion" id="ch_address">Адрес доставки</button>
                     <div class="panel">
                         <div class="wrapper address-wrapper">
                             <input type="hidden" id="order-fld-2" name="fld2" value=""/>
 
                             <div id="address-delivery-1" class="delivery_address">
                                 <div id="glavPunktMap"></div>
+                                <div id="pickedPoint" style="display: none;">
+                                    <h3>Вы выбрали</h3>
+                                    <p>Пункт выдачи по адресу: <span id="pickup_address"></span></p>
+                                    <p>Время работы: <span id="pickup_work_time"></span></p>
+                                    <p>Номер телефона: <span id="pickup_phone"></span></p>
+                                    <p>Доставка: <span id="pickup_delivery_cost"></span></p>
+                                </div>
                             </div>
                             <div id="address-delivery-2" class="delivery_address">
-                                <input type="text" id="js_d_2_street" placeholder="Улица" />
-                                <input type="text" id="js_d_2_house" placeholder="Дом" />
-                                <input type="text" id="js_d_2_block" placeholder="Корпус" />
-                                <input type="text" id="js_d_2_apartment" placeholder="Квартира" />
+                                <div class="delivery_address_row">
+                                    <label>Улица</label>
+                                    <input type="text" id="js_d_2_street" placeholder="Улица" />
+                                </div>
+                                <div class="delivery_address_row">
+                                    <label>Дом</label>
+                                    <input type="text" id="js_d_2_house" placeholder="Дом" />
+                                </div>
+                                <div class="delivery_address_row">
+                                    <label>Корпус</label>
+                                    <input type="text" id="js_d_2_block" placeholder="Корпус" />
+                                </div>
+                                <div class="delivery_address_row">
+                                    <label>Квартира</label>
+                                    <input type="text" id="js_d_2_apartment" placeholder="Квартира" />
+                                </div>
                             </div>
                             <div id="address-delivery-3" class="delivery_address">
-                                <input type="text" id="js_d_3_street" placeholder="Улица" />
-                                <input type="text" id="js_d_3_house" placeholder="Дом" />
-                                <input type="text" id="js_d_3_block" placeholder="Корпус" />
-                                <input type="text" id="js_d_3_apartment" placeholder="Квартира" />
-                                <input type="text" id="js_d_3_post" placeholder="Почтовый индекс" />
+                                <div class="delivery_address_row">
+                                    <label>Почтовый индекс</label>
+                                    <input type="text" id="js_d_3_post" placeholder="Почтовый индекс" />
+                                </div>
+                                <div class="delivery_address_row">
+                                    <label>Улица</label>
+                                    <input type="text" id="js_d_3_street" placeholder="Улица" />
+                                </div>
+                                <div class="delivery_address_row">
+                                    <label>Дом</label>
+                                    <input type="text" id="js_d_3_house" placeholder="Дом" />
+                                </div>
+                                <div class="delivery_address_row">
+                                    <label>Корпус</label>
+                                    <input type="text" id="js_d_3_block" placeholder="Корпус" />
+                                </div>
+                                <div class="delivery_address_row">
+                                    <label>Квартира</label>
+                                    <input type="text" id="js_d_3_apartment" placeholder="Квартира" />
+                                </div>
                             </div>
                         </div>
-                        <div class="checkout_delivery_footer">
+                        <div class="checkout_form_block_button">
                             <button type="button" onclick="Page.backDelivery()">Назад</button>
                             <button type="button" onclick="Page.nextPayment()">Далее</button>
                         </div>
@@ -306,7 +359,7 @@
                             <p class="description">Выберете удобный способ оплаты</p>
                             $PAYMENT_LIST$
                         </div>
-                        <div class="checkout_delivery_footer">
+                        <div class="checkout_form_block_button">
                             <button type="button" onclick="Page.backAddress()">Назад</button>
                             <button type="button" onclick="Page.nextTotal()">Далее</button>
                         </div>
@@ -344,7 +397,7 @@
 
                         <div id="order-field-7-block">
                             <input type="checkbox" class="checkbox" id="order-fld-7" name="fld7" value="1" checked="checked">
-                            <label for="order-fld-7">Нажимая на кнопку «Оформить заказ», я соглашаюсь с <a href="javascript://" class="window-offer">договором оферты</a>, <a href="javascript://" class="window-policy">политикой конфиденциальности сайта</a> и даю <a href="javascript://" class="window-pd">согласие на обработку персональных данных</a>.</label>
+                            <label for="order-fld-7">Нажимая на кнопку «Оформить заказ», я соглашаюсь с <a href="javascript://" class="window-policy">политикой конфиденциальности сайта</a> и даю <a href="javascript://" class="window-pd">согласие на обработку персональных данных</a>.</label>
                         </div>
 
                         $ORDER_INFO$

@@ -1,5 +1,5 @@
-const _tmpl_viewMode = 'grid'; // 'grid' or 'list'
-const _tmpl_newDays = 1;
+var _tmpl_viewMode = 'grid'; // 'grid' or 'list'
+var _tmpl_newDays = 1;
 var _tmpl_isMobile = false;
 if (navigator.userAgent.match(/Android/i) ||
     navigator.userAgent.match(/webOS/i) ||
@@ -23,8 +23,9 @@ window.DataStorage = new (function() {
      * @param {number} [expirationMin] время жизни данных в минутах - по умолчанию 1ч.
      */
     this.set = function(key, value, expirationMin) {
-        const expirationMs = (expirationMin || 60) * 60 * 1000;
-        const record = {value: value, exp: (new Date().getTime() + expirationMs)};
+        return;
+        var expirationMs = (expirationMin || 60) * 60 * 1000;
+        var record = {value: value, exp: (new Date().getTime() + expirationMs)};
         localStorage.setItem(key, JSON.stringify(record));
     };
 
@@ -34,7 +35,8 @@ window.DataStorage = new (function() {
      * @return {*}
      */
     this.get = function(key) {
-        const record = JSON.parse(localStorage.getItem(key));
+        return null;
+        var record = JSON.parse(localStorage.getItem(key));
         if (!record) {
             return null;
         }
@@ -79,7 +81,7 @@ window.UserGeo = new (function() {
      * @param {function} [onError]
      */
     this.getLocation = function(onSuccess, onError) {
-        const onYApiLoaded = function() {
+        var onYApiLoaded = function() {
             ymaps.ready(function() {
                 console.log('try ymap');
                 ymaps.geolocation.get()
@@ -154,7 +156,7 @@ window.UserGeo = new (function() {
      * @param {function} [onError]
      */
     this.getCity = function(onSuccess, onError) {
-        const t = this;
+        var t = this;
 
         if (this._isWorking) {
             setTimeout(function() {
@@ -168,7 +170,7 @@ window.UserGeo = new (function() {
         var city;
 
         // for test
-        const hash = window.location.hash;
+        var hash = window.location.hash;
         if (hash.indexOf('#_t=') !== -1) {
             city = decodeURI(hash.replace('#_t=', ''));
             t._isWorking = false;

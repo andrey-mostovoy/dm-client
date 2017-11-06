@@ -1,4 +1,4 @@
-const DeliveryMap = function() {
+var DeliveryMap = function() {
     this.inited = false;
     this.Map = null;
     this.GeoCollection = null;
@@ -372,7 +372,7 @@ var DeliveryMapGlavPunkt = function() {
     };
 
     this._getBalloonHeader = function(Point) {
-        const dataAddress = (Point.city + '; ' + Point.address).replace(/"/g, '&quot;');
+        var dataAddress = (Point.city + '; ' + Point.address).replace(/"/g, '&quot;');
         return [
             '<h3 class="pointInfo" data-id="' + Point.id + '" data-city="' + Point.city + '" data-address="' + dataAddress + '">',
             Point.address,
@@ -381,7 +381,7 @@ var DeliveryMapGlavPunkt = function() {
     };
 
     this._getBalloonBody = function(Point) {
-        const body = [
+        var body = [
         ];
 
         // body.push('<p>');
@@ -433,7 +433,7 @@ var DeliveryMapGlavPunkt = function() {
      * @param {Event} e
      */
     this.onSelectCity = function(e) {
-        const cityCode = $(e.target).val();
+        var cityCode = $(e.target).val();
         this._showPointsInCity(cityCode, function() {});
 
         typeof this.citySelectCallback === 'function' && this.citySelectCallback($(e.target).find(':selected').text());
@@ -445,7 +445,7 @@ DeliveryMapGlavPunkt.prototype = new DeliveryMap();
  * Доставка курьером.
  * @constructor
  */
-const CourierDelivery = function() {
+var CourierDelivery = function() {
     this.Courier = null;
     this.selector.mapWrapper = '.js-courier_city_list';
 
@@ -455,18 +455,18 @@ const CourierDelivery = function() {
             return;
         }
 
-        const t = this;
+        var t = this;
         this.Courier = new CourierGlavPunkt();
 
         showRequired = showRequired || false;
 
-        const selectId = 'courierCitySelect';
+        var selectId = 'courierCitySelect';
 
-        const $wrapper = $('<div></div>').addClass(this.selector.mapWrapper.replace('.', ''));
-        const $selectWrapper = $('<div></div>');
-        const $select = $('<select></select>').attr('id', selectId);
-        const $selectLabel = $('<p></p>').text('Выберите город:');
-        const $addressLabel = $('<p></p>').text('Укажите адрес:');
+        var $wrapper = $('<div></div>').addClass(this.selector.mapWrapper.replace('.', ''));
+        var $selectWrapper = $('<div></div>');
+        var $select = $('<select></select>').attr('id', selectId);
+        var $selectLabel = $('<p></p>').text('Выберите город:');
+        var $addressLabel = $('<p></p>').text('Укажите адрес:');
 
         $wrapper.hide();
         $selectWrapper.append($selectLabel);
@@ -485,8 +485,8 @@ const CourierDelivery = function() {
         this.inited = true;
 
         this.Courier.getCourierCities(function(cityList) {
-            const currentCity = $(t.selector.cityField).val();
-            const count = cityList.length;
+            var currentCity = $(t.selector.cityField).val();
+            var count = cityList.length;
             for (var i = 0; i < count; i++) {
                 var $option = $('<option></option>').attr('value', cityList[i]).text(cityList[i]);
                 $select.append($option)
@@ -538,7 +538,7 @@ const CourierDelivery = function() {
 };
 CourierDelivery.prototype = new DeliveryMap();
 
-const MapProcessor = function() {
+var MapProcessor = function() {
     this.delivery = {};
     this.delivery.current = 0;
     this.delivery.id = {};

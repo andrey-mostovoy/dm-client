@@ -138,7 +138,8 @@
 
                 <?if($PAGE_ID$=='checkout')?>
                 <?if($NUM_ENTRIES$)?>
-                <form enctype="text/plain" id="checkout-form" method="POST" action="" class="methods-list" onsubmit="return shopCheckOut();">
+                <form enctype="text/plain" id="checkout-form" method="POST" action="" class="methods-list"
+                      onsubmit="return shopCheckOut();">
                     <input type="hidden" name="mode" value="order" id="checkout-form-mode">
                     <input type="hidden" name="ssid" id="checkout-form-ssid" value="<?$SSID$?>">
                     <input type="hidden" name="payment_id" value="1" id="payment_id">
@@ -170,7 +171,8 @@
                     </div>
 
                     <?if($DELIVERY_LIST$)?>
-                    <button type="button" class="accordion" id="ch_delivery"><!--<s4454>-->Способ доставки<!--</s>--></button>
+                    <button type="button" class="accordion" id="ch_delivery"><!--<s4454>-->Способ доставки
+                        <!--</s>--></button>
                     <div class="panel">
                         <p class="description">Выберете удобный способ доставки</p>
                         $DELIVERY_LIST$
@@ -198,7 +200,8 @@
                     </div>
                     <?endif?>
 
-                    <button type="button" class="accordion" id="ch_payment"><!--<s4452>-->Способ оплаты<!--</s>--></button>
+                    <button type="button" class="accordion" id="ch_payment"><!--<s4452>-->Способ оплаты
+                        <!--</s>--></button>
                     <div class="panel">
                         <div class="wrapper">
                             <p class="description">Выберете удобный способ оплаты</p>
@@ -210,7 +213,8 @@
                         </div>
                     </div>
 
-                    <button type="button" class="accordion" id="ch_total"><!--<s4452>-->Подтверждение<!--</s>--></button>
+                    <button type="button" class="accordion" id="ch_total"><!--<s4452>-->Подтверждение
+                        <!--</s>--></button>
                     <div class="panel">
                         <div id="order-field-5-block">
                             <span class="label">$ORDER_FNAME_5$</span>
@@ -234,15 +238,21 @@
                             <tr valign="top">
                                 <td>
                                     <h4 class="order_total_pay_title">Стоимость заказа</h4>
-                                    <h4 class="order_total_pay_title_no_delivery" style="display: none;"><!--<s4570>-->Сумма к оплате (без стоимости доставки)<!--</s>--></h4>
+                                    <h4 class="order_total_pay_title" style="display: none;"><!--<s4570>-->Сумма к
+                                        оплате (без стоимости доставки)<!--</s>--></h4>
                                     $ORDER_TOPAY_CURR$
                                 </td>
                             </tr>
                         </table>
 
                         <div id="order-field-7-block">
-                            <input type="checkbox" class="checkbox" id="order-fld-7" name="fld7" value="1" checked="checked">
-                            <label for="order-fld-7">Нажимая на кнопку «Оформить заказ», я соглашаюсь с <a href="javascript://" class="window-offer">договором оферты</a>, <a href="javascript://" class="window-policy">политикой конфиденциальности сайта</a> и даю <a href="javascript://" class="window-pd">согласие на обработку персональных данных</a>.</label>
+                            <input type="checkbox" class="checkbox" id="order-fld-7" name="fld7" value="1"
+                                   checked="checked">
+                            <label for="order-fld-7">Нажимая на кнопку «Оформить заказ», я соглашаюсь с <a
+                                    href="javascript://" class="window-offer">договором оферты</a>, <a
+                                    href="javascript://" class="window-policy">политикой конфиденциальности сайта</a> и
+                                даю <a href="javascript://" class="window-pd">согласие на обработку персональных
+                                    данных</a>.</label>
                         </div>
 
                         $ORDER_INFO$
@@ -313,7 +323,7 @@ $GLOBAL_BFOOTER$
 <script type="text/javascript" src="/js/delivery/info.js"></script>
 <script type="text/javascript" src="/js/courier.js"></script>
 <script type="text/javascript" src="/js/deliveryMap.js"></script>
-<script type="text/javascript" src="/js/page/CheckoutPage.js"></script>
+<script type="text/javascript" src="/js/shop/checkoutPage.js"></script>
 <?if($NUM_ENTRIES$)?>
 <script type="text/javascript">setTotal($ORDER_WEIGHT$, $ORDER_AMOUNT_RAW$);</script>
 <?endif?>

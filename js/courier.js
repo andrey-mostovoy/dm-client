@@ -51,7 +51,7 @@ var CourierGlavPunkt = function() {
             return;
         }
 
-        const t = this;
+        var t = this;
 
         this.getPickupPoints('spb', function() {
             typeof callback === 'function' && callback(t.cityList);
@@ -156,7 +156,7 @@ var CourierGlavPunkt = function() {
      */
     this.getCourierCities = function(callback) {
         // сначала посмотрим в кеш, и заберем из него если там есть
-        const data = DataStorage.get(this.courierCitiesCacheKey);
+        var data = DataStorage.get(this.courierCitiesCacheKey);
         if (data) {
             this.cityListForCourier = data.list;
 
@@ -164,10 +164,10 @@ var CourierGlavPunkt = function() {
             return;
         }
 
-        const t = this;
+        var t = this;
 
         this.send('api/get_courier_cities', {}, function(response) {
-            const count = response.length;
+            var count = response.length;
             for (var i = 0; i < count; i++) {
                 t.cityListForCourier.push(response[i].name);
             }
@@ -186,7 +186,7 @@ var CourierGlavPunkt = function() {
      * @param {function} callback
      */
     this.getAvailableCities = function(callback) {
-        const t = this;
+        var t = this;
 
         t.getCityList(function(pickupCityList) {
             t.getCourierCities(function(courierCityList) {
@@ -197,7 +197,7 @@ var CourierGlavPunkt = function() {
                     courierCityList.push(pickupCityList[i]);
                 }
 
-                const uniqueCityList = courierCityList.filter(function(value, index, self) {
+                var uniqueCityList = courierCityList.filter(function(value, index, self) {
                     return self.indexOf(value) === index;
                 });
 
@@ -469,7 +469,7 @@ var CourierGlavPunkt = function() {
                 },
             },
         };
-        const t = this;
+        var t = this;
 
         if (city === 'Санкт-Петербург') {
             if (order.weight <= 1) {
@@ -507,7 +507,9 @@ var CourierGlavPunkt = function() {
                     if (city === 'Москва') {
                         t.getDeliveryCost({
                             punktId: pickupPointList[0].id,
-                            cityTo: city
+                            cityTo: city,
+                            weight: order.weight,
+                            price: order.amount,
                         }, function (info) {
                             result.pvz.cost.text = t._getDeliveryCostString(info.price);
                             result.pvz.cost.raw = info.price;
@@ -550,13 +552,16 @@ var CourierGlavPunkt = function() {
                             t.getDeliveryCost({
                                 punktId: pickupPoint['id'],
                                 cityTo: city,
+                                weight: order.weight,
+                                price: order.amount,
                             }, function (info, punktId) {
-                                console.log(punktId, pickupPoint['id']);
                                 result.pvz.cost[pickupPoint['operator']] = {
                                     text: t._getDeliveryCostString(info.price),
                                     raw: info.price,
                                 };
-                                result.pvz.period[pickupPoint['operator']] = t._getDeliveryPeriodString(info.period);
+                                result.pvz.period[pickupPoint['operator']] = {
+                                    text: t._getDeliveryPeriodString(info.period),
+                                };
 
                                 pvzCosts.push(info.price);
                                 var parsedPeriod = t._parsePeriod(info.period);
@@ -593,7 +598,7 @@ var CourierGlavPunkt = function() {
                 },
             },
         };
-        const t = this;
+        var t = this;
 
         if (city === 'Санкт-Петербург') {
             if (order.weight <= 1) {
@@ -610,6 +615,8 @@ var CourierGlavPunkt = function() {
             this.getDeliveryCost({
                 serv: 'курьерская доставка',
                 cityTo: city,
+                weight: order.weight,
+                price: order.amount,
             }, function (info) {
                 result.courier.cost.text = t._getDeliveryCostString(info.price);
                 result.courier.cost.raw = info.price;
@@ -649,11 +656,11 @@ var CourierGlavPunkt = function() {
      */
     this._pluralDayName = function(dayCount) {
         if (dayCount === 1) {
-            return 'день';
+            return 'раб. день';
         } else if (dayCount > 1 && dayCount <= 4) {
-            return 'дня';
+            return 'раб. дня';
         } else {
-            return 'дней';
+            return 'раб. дней';
         }
     };
 
@@ -664,7 +671,7 @@ var CourierGlavPunkt = function() {
      * @private
      */
     this._parsePeriod = function(period) {
-        const splited = period.split('-');
+        var splited = period.split('-');
         var min = splited[0];
         var max = splited[1];
         if (min > max) {
@@ -684,8 +691,8 @@ var CourierGlavPunkt = function() {
         if (arguments.length === 1) {
             costString = arguments[0];
         } else {
-            const min = arguments[0];
-            const max = arguments[1];
+            var min = arguments[0];
+            var max = arguments[1];
             if (min === max) {
                 costString = min;
             } else {
@@ -707,7 +714,7 @@ var CourierGlavPunkt = function() {
         if (arguments.length === 1) {
             if (isNaN(arguments[0])) {
                 // строка
-                const parsed = this._parsePeriod(arguments[0]);
+                var parsed = this._parsePeriod(arguments[0]);
                 lengthString = parsed.min + ' - ' + parsed.max;
                 max = parsed.max;
             } else {

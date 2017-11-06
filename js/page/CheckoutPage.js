@@ -2,7 +2,7 @@
  * Страница оформления заказа.
  * @constructor
  */
-const CheckoutPage = function () {
+var CheckoutPage = function () {
     /**
      * Объект курьерской компании.
      * @type {CourierGlavPunkt}
@@ -74,6 +74,14 @@ const CheckoutPage = function () {
         d3block: 'js_d_3_block',
         d3apartment: 'js_d_3_apartment',
         d3post: 'js_d_3_post',
+    };
+
+    /**
+     * Кеш
+     * @type {{cities: {}}}
+     */
+    this.cache = {
+        cities: {},
     };
 
     /**
@@ -169,6 +177,11 @@ const CheckoutPage = function () {
 
         // автокомплит по полю город
         this.Courier.getAvailableCities(function(cityList) {
+            var count = cityList.length;
+            for (var i = 0; i < count; i++) {
+                t.cache.cities[cityList[i].toLowerCase()] = cityList[i];
+            }
+
             t.getField(t.fieldIds.city).autocomplete({
                 source: cityList,
             });
@@ -235,8 +248,24 @@ const CheckoutPage = function () {
      * @param {Event} event
      */
     this.onPickupPointSelect = function(event) {
-        var $item = $(event.target).parent().parent().find('.pointInfo');
+        var $item = $(event.target);
         this.state.d_1_id = $item.data('id');
+
+        var Point = this.state.d_1_points[this.state.d_1_id];
+        var cost;
+        if (Point.operator === 'Cdek') {
+            cost = this.state.deliveryCostPvz.cost.Cdek.text;
+        } else if (Point.operator === 'Boxberry') {
+            cost = this.state.deliveryCostPvz.cost.Boxberry.text;
+        } else {
+            cost = this.state.deliveryCostPvz.cost.text;
+        }
+
+        $('#pickup_address').text(Point.address);
+        $('#pickup_work_time').text(Point.work_time);
+        $('#pickup_phone').text(Point.phone);
+        $('#pickup_delivery_cost').text(cost);
+        $('#pickedPoint').show();
     };
 
     /**
@@ -245,9 +274,7 @@ const CheckoutPage = function () {
      */
     this.addCustomDeliveryTax = function(cost) {
         this.order.delivery = cost;
-        // @todo не выставляем до разбора полетов.
         console.log('addCustomDeliveryTax', cost);
-        return;
 
         // запись стоимости доставки в поле custom_delivery_tax
         $('input[name="custom_delivery_tax"]').val(cost);
@@ -257,14 +284,16 @@ const CheckoutPage = function () {
             // скрываю стоимость доставки
             $('#deliveryAmount').hide();
             // меняю текст про стоимость заказа
-            $('.order_total_pay_title').hide();
-            $('.order_total_pay_title_no_delivery').show();
+            // $('.order_total_pay_title').hide();
+            // $('.order_total_pay_title_no_delivery').show();
         } else {
+            // ставлю сумму в интерфейсе
+            $('#deliveryAmount .order_tax').text(cost + '.00 руб.');
             // показываю стоимость доставки
             $('#deliveryAmount').show();
             // меняю текст про стоимость заказа
-            $('.order_total_pay_title').show();
-            $('.order_total_pay_title_no_delivery').hide();
+            // $('.order_total_pay_title').show();
+            // $('.order_total_pay_title_no_delivery').hide();
         }
     };
 
@@ -346,7 +375,7 @@ const CheckoutPage = function () {
      * @return {boolean}
      */
     this.validateStreet = function(street) {
-        return true;
+        return !!street.length;
     };
 
     /**
@@ -355,7 +384,7 @@ const CheckoutPage = function () {
      * @return {boolean}
      */
     this.validateHouse = function(house) {
-        return true;
+        return !!house.length;
     };
 
     /**
@@ -382,7 +411,7 @@ const CheckoutPage = function () {
      * @return {boolean}
      */
     this.validatePost = function(post) {
-        return true;
+        return !!post.length && parseInt(post) == post;
     };
 
     /**
@@ -391,6 +420,18 @@ const CheckoutPage = function () {
      */
     this.beforeShowDeliveryBlock = function(callback) {
         var t = this;
+
+        // нормализация города
+
+        var lowerCaseCity = this.state.city.toLowerCase();
+        if (!t.cache.cities[lowerCaseCity]) {
+            // введенного города просто нет, ну ладно - значит посчитает правильно.
+        } else if (t.cache.cities[lowerCaseCity] && t.cache.cities[lowerCaseCity] != this.state.city) {
+            // город есть, но введен в поле не так, как понимает главпункт,
+            // например "нижний новгород" вместо "Нижний Новгород"
+            // в таком случае заберем правильно название
+            this.state.city = t.cache.cities[lowerCaseCity];
+        }
 
         this.Courier.getInfoForCity(this.state.city, this.order, function(deliveryInfo) {
             // прячу все варианты с доставкой и показываю те, которые есть
@@ -407,25 +448,31 @@ const CheckoutPage = function () {
 
                         // скрываю цену всех операторов.
                         $('.operator-cost').hide();
+                        // скрываю период доставки всех операторов.
+                        $('.operator-period').hide();
 
                         // условие ниже - это спб или москва
                         if (info.cost.raw) {
                             $('#raw_cost').text(info.cost.text);
+                            $('#raw_period').text(info.period.text);
                             $('.operator-raw').show();
                         } else {
                             // а тут остальные города.
                             if (info.cost.Boxberry) {
                                 $('#boxberry_cost').text(info.cost.Boxberry.text);
+                                $('#boxberry_period').text(info.period.Boxberry.text);
                                 $('.operator-boxberry').show();
                             }
                             if (info.cost.Cdek) {
                                 $('#cdek_cost').text(info.cost.Cdek.text);
+                                $('#cdek_period').text(info.period.Cdek.text);
                                 $('.operator-cdek').show();
                             }
                         }
                         break;
                     case 'courier':
                         $('#courier_cost').text(info.cost.text);
+                        $('#courier_period').text(info.period.text);
                         t.state.deliveryCostCourier = info;
                         break;
                     case 'post':
@@ -438,7 +485,9 @@ const CheckoutPage = function () {
             // когда передадим в доставку
             var nowDate = new Date();
             var shippingDateText = 'завтра';
-            if (nowDate.getHours() <= 11) {
+            if (nowDate.getDay() === 6 || (nowDate.getDay() === 5 && nowDate.getHours() > 11)) {
+                shippingDateText = 'понедельник';
+            } else if (nowDate.getHours() <= 11 && nowDate.getDay() !== 0) {
                 shippingDateText = 'сегодня';
             }
             $('.delivery-shipping-date').text(shippingDateText);
@@ -484,31 +533,35 @@ const CheckoutPage = function () {
     this.beforeShowPaymentBlock = function(callback) {
         // сформируем адрес
         switch (this.state.deliveryId) {
-            case 1:
+            case '1':
+                if (!this.state.d_1_id) {
+                    // еще не выбрали пункт
+                    return;
+                }
                 var Point = this.state.d_1_points[this.state.d_1_id];
                 this.state.address = Point.address;
                 break;
-            case 2:
+            case '2':
                 this.state.address = [
                     this.state.d_2_street + ', ',
                     'д. ' + this.state.d_2_house + ', ',
                     this.state.d_2_block ? ('к. ' + this.state.d_2_block + ', ') : '',
-                    'кв. ' + this.state.d_2_apartment,
+                    this.state.d_2_apartment ? ('кв. ' + this.state.d_2_apartment) : '',
                 ].join('');
                 break;
-            case 3:
+            case '3':
                 this.state.address = [
                     this.state.d_3_post ? (this.state.d_3_post + ', ') : '',
                     this.state.d_3_street + ', ',
                     'д. ' + this.state.d_3_house + ', ',
                     this.state.d_3_block ? ('к. ' + this.state.d_3_block + ', ') : '',
-                    'кв. ' + this.state.d_3_apartment,
+                    this.state.d_3_apartment ? ('кв. ' + this.state.d_3_apartment) : '',
                 ].join('');
                 break;
         }
 
         // поставим в поле формы адрес
-        $(this.fieldIds.address).val(this.state.address);
+        this.getField(this.fieldIds.address).val(this.state.address);
         
         // @todo посчитать стоимость доставки почтой... ? и то если выбрано почтой
         // https://otpravka.pochta.ru/specification#/nogroup-rate_calculate
@@ -524,7 +577,7 @@ const CheckoutPage = function () {
     this.beforeShowTotalBlock = function(callback) {
         // выставляю в состояние заказа и форму стоимость доставки
         switch (this.state.deliveryId) {
-            case 1:
+            case '1':
                 var Point = this.state.d_1_points[this.state.d_1_id];
                 if (Point.operator === 'Cdek') {
                     this.addCustomDeliveryTax(this.state.deliveryCostPvz.cost.Cdek.raw);
@@ -534,10 +587,10 @@ const CheckoutPage = function () {
                     this.addCustomDeliveryTax(this.state.deliveryCostPvz.cost.raw);
                 }
                 break;
-            case 2:
+            case '2':
                 this.addCustomDeliveryTax(this.state.deliveryCostCourier.cost.raw);
                 break;
-            case 3:
+            case '3':
                 this.addCustomDeliveryTax(this.state.deliveryCostPost.cost.raw);
                 break;
         }
@@ -550,7 +603,7 @@ const CheckoutPage = function () {
      * @param {string} panelId
      */
     this.accordionPanelToggle = function(panelId) {
-        const $element = $('#' + panelId);
+        var $element = $('#' + panelId);
         $element.toggleClass('active');
         $element.next('.panel').slideToggle(200, function() {
             if (_tmpl_isMobile) {
@@ -611,19 +664,26 @@ const CheckoutPage = function () {
      */
     this.nextPayment = function() {
         var t = this;
-        var result = true;
 
-        // валидируем поля адреса
-        this.getField('ch_address').next('.panel').find('input:visible').each(function() {
-            t.setState($(this));
-            result = result && t.validate($(this));
-        });
+        if (this.state.deliveryId != 1) {
+            var result = true;
 
-        if (!result) {
-            return false;
+            // валидируем поля адреса
+            this.getField('ch_address').next('.panel').find('input:visible').each(function() {
+                t.setState($(this));
+                result = result && t.validate($(this));
+            });
+
+            if (!result) {
+                return false;
+            }
         }
 
         this.beforeShowPaymentBlock(function() {
+            if (!t.state.address) {
+                return;
+            }
+
             t.accordionPanelToggle('ch_address');
             t.accordionPanelToggle('ch_payment');
         });
@@ -678,7 +738,7 @@ const CheckoutPage = function () {
  * Карта пунктов самовывоза главпункта.
  * @constructor
  */
-const GlavpunktMap = function() {
+var GlavpunktMap = function() {
     /**
      * Объект карты.
      * @type {ymaps.Map}
@@ -712,10 +772,13 @@ const GlavpunktMap = function() {
         var t = this;
 
         // навесим обработчик выбора пвз
-        $(document).delegate('.js-gp-select-point', 'click', onPointSelected);
+        $(document).delegate('.js-gp-select-point', 'click', function(event) {
+            t.Map.balloon.close();
+            onPointSelected(event);
+        });
 
         window.ymaps.ready(function() {
-            t.Map = new window.ymaps.Map('#glavPunktMap', {
+            t.Map = new window.ymaps.Map('glavPunktMap', {
                 center: [59.94, 30.32], // Спб
                 controls: ['zoomControl', 'searchControl'],
                 // controls: ['zoomControl'],
@@ -746,7 +809,7 @@ const GlavpunktMap = function() {
         });
 
         // обычно зума 10 достаточно, если точек мало - скорее всего город маленький и зум надо побольше
-        var newZoom = cityCode === 'spb' ? 7 : 10;
+        var newZoom = deliveryInfo.code === 'spb' ? 7 : 10;
         if (this.GeoCollection.getLength() === 1) {
             newZoom = 13;
         }
@@ -771,8 +834,8 @@ const GlavpunktMap = function() {
     this._createMapPlacemark = function(id, Point, deliveryInfo) {
         var params = {
             balloonContentHeader: this._getBalloonHeader(Point, id),
-            balloonContentBody: this._getBalloonBody(Point, deliveryInfo),
-            balloonContentFooter: this._getBalloonFooter(Point),
+            balloonContentBody: this._getBalloonBody(Point, id, deliveryInfo),
+            balloonContentFooter: this._getBalloonFooter(Point, id, deliveryInfo),
             hintContent: Point.address
         };
         var options = {
@@ -800,7 +863,7 @@ const GlavpunktMap = function() {
      */
     this._getBalloonHeader = function(Point, id) {
         return [
-            '<h3 class="pointInfo" data-id="' + id + '">',
+            '<h3 class="pointInfo">',
             Point.address,
             '</h3>',
         ].join('');
@@ -809,19 +872,33 @@ const GlavpunktMap = function() {
     /**
      * Возвращает html тела балуна.
      * @param {object} Point
+     * @param {number} id Ид метки.
      * @param {object} deliveryInfo
      * @return {string}
      * @private
      */
-    this._getBalloonBody = function(Point, deliveryInfo) {
-        const body = [
+    this._getBalloonBody = function(Point, id, deliveryInfo) {
+        var body = [
+            '<input type="button" value="Заберу здесь" data-id="' + id + '" class="js-gp-select-point" />',
         ];
 
         if (Point.operator === 'Cdek') {
-            body.push('<p>Пункт выдачи CDEK</p>');
+            body.push('<p>Пункт выдачи <strong>CDEK</strong></p>');
         } else if (Point.operator === 'Boxberry') {
-            body.push('<p>Пункт выдачи Boxberry</p>');
+            body.push('<p>Пункт выдачи <strong>Boxberry</strong></p>');
         }
+
+        body.push('<p>');
+        body.push('<strong>Доставка ');
+        if (Point.operator === 'Cdek') {
+            body.push(deliveryInfo.cost.Cdek.text);
+        } else if (Point.operator === 'Boxberry') {
+            body.push(deliveryInfo.cost.Boxberry.text);
+        } else {
+            body.push(deliveryInfo.cost.text);
+        }
+        body.push('</strong>');
+        body.push('</p>');
 
         body.push('<p>');
         body.push('Время работы: ');
@@ -831,28 +908,19 @@ const GlavpunktMap = function() {
         body.push(Point.phone);
         body.push('</p>');
 
-        body.push('<p>');
-        body.push('<b>Доставка ');
-        if (Point.operator === 'Cdek') {
-            body.push(deliveryInfo.cost.Cdek.text);
-        } else if (Point.operator === 'Boxberry') {
-            body.push(deliveryInfo.cost.Boxberry.text);
-        } else {
-            body.push(deliveryInfo.cost.text);
-        }
-        body.push('</b>');
-        body.push('</p>');
-
         return body.join('');
     };
 
     /**
      * Возвращает html футера балуна.
      * @param {object} Point
+     * @param {number} id Ид метки.
+     * @param {object} deliveryInfo
+     * @return {string}
      * @private
      */
-    this._getBalloonFooter = function(Point) {
-        '<input type="button" value="Заберу здесь" class="js-gp-select-point">'
+    this._getBalloonFooter = function(Point, id, deliveryInfo) {
+        return '';
     }
 };
 
@@ -860,161 +928,4 @@ window.Page = new CheckoutPage();
 
 $(document).ready(function() {
     Page.init();
-
-    // скрываю поле город
-    // $('#order-fld-8').parents('div').eq(0).hide();
-    // $('#order-fld-8').val('');
-    // ---------
-
-
-    // общая инфа по доставке
-    // window.TotalDeliveryInfo = new DeliveryInfo();
-    // TotalDeliveryInfo.citySelectRequired = false;
-    // ---------
-
-    // window.DeliveryHandler = new MapProcessor();
-    // DeliveryHandler.setMapByDelivery($('input[name=delivery]:checked').val(), onDeliveryPointSelect, onCitySelect);
-    // $('input[name=delivery]').on({
-    //     click: function() {
-    //         // @todo а при переключении может надо пересчитать стоимость доставки
-    //         DeliveryHandler.setMapByDelivery($(this).val(), onDeliveryPointSelect, onCitySelect);
-    //     }
-    // });
-
-    // Отмечаю обязательные поля
-    // var requiredNames = [
-    //     'order-fld-4',
-    //     'order-fld-1',
-    //     'order-fld-6',
-    //     'order-fld-2'
-    // ];
-    // for (var i = 0; i < requiredNames.length; i++) {
-    //     var $label = $('#' + requiredNames[i]).siblings('.label');
-    //     $label.text($label.text().replace(':', '')).after('<span class="field_required">*</span>:');
-    // }
-    // --------
-
-    // для подсчета стоимости доставки при вводе в поле адреса
-
-    // callback: The callback function
-    // wait: The number of milliseconds to wait after the the last key press before firing the callback
-    // highlight: Highlights the element when it receives focus
-    // allowSubmit: Allows a non-multiline element to be submitted (enter key) regardless of captureLength
-    // captureLength: Minimum # of characters necessary to fire the callback
-    // var options = {
-    //     callback: function(value) {
-    //         console.log('Ввели адресс: ' + value);
-    //
-    //         var checkedDeliveryId = $('input[name=delivery]:checked').val();
-    //         if (checkedDeliveryId == DeliveryHandler.delivery.id.mail) {
-    //             // доставка почтой
-    //             onMailAddressSelect(value);
-    //         }
-    //     },
-    //     wait: 1000,
-    //     highlight: true,
-    //     allowSubmit: false,
-    //     captureLength: 20
-    // };
-    //
-    // $("#order-fld-2").typeWatch(options);
-    // ---------------
-
-    // Калькулятор
-    // @todo поле, куда нужно поставить сумму доставки видно в calculator.js
-    // @todo при открытии страницы смотреть на переключатели которые выбраны и считать калькулятор
-    // @todo при смене пункта выдачи пересчитывать
 });
-
-/**
- * Общий колбек на выбор города доставки.
- */
-// const onCitySelect = function(city) {
-//     $('#order-fld-8').val(city);
-//
-//     TotalDeliveryInfo.clear();
-//     TotalDeliveryInfo.city = city;
-//     TotalDeliveryInfo.init();
-// };
-
-/**
- * Общий колбек на выбор пункта доставки (самовывоз, адрес, прочее)
- */
-// const onDeliveryPointSelect = function() {
-//     const checkedDeliveryId = parseInt($('input[name=delivery]:checked').val());
-//     switch (checkedDeliveryId) {
-//         case DeliveryHandler.delivery.id.glavpunkt:
-//             onPickupPointSelect(arguments[0], arguments[1]);
-//             break;
-//         case DeliveryHandler.delivery.id.courier:
-//             // доставка курьером
-//             onCourierAddressSelect(arguments[0]);
-//             break;
-//     }
-// };
-
-/**
- * Подсчет стоимости доставки при выборе пункта пвз.
- * @param {string} id Ид выбранного пвз
- * @param {string} city Город
- */
-// var onPickupPointSelect = function(id, city) {
-//     if (city == 'Санкт-Петербург') {
-//         if (window.TOTAL_WEIGHT <= 1) {
-//             addCustomDeliveryTax(120);
-//         } else if (window.TOTAL_WEIGHT >= 7) {
-//             addCustomDeliveryTax(230);
-//         } else {
-//             addCustomDeliveryTax(150);
-//         }
-//     } else {
-//         var Courier = new CourierGlavPunkt();
-//         Courier.getDeliveryCost({
-//             cityTo: city,
-//             punktId: id
-//         }, function(info) {
-//             // done
-//             addCustomDeliveryTax(info.price);
-//         }, function() {
-//             // error
-//             addCustomDeliveryTax(0);
-//         });
-//     }
-// };
-
-/**
- * Подсчет стоимости доставки курьером при вводе адреса доставки.
- * @param {string} city Город доставки
- */
-// const onCourierAddressSelect = function(city) {
-//     console.log('onCourierAddressSelect');
-//     const Courier = new CourierGlavPunkt();
-//     Courier.getDeliveryCost({
-//         serv: 'курьерская доставка',
-//         cityTo: city
-//     }, function(info) {
-//         // done
-//         addCustomDeliveryTax(info.price);
-//     }, function() {
-//         // error
-//         addCustomDeliveryTax(0);
-//     });
-// };
-
-/**
- * Подсчет стоимости доставки почтой РФ при вводе адреса доставки.
- * @param {string} address Адрес доставки
- */
-// var onMailAddressSelect = function(address) {
-//     console.log('onMailAddressSelect');
-//     return;
-//     var Courier = new CourierGlavPunkt();
-//     Courier.getPostDeliveryCost({
-//         address: address
-//     }, function(info) {
-//         // done
-//     }, function() {
-//         // error
-//         addCustomDeliveryTax(0);
-//     });
-// };

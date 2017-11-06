@@ -2,18 +2,18 @@
  * Страница товара.
  * @constructor
  */
-const ProductPage = function () {
+var ProductPage = function () {
     /**
      * Инициализация.
      */
     this.init = function() {
-        // const Info = new DeliveryInfo();
+        // var Info = new DeliveryInfo();
         // Info.init();
     };
 };
 
 $(document).ready(function() {
-    const Page = new ProductPage();
+    var Page = new ProductPage();
     Page.init();
 });
 

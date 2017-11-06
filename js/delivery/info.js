@@ -15,7 +15,7 @@ function setTotal(weight, sum) {
  * Предполагается что была уже использована функция setTotal до вызова этого конструктора, а также был подключен блок
  * $GLOBAL_DELIVEINFO$ (да имя обрезано - ограничение движка на название блока)
  */
-const DeliveryInfo = function() {
+var DeliveryInfo = function() {
     /**
      * Объект содержит курьера.
      * @type {CourierGlavPunkt}
@@ -56,7 +56,7 @@ const DeliveryInfo = function() {
      * Инициализвация.
      */
     this.init = function() {
-        const t = this;
+        var t = this;
 
         if (!this.Courier) {
             this.Courier = new CourierGlavPunkt();
@@ -67,7 +67,7 @@ const DeliveryInfo = function() {
             $('#uCitySelect').show();
         }
 
-        const onApiLoaded = function() {
+        var onApiLoaded = function() {
             ymaps.ready(function() {
                 t.run();
             });
@@ -86,7 +86,7 @@ const DeliveryInfo = function() {
      * Запускаем процесс получения информации и рендера его в блок.
      */
     this.run = function() {
-        const t = this;
+        var t = this;
 /*
 список городов получить от объекта курьера (по пунктам и курьерской доставке сложить вместе и добавить пункт "другой")
 на странице с продуктом это только
@@ -122,10 +122,10 @@ const DeliveryInfo = function() {
             return;
         }
 
-        const t = this;
+        var t = this;
 
         this.Courier.getAvailableCities(function(cityList) {
-            const $citySelect = $('#uCitySelect');
+            var $citySelect = $('#uCitySelect');
             var $option;
             $.each(cityList, function(index, cityName) {
                 $option = $('<option></option>').attr('value', cityName).text(cityName);
@@ -182,7 +182,7 @@ const DeliveryInfo = function() {
     };
 
     this.parsePeriod = function(period) {
-        const splited = period.split('-');
+        var splited = period.split('-');
         var min = splited[0];
         var max = splited[1];
         if (min > max) {
@@ -197,8 +197,8 @@ const DeliveryInfo = function() {
         if (arguments.length === 1) {
             costString = arguments[0];
         } else {
-            const min = arguments[0];
-            const max = arguments[1];
+            var min = arguments[0];
+            var max = arguments[1];
             costString = min + ' - ' + max;
         }
         return costString + ' руб.';
@@ -211,7 +211,7 @@ const DeliveryInfo = function() {
         if (arguments.length === 1) {
             if (isNaN(arguments[0])) {
                 // строка
-                const parsed = this.parsePeriod(arguments[0]);
+                var parsed = this.parsePeriod(arguments[0]);
                 lengthString = parsed.min + ' - ' + parsed.max;
                 max = parsed.max;
             } else {
@@ -231,7 +231,7 @@ const DeliveryInfo = function() {
     };
 
     this.renderCostForPickupPoint = function() {
-        const t = this;
+        var t = this;
 
         if (t.city === 'Санкт-Петербург') {
             if (window.TOTAL_WEIGHT <= 1) {
@@ -264,9 +264,9 @@ const DeliveryInfo = function() {
                                     t.onDone();
                                 });
                             } else {
-                                const pointIds = [];
+                                var pointIds = [];
                                 var pickupPoint;
-                                const receivedInfo = [];
+                                var receivedInfo = [];
                                 for (var ppIndex in pickupPointList) {
                                     if (!pickupPointList.hasOwnProperty(ppIndex)) {
                                         continue;
@@ -291,10 +291,10 @@ const DeliveryInfo = function() {
                                                 maxCost = receivedInfo[0].price;
                                             }
 
-                                            const period1 = t.parsePeriod(receivedInfo[0].period);
-                                            const period2 = t.parsePeriod(receivedInfo[1].period);
-                                            const minLength = period1.min < period2.min ? period1.min : period2.min;
-                                            const maxLength = period1.max > period2.max ? period1.max : period2.max;
+                                            var period1 = t.parsePeriod(receivedInfo[0].period);
+                                            var period2 = t.parsePeriod(receivedInfo[1].period);
+                                            var minLength = period1.min < period2.min ? period1.min : period2.min;
+                                            var maxLength = period1.max > period2.max ? period1.max : period2.max;
 
                                             $('#pvzCost').text(t.getDeliveryCostString(minCost, maxCost));
                                             $('#pvzLength').text(t.getDeliveryPeriodString(minLength, maxLength));
@@ -321,7 +321,7 @@ const DeliveryInfo = function() {
     };
 
     this.renderCostForCourier = function() {
-        const t = this;
+        var t = this;
 
         if (this.city === 'Санкт-Петербург') {
             if (window.TOTAL_WEIGHT <= 1) {
@@ -359,7 +359,7 @@ const DeliveryInfo = function() {
         return;
 
         // @todo - тут уже иначе надо
-        const address = ymaps.geolocation.country + ', г. ' + /*ymaps.geolocation.region + ', ' +*/ this.city;
+        var address = ymaps.geolocation.country + ', г. ' + /*ymaps.geolocation.region + ', ' +*/ this.city;
         console.log(address);
         this.Courier.getPostDeliveryCost({
             address: address
