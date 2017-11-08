@@ -27,7 +27,7 @@ var CheckoutPage = function () {
 
     /**
      * Данные заказа. Заполняются по ходу прохождения "визарда"
-     * @type {{name: string, phone: string, email: string, city: string, deliveryId: string, address: string, paymentId: string, comment: string, d_2_street: string, d_2_house: string, d_2_block: string, d_2_apartment: string, d_3_street: string, d_3_house: string, d_3_block: string, d_3_apartment: string, d_3_post: string, deliveryCostPvz: {}, deliveryCostCourier: {}, deliveryCostPost: {}, d_1_points: Array, d_1_id: string}}
+     * @type {{name: string, phone: string, email: string, city: string, deliveryId: string, address: string, paymentId: string, comment: string, d_2_street: string, d_2_house: string, d_2_block: string, d_2_apartment: string, d_3_street: string, d_3_house: string, d_3_block: string, d_3_apartment: string, d_3_post: string, deliveryCostPvz: {}, deliveryCostCourier: {}, deliveryCostPost: {}, d_1_points: Array, d_1_id: number}}
      */
     this.state = {
         name: '',
@@ -52,7 +52,7 @@ var CheckoutPage = function () {
         deliveryCostCourier: {}, // информация по стоимости доставки курьером
         deliveryCostPost: {}, // информация по стоимости доставки почтой
         d_1_points: [], // пункты самовывоза в городе
-        d_1_id: '', // выбранный индекс пункта самовывоза из списка d_1_points
+        d_1_id: -1, // выбранный индекс пункта самовывоза из списка d_1_points
     };
 
     /**
@@ -476,6 +476,10 @@ var CheckoutPage = function () {
                             $('#raw_cost').text(info.cost.text);
                             $('#raw_period').text(info.period.text);
                             $('.operator-raw').show();
+                        } else if (info.cost.Gp) {
+                            $('#raw_cost').text(info.cost.Gp.text);
+                            $('#raw_period').text(info.period.Gp.text);
+                            $('.operator-raw').show();
                         } else {
                             // а тут остальные города.
                             if (info.cost.Boxberry) {
@@ -554,7 +558,7 @@ var CheckoutPage = function () {
         // сформируем адрес
         switch (this.state.deliveryId) {
             case '1':
-                if (!this.state.d_1_id) {
+                if (this.state.d_1_id < 0) {
                     // еще не выбрали пункт
                     return;
                 }

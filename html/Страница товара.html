@@ -41,17 +41,17 @@
                         <?if($PRICE_OLD$)?><span class="gsale">АКЦИЯ</span><?endif?>
                         <div class="oh">
                             <?if($SMALL_1$)?>
-                            <img alt="" src="$SMALL$" class="small gphoto" onclick="var el=getElementById('ipreview'); el.src='$THUMB$'; el.setAttribute('idx',0);">
-                            <img alt="" src="$SMALL_1$" class="small gphoto" onclick="var el=getElementById('ipreview'); el.src='$THUMB_1$'; el.setAttribute('idx',1);">
+                            <img alt="" src="$SMALL$" class="small gphoto" onclick="var el=getElementById('ipreview'); el.src='$THUMB$'; el.setAttribute('idx',0); el.click();">
+                            <img alt="" src="$SMALL_1$" class="small gphoto" onclick="var el=getElementById('ipreview'); el.src='$THUMB_1$'; el.setAttribute('idx',1); el.click();">
                             <?endif?>
-                            <?if($SMALL_2$)?><img alt="" src="$SMALL_2$" class="small gphoto" onclick="var el=getElementById('ipreview'); el.src='$THUMB_2$'; el.setAttribute('idx',2);"><?endif?>
-                            <?if($SMALL_3$)?><img alt="" src="$SMALL_3$" class="small gphoto" onclick="var el=getElementById('ipreview'); el.src='$THUMB_3$'; el.setAttribute('idx',3);"><?endif?>
-                            <?if($SMALL_4$)?><img alt="" src="$SMALL_4$" class="small gphoto" onclick="var el=getElementById('ipreview'); el.src='$THUMB_4$'; el.setAttribute('idx',4);"><?endif?>
-                            <?if($SMALL_5$)?><img alt="" src="$SMALL_5$" class="small gphoto" onclick="var el=getElementById('ipreview'); el.src='$THUMB_5$'; el.setAttribute('idx',5);"><?endif?>
-                            <?if($SMALL_6$)?><img alt="" src="$SMALL_6$" class="small gphoto" onclick="var el=getElementById('ipreview'); el.src='$THUMB_6$'; el.setAttribute('idx',6);"><?endif?>
-                            <?if($SMALL_7$)?><img alt="" src="$SMALL_7$" class="small gphoto" onclick="var el=getElementById('ipreview'); el.src='$THUMB_7$'; el.setAttribute('idx',7);"><?endif?>
-                            <?if($SMALL_8$)?><img alt="" src="$SMALL_8$" class="small gphoto" onclick="var el=getElementById('ipreview'); el.src='$THUMB_8$'; el.setAttribute('idx',8);"><?endif?>
-                            <?if($SMALL_9$)?><img alt="" src="$SMALL_9$" class="small gphoto" onclick="var el=getElementById('ipreview'); el.src='$THUMB_9$'; el.setAttribute('idx',9);"><?endif?>
+                            <?if($SMALL_2$)?><img alt="" src="$SMALL_2$" class="small gphoto" onclick="var el=getElementById('ipreview'); el.src='$THUMB_2$'; el.setAttribute('idx',2); el.click();"><?endif?>
+                            <?if($SMALL_3$)?><img alt="" src="$SMALL_3$" class="small gphoto" onclick="var el=getElementById('ipreview'); el.src='$THUMB_3$'; el.setAttribute('idx',3); el.click();"><?endif?>
+                            <?if($SMALL_4$)?><img alt="" src="$SMALL_4$" class="small gphoto" onclick="var el=getElementById('ipreview'); el.src='$THUMB_4$'; el.setAttribute('idx',4); el.click();"><?endif?>
+                            <?if($SMALL_5$)?><img alt="" src="$SMALL_5$" class="small gphoto" onclick="var el=getElementById('ipreview'); el.src='$THUMB_5$'; el.setAttribute('idx',5); el.click();"><?endif?>
+                            <?if($SMALL_6$)?><img alt="" src="$SMALL_6$" class="small gphoto" onclick="var el=getElementById('ipreview'); el.src='$THUMB_6$'; el.setAttribute('idx',6); el.click();"><?endif?>
+                            <?if($SMALL_7$)?><img alt="" src="$SMALL_7$" class="small gphoto" onclick="var el=getElementById('ipreview'); el.src='$THUMB_7$'; el.setAttribute('idx',7); el.click();"><?endif?>
+                            <?if($SMALL_8$)?><img alt="" src="$SMALL_8$" class="small gphoto" onclick="var el=getElementById('ipreview'); el.src='$THUMB_8$'; el.setAttribute('idx',8); el.click();"><?endif?>
+                            <?if($SMALL_9$)?><img alt="" src="$SMALL_9$" class="small gphoto" onclick="var el=getElementById('ipreview'); el.src='$THUMB_9$'; el.setAttribute('idx',9); el.click();"><?endif?>
                         </div>
                     </div>
                     <div class="gp_info">
@@ -79,7 +79,7 @@
                             $2WISHLIST$
                             -->
                             <!--
-                             <a class="button4" href="javascript:void(0)" onclick="buyNow('$ID$','id');" title="Купить сейчас"><i class="fa fa-shopping-cart"></i></a>
+                            <a class="button4" href="javascript:void(0)" onclick="buyNow('$ID$','id');" title="Купить сейчас"><i class="fa fa-shopping-cart"></i></a>
                             -->
                             <?if($OTHER8$)?>
                             <script type="text/javascript">
@@ -108,7 +108,7 @@
                                 <?if($UNIT$)?><li style="display: none"><span class="opt">Единица:</span> <span class="val">$UNIT$</span></li><?endif?>
                                 <?if($ENTRY_TYPE$ == 1)?><li><span class="opt"><!--<s5119>-->Размер<!--</s>-->:</span> <span class="val">$FILE_SIZE$</span></li><?endif?>
                                 <!--
-                                 <?if($TAGS$)?>Теги: $TAGS$<?endif?>
+                                <?if($TAGS$)?>Теги: $TAGS$<?endif?>
                                 -->
                             </ul>
 
@@ -128,6 +128,7 @@
                         <li>
                             <?if($DESCRIPTION$)?>$DESCRIPTION$<?else?><!--<s4782>-->Описание товара отсутствует<!--</s>--><?endif?>
                         </li>
+
                         <li style="display: none;">
                             <?if($COM_IS_ACTIVE$)?>
                             <?if($COM_CAN_READ$)?>
@@ -147,19 +148,19 @@
                             <?endif?>
                         </li>
                         <!--
-                        <li>
-                            <div class="shop-imgs with-clear">
-                                <?if($PHOTO$)?><img alt="" src="$THUMB$" class="gphoto" onclick="_bldCont1($ID$, this.getAttribute('idx'));" idx="0" title="Кликните для увеличения изображения"><?endif?>
-                                <?if($PHOTO_1$)?><img alt="" src="$THUMB_1$" class="gphoto" onclick="_bldCont1($ID$, this.getAttribute('idx'));" idx="1" title="Кликните для увеличения изображения"><?endif?>
-                                <?if($PHOTO_2$)?><img alt="" src="$THUMB_2$" class="gphoto" onclick="_bldCont1($ID$, this.getAttribute('idx'));" idx="2" title="Кликните для увеличения изображения"><?endif?>
-                                <?if($PHOTO_3$)?><img alt="" src="$THUMB_3$" class="gphoto" onclick="_bldCont1($ID$, this.getAttribute('idx'));" idx="3" title="Кликните для увеличения изображения"><?endif?>
-                                <?if($PHOTO_4$)?><img alt="" src="$THUMB_4$" class="gphoto" onclick="_bldCont1($ID$, this.getAttribute('idx'));" idx="4" title="Кликните для увеличения изображения"><?endif?>
-                                <?if($PHOTO_5$)?><img alt="" src="$THUMB_5$" class="gphoto" onclick="_bldCont1($ID$, this.getAttribute('idx'));" idx="5" title="Кликните для увеличения изображения"><?endif?>
-                                <?if($PHOTO_6$)?><img alt="" src="$THUMB_6$" class="gphoto" onclick="_bldCont1($ID$, this.getAttribute('idx'));" idx="6" title="Кликните для увеличения изображения"><?endif?>
-                                <?if($PHOTO_7$)?><img alt="" src="$THUMB_7$" class="gphoto" onclick="_bldCont1($ID$, this.getAttribute('idx'));" idx="7" title="Кликните для увеличения изображения"><?endif?>
-                                <?if($PHOTO_8$)?><img alt="" src="$THUMB_8$" class="gphoto" onclick="_bldCont1($ID$, this.getAttribute('idx'));" idx="8" title="Кликните для увеличения изображения"><?endif?>
-                                <?if($PHOTO_9$)?><img alt="" src="$THUMB_9$" class="gphoto" onclick="_bldCont1($ID$, this.getAttribute('idx'));" idx="9" title="Кликните для увеличения изображения"><?endif?>
-                            </div>
+                       <li>
+                        <div class="shop-imgs with-clear">
+                        <?if($PHOTO$)?><img alt="" src="$THUMB$" class="gphoto" onclick="_bldCont1($ID$, this.getAttribute('idx'));" idx="0" title="Кликните для увеличения изображения"><?endif?>
+                        <?if($PHOTO_1$)?><img alt="" src="$THUMB_1$" class="gphoto" onclick="_bldCont1($ID$, this.getAttribute('idx'));" idx="1" title="Кликните для увеличения изображения"><?endif?>
+                        <?if($PHOTO_2$)?><img alt="" src="$THUMB_2$" class="gphoto" onclick="_bldCont1($ID$, this.getAttribute('idx'));" idx="2" title="Кликните для увеличения изображения"><?endif?>
+                        <?if($PHOTO_3$)?><img alt="" src="$THUMB_3$" class="gphoto" onclick="_bldCont1($ID$, this.getAttribute('idx'));" idx="3" title="Кликните для увеличения изображения"><?endif?>
+                        <?if($PHOTO_4$)?><img alt="" src="$THUMB_4$" class="gphoto" onclick="_bldCont1($ID$, this.getAttribute('idx'));" idx="4" title="Кликните для увеличения изображения"><?endif?>
+                        <?if($PHOTO_5$)?><img alt="" src="$THUMB_5$" class="gphoto" onclick="_bldCont1($ID$, this.getAttribute('idx'));" idx="5" title="Кликните для увеличения изображения"><?endif?>
+                        <?if($PHOTO_6$)?><img alt="" src="$THUMB_6$" class="gphoto" onclick="_bldCont1($ID$, this.getAttribute('idx'));" idx="6" title="Кликните для увеличения изображения"><?endif?>
+                        <?if($PHOTO_7$)?><img alt="" src="$THUMB_7$" class="gphoto" onclick="_bldCont1($ID$, this.getAttribute('idx'));" idx="7" title="Кликните для увеличения изображения"><?endif?>
+                        <?if($PHOTO_8$)?><img alt="" src="$THUMB_8$" class="gphoto" onclick="_bldCont1($ID$, this.getAttribute('idx'));" idx="8" title="Кликните для увеличения изображения"><?endif?>
+                        <?if($PHOTO_9$)?><img alt="" src="$THUMB_9$" class="gphoto" onclick="_bldCont1($ID$, this.getAttribute('idx'));" idx="9" title="Кликните для увеличения изображения"><?endif?>
+                        </div>
                         </li>
                         -->
                     </ul>

@@ -514,6 +514,9 @@ var CourierGlavPunkt = function() {
                             var price = info.price >= 200 ? info.price : 200;
                             result.pvz.cost.text = t._getDeliveryCostString(price);
                             result.pvz.cost.raw = info.price;
+                            if (parseInt(info.period) == info.period) {
+                                info.period += 1;
+                            }
                             result.pvz.period.text = t._getDeliveryPeriodString(info.period);
                             callback(result);
                         }, function() {
@@ -621,6 +624,9 @@ var CourierGlavPunkt = function() {
             }, function (info) {
                 result.courier.cost.text = t._getDeliveryCostString(info.price);
                 result.courier.cost.raw = info.price;
+                if (city === 'Москва' && parseInt(info.period) == info.period) {
+                    info.period += 1;
+                }
                 result.courier.period.text = t._getDeliveryPeriodString(info.period);
 
                 callback(result);
@@ -672,7 +678,7 @@ var CourierGlavPunkt = function() {
      * @private
      */
     this._parsePeriod = function(period) {
-        var splited = period.split('-');
+        var splited = period.toString().split('-');
         var min = splited[0];
         var max = splited[1];
         if (min > max) {
