@@ -148,7 +148,7 @@
                             <?endif?>
                         </li>
                         <!--
-                       <li>
+                        <li>
                         <div class="shop-imgs with-clear">
                         <?if($PHOTO$)?><img alt="" src="$THUMB$" class="gphoto" onclick="_bldCont1($ID$, this.getAttribute('idx'));" idx="0" title="Кликните для увеличения изображения"><?endif?>
                         <?if($PHOTO_1$)?><img alt="" src="$THUMB_1$" class="gphoto" onclick="_bldCont1($ID$, this.getAttribute('idx'));" idx="1" title="Кликните для увеличения изображения"><?endif?>
@@ -171,6 +171,13 @@
                 <div class="og">
                     <h4>С этим товаром покупают</h4>
                     <?$RECOMMENDED_PRODUCTS$()?>
+                </div>
+                <?endif?>
+
+                <?if ($RELATED_ENTRIES$) ?>
+                <div class="og">
+                    <h4>Похожие товары</h4>
+                    <?$RELATED_ENTRIES$(4)?>
                 </div>
                 <?endif?>
 

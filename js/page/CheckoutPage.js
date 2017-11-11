@@ -27,7 +27,7 @@ var CheckoutPage = function () {
 
     /**
      * Данные заказа. Заполняются по ходу прохождения "визарда"
-     * @type {{name: string, phone: string, email: string, city: string, deliveryId: string, address: string, paymentId: string, comment: string, d_2_street: string, d_2_house: string, d_2_block: string, d_2_apartment: string, d_3_street: string, d_3_house: string, d_3_block: string, d_3_apartment: string, d_3_post: string, deliveryCostPvz: {}, deliveryCostCourier: {}, deliveryCostPost: {}, d_1_points: Array, d_1_id: number}}
+     * @type {{name: string, phone: string, email: string, city: string, deliveryId: string, address: string, paymentId: string, comment: string, d_2_street: string, d_2_house: string, d_2_block: string, d_2_apartment: string, d_3_region: string, d_3_street: string, d_3_house: string, d_3_block: string, d_3_apartment: string, d_3_post: string, deliveryCostPvz: {}, deliveryCostCourier: {}, deliveryCostPost: {}, d_1_points: Array, d_1_id: number}}
      */
     this.state = {
         name: '',
@@ -43,6 +43,7 @@ var CheckoutPage = function () {
         d_2_house: '', // дом
         d_2_block: '', // корпус
         d_2_apartment: '', // квартира
+        d_3_region: '', // область
         d_3_street: '', // улица
         d_3_house: '', // дом
         d_3_block: '', // корпус
@@ -57,7 +58,7 @@ var CheckoutPage = function () {
 
     /**
      * Ид полей.
-     * @type {{userName: string, phone: string, email: string, city: string, address: string, d2street: string, d2house: string, d2block: string, d2apartment: string, d3street: string, d3house: string, d3block: string, d3apartment: string, d3post: string}}
+     * @type {{userName: string, phone: string, email: string, city: string, address: string, d2street: string, d2house: string, d2block: string, d2apartment: string, d3region: string, d3street: string, d3house: string, d3block: string, d3apartment: string, d3post: string}}
      */
     this.fieldIds = {
         userName: 'order-fld-4',
@@ -69,6 +70,7 @@ var CheckoutPage = function () {
         d2house: 'js_d_2_house',
         d2block: 'js_d_2_block',
         d2apartment: 'js_d_2_apartment',
+        d3region: 'js_d_3_region',
         d3street: 'js_d_3_street',
         d3house: 'js_d_3_house',
         d3block: 'js_d_3_block',
@@ -127,6 +129,9 @@ var CheckoutPage = function () {
                 break;
             case this.fieldIds.city:
                 this.state.city = $field.val();
+                break;
+            case this.fieldIds.d3region:
+                this.state.d_3_region = $field.val();
                 break;
             case this.fieldIds.d2street:
                 this.state.d_2_street = $field.val();
@@ -320,6 +325,9 @@ var CheckoutPage = function () {
             case this.fieldIds.city:
                 result = this.validateCity($field.val());
                 break;
+            case this.fieldIds.d3region:
+                result = this.validateRegion($field.val());
+                break;
             case this.fieldIds.d2street:
             case this.fieldIds.d3street:
                 result = this.validateStreet($field.val());
@@ -387,6 +395,15 @@ var CheckoutPage = function () {
      */
     this.validateCity = function(city) {
         return !!city.length;
+    };
+
+    /**
+     * Валидирует область
+     * @param {string} region
+     * @return {boolean}
+     */
+    this.validateRegion = function(region) {
+        return true;
     };
 
     /**
@@ -558,6 +575,7 @@ var CheckoutPage = function () {
         // сформируем адрес
         switch (this.state.deliveryId) {
             case '1':
+                // самовывоз
                 if (this.state.d_1_id < 0) {
                     // еще не выбрали пункт
                     return;
@@ -566,6 +584,7 @@ var CheckoutPage = function () {
                 this.state.address = Point.address;
                 break;
             case '2':
+                // курьер
                 this.state.address = [
                     this.state.d_2_street + ', ',
                     'д. ' + this.state.d_2_house + ', ',
@@ -574,8 +593,10 @@ var CheckoutPage = function () {
                 ].join('');
                 break;
             case '3':
+                // почта рф
                 this.state.address = [
                     this.state.d_3_post ? (this.state.d_3_post + ', ') : '',
+                    this.state.d_3_region ? (this.state.d_3_region + ', ') : '',
                     this.state.d_3_street + ', ',
                     'д. ' + this.state.d_3_house + ', ',
                     this.state.d_3_block ? ('к. ' + this.state.d_3_block + ', ') : '',
@@ -662,8 +683,10 @@ var CheckoutPage = function () {
         this.beforeShowDeliveryBlock(function() {
             t.accordionPanelToggle('ch_contact');
             t.accordionPanelToggle('ch_delivery', function() {
-                // необходимо именно затригерить событие, ибо на это завязана логика другая
-                $('.delivery-item:visible').eq(0).click();
+                if (!t.state.deliveryId) {
+                    // необходимо именно затригерить событие, ибо на это завязана логика другая
+                    $('.delivery-item:visible').eq(0).click();
+                }
             });
         });
 

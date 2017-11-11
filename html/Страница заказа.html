@@ -92,32 +92,33 @@
                 </table>
 
                 <form name="TinkoffPayForm" class="TinkoffPayForm" onsubmit="pay(this); return false;">
+<!-- $PAYMENT$ == 'Онлайн' -->
+                    <h2><!--<s4604>-->Оплата заказа<!--</s>--><?if($ORDER_TAX_RAW$ && $PAYMENT$ == 'Онлайн')?> (без стоимости доставки)<?endif?></h2>
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="orderPay"><tr valign="top">
+                        <td width="20">&nbsp;</td><td><b>$PAYMENT$</b><div style="padding-top:5px">$PAYMENT_DESCR$</div></td>
+                        <?if($PAY_NOW$)?><td style="text-align:right;padding-left:20px;"><h3>$ORDER_TOPAY_CURR$</h3>$PAY_NOW$</td><?endif?>
 
-                <h2><!--<s4604>-->Оплата заказа<!--</s>--></h2>
-                <table border="0" cellpadding="0" cellspacing="0" width="100%" class="orderPay"><tr valign="top">
-                    <td width="20">&nbsp;</td><td><b>$PAYMENT$</b><div style="padding-top:5px">$PAYMENT_DESCR$</div></td>
-                    <?if($PAY_NOW$)?><td style="text-align:right;padding-left:20px;"><h3>$ORDER_TOPAY_CURR$</h3>$PAY_NOW$</td><?endif?>
+<!-- $PAYMENT$ == 'Онлайн' -->
+<? if($ORDER_STATUS$ == 'Оплачивается') ?>
+                        <td style="text-align:right;padding-left:20px;">
+                            <h3>$ORDER_AMOUNT$</h3>
+                            <input class="tinkoffPayRow" type="submit" value="Оплатить" style="width:160px;display:inline-block;">
+                        </td>
+                        <?endif?>
+                    </tr></table>
 
-                    <? if($ORDER_ID$ == 309 && ($ORDER_STATUS$ == 'Оплачивается' || $ORDER_STATUS$ == 'В обработке')) ?>
-                    <td style="text-align:right;padding-left:20px;">
-                        <h3>$ORDER_TOTAL$</h3>
-                        <input class="tinkoffPayRow" type="submit" value="Оплатить" style="width:160px;display:inline-block;">
-                    </td>
-                    <?endif?>
-                </tr></table>
-
-                <?if($ORDER_FIELDS$)?>
-                <div id="order-info" class="commFl" style="margin-top:20px;">
-                    <!-- $PAYMENT$ == 'Онлайн' -->
-                    <? if($ORDER_ID$ == 309 && ($ORDER_STATUS$ == 'Оплачивается' || $ORDER_STATUS$ == 'В обработке')) ?>
+                    <?if($ORDER_FIELDS$)?>
+                    <div id="order-info" class="commFl" style="margin-top:20px;">
+<!-- $PAYMENT$ == 'Онлайн' -->
+<? if($ORDER_STATUS$ == 'Оплачивается') ?>
                         <script src="https://securepay.tinkoff.ru/html/payForm/js/tinkoff.js"></script>
 
-                        <input class="tinkoffPayRow" type="hidden" name="terminalkey" value="TinkoffBankTest" />
+                        <input class="tinkoffPayRow" type="hidden" name="terminalkey" value="1509360531509" />
                         <input class="tinkoffPayRow" type="hidden" name="frame" value="false" />
                         <input class="tinkoffPayRow" type="hidden" name="language" value="ru" />
-                        <input class="tinkoffPayRow" type="hidden" placeholder="Сумма заказа" name="amount" required value="<?$ORDER_TOTAL_RAW$?>" />
+                        <input class="tinkoffPayRow" type="hidden" placeholder="Сумма заказа" name="amount" required value="<?$ORDER_AMOUNT_RAW$?>" />
                         <input class="tinkoffPayRow" type="hidden" placeholder="Номер заказа" name="order" value="<?$ORDER_CODE$?>" />
-                        <input class="tinkoffPayRow" type="hidden" placeholder="Описание заказа" name="description" value="Оплата заказа №<?$ORDER_CODE$?>" />
+                        <input class="tinkoffPayRow" type="hidden" placeholder="Описание заказа" name="description" value="Оплата заказа №<?$ORDER_CODE$?> интернет-магазин Домик-мечты.рф" />
 
                         <div class="order-fname"><?$ORDER_FNAME_4$?></div>
                         <div class="order-field">
@@ -145,7 +146,9 @@
                                 <input class="tinkoffPayRow" type="text" placeholder="Контактный телефон" name="phone" value="<?$ORDER_FIELD_1$?>" />
                             <? endif ?>
                         </div>
-                    <?else?>
+
+                        <?else?>
+
                         <div class="order-fname"><?$ORDER_FNAME_4$?></div>
                         <div class="order-field">
                             <? if($GROUP_ID$ == 4) ?>
@@ -170,25 +173,26 @@
                                 $ORDER_FIELD_6$
                             <? endif ?>
                         </div>
-                    <?endif?>
 
-                    <div class="order-fname"><?$ORDER_FNAME_8$?></div>
-                    <div class="order-field">
-                        <? if($GROUP_ID$ == 4) ?>
-                            $ORDER_FIELD_EDIT_8$
-                        <?else?>
-                            $ORDER_FIELD_8$
-                        <? endif ?>
-                    </div>
-                    <div class="order-fname"><?$ORDER_FNAME_2$?></div>
-                    <div class="order-field">
-                        <? if($GROUP_ID$ == 4) ?>
-                            $ORDER_FIELD_EDIT_2$
-                        <?else?>
-                            $ORDER_FIELD_2$
-                        <? endif ?>
-                    </div>
-                    <? if($ORDER_FIELD_3$ || $GROUP_ID$ == 4) ?>
+                        <?endif?>
+
+                        <div class="order-fname"><?$ORDER_FNAME_8$?></div>
+                        <div class="order-field">
+                            <? if($GROUP_ID$ == 4) ?>
+                                $ORDER_FIELD_EDIT_8$
+                            <?else?>
+                                $ORDER_FIELD_8$
+                            <? endif ?>
+                        </div>
+                        <div class="order-fname"><?$ORDER_FNAME_2$?></div>
+                        <div class="order-field">
+                            <? if($GROUP_ID$ == 4) ?>
+                                $ORDER_FIELD_EDIT_2$
+                            <?else?>
+                                $ORDER_FIELD_2$
+                            <? endif ?>
+                        </div>
+                        <? if($ORDER_FIELD_3$ || $GROUP_ID$ == 4) ?>
                         <div class="order-fname"><?$ORDER_FNAME_3$?></div>
                         <div class="order-field">
                             <? if($GROUP_ID$ == 4) ?>
@@ -197,21 +201,21 @@
                                 $ORDER_FIELD_3$
                             <? endif ?>
                         </div>
-                    <?endif?>
-                    <div class="order-fname"><?$ORDER_FNAME_5$?></div>
-                    <div class="order-field">
-                        <? if($GROUP_ID$ == 4) ?>
+                        <?endif?>
+                        <div class="order-fname"><?$ORDER_FNAME_5$?></div>
+                        <div class="order-field">
+                            <? if($GROUP_ID$ == 4) ?>
                             $ORDER_FIELD_EDIT_5$
-                        <?else?>
+                            <?else?>
                             $ORDER_FIELD_5$
-                        <? endif ?>
+                            <? endif ?>
+                        </div>
+                        <!--
+                        <div class="order-fname"><?$ORDER_FNAME_7$?></div>
+                        <div class="order-field"><?$ORDER_FIELD_7$?></div>
+                        -->
                     </div>
-                    <!--
-                    <div class="order-fname"><?$ORDER_FNAME_7$?></div>
-                    <div class="order-field"><?$ORDER_FIELD_7$?></div>
-                    -->
-                </div>
-                <?endif?>
+                    <?endif?>
 
                 </form>
                 <div style="padding:20px 0; text-align:right; font-style: italic;"><b><!--<s4522>-->Добавлен<!--</s>-->:</b> $ADD_DATE$, $ADD_TIME$ <?if($MOD_TIME$)?> <b><!--<s4523>-->Изменён<!--</s>-->:</b> $MOD_DATE$, $MOD_TIME$<?endif?></div>
