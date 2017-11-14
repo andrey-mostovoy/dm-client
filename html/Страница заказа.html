@@ -93,13 +93,12 @@
 
                 <form name="TinkoffPayForm" class="TinkoffPayForm" onsubmit="pay(this); return false;">
 <!-- $PAYMENT$ == 'Онлайн' -->
-                    <h2><!--<s4604>-->Оплата заказа<!--</s>--><?if($ORDER_TAX_RAW$ && $PAYMENT$ == 'Онлайн')?> (без стоимости доставки)<?endif?></h2>
+                    <h2><!--<s4604>-->Оплата заказа<!--</s>--><?if($ORDER_TAX_RAW$ && $PAYMENT$ == 'Банковской картой онлайн')?> (без стоимости доставки)<?endif?></h2>
                     <table border="0" cellpadding="0" cellspacing="0" width="100%" class="orderPay"><tr valign="top">
                         <td width="20">&nbsp;</td><td><b>$PAYMENT$</b><div style="padding-top:5px">$PAYMENT_DESCR$</div></td>
                         <?if($PAY_NOW$)?><td style="text-align:right;padding-left:20px;"><h3>$ORDER_TOPAY_CURR$</h3>$PAY_NOW$</td><?endif?>
 
-<!-- $PAYMENT$ == 'Онлайн' -->
-<? if($ORDER_STATUS$ == 'Оплачивается') ?>
+<? if($PAYMENT$ == 'Банковской картой онлайн' && $ORDER_STATUS$ == 'Оплачивается') ?>
                         <td style="text-align:right;padding-left:20px;">
                             <h3>$ORDER_AMOUNT$</h3>
                             <input class="tinkoffPayRow" type="submit" value="Оплатить" style="width:160px;display:inline-block;">
@@ -109,8 +108,7 @@
 
                     <?if($ORDER_FIELDS$)?>
                     <div id="order-info" class="commFl" style="margin-top:20px;">
-<!-- $PAYMENT$ == 'Онлайн' -->
-<? if($ORDER_STATUS$ == 'Оплачивается') ?>
+<? if($PAYMENT$ == 'Банковской картой онлайн' && $ORDER_STATUS$ == 'Оплачивается') ?>
                         <script src="https://securepay.tinkoff.ru/html/payForm/js/tinkoff.js"></script>
 
                         <input class="tinkoffPayRow" type="hidden" name="terminalkey" value="1509360531509" />
