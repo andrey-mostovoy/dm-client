@@ -10,7 +10,7 @@
 
     $GLOBAL_HEAD$
 
-    <?if($PAGE_ID$ == 'checkout')?>
+    <?if($PAGE_ID$ == 'checkout' || $PAGE_ID$=='invoices')?>
     <style type="text/css">
         #content {
             float: none;
@@ -103,6 +103,9 @@
                 </table>
                 <?endif?>
                 <hr/>
+
+                <input type="button" id="create_glavpunkt_order" value="Создать заказы в Главпункт" />
+
                 <?endif?>
 
                 <?if($PAGE_ID$=='price')?>
@@ -184,6 +187,9 @@
                     <button type="button" class="accordion" id="ch_delivery"><!--<s4454>-->Способ доставки<!--</s>--></button>
                     <div class="panel">
                         <p class="description">Выберете удобный способ доставки</p>
+                        <p class="new_year_restriction">
+                            Внимание! С 18 до 31 декабря доставка осуществляется только по предоплате за заказ. Спасибо за понимание.
+                        </p>
 
                         <div class="delivery-list-wrapper">
                             <div class="delivery-row" id="delivery-block-courier">
@@ -268,6 +274,9 @@
                                             При выборе данного способа доставки не забудьте указать индекс, область,
                                             населенный пункт и ваш адрес.
                                         </p>
+                                        <!--<p class="order_field_descr" style="color:coral; font-weight: bold;">-->
+                                            <!--Внимание! Доставка Почтой России осуществляется только по предоплате за заказ.-->
+                                        <!--</p>-->
                                     </div>
                                 </div>
                                 <div class="delivery-row-more-info">
@@ -484,6 +493,10 @@ $GLOBAL_BFOOTER$
  <script type="text/javascript" src="http://lk.pro-cour.ru/map.js?v=1.3"></script>
 -->
 
+<?endif?>
+<?if($PAGE_ID$ == 'invoices')?>
+<script type="text/javascript" src="/js/courier.js"></script>
+<script type="text/javascript" src="/js/page/InvoicesPage.js"></script>
 <?endif?>
 
 </body>

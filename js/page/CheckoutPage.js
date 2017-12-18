@@ -2,7 +2,7 @@
  * Страница оформления заказа.
  * @constructor
  */
-var CheckoutPage = function () {
+var CheckoutPage = function() {
     /**
      * Объект курьерской компании.
      * @type {CourierGlavPunkt}
@@ -189,6 +189,8 @@ var CheckoutPage = function () {
 
             t.getField(t.fieldIds.city).autocomplete({
                 source: cityList,
+                autoFocus: true,
+                delay: 0,
             });
         });
 
@@ -470,6 +472,17 @@ var CheckoutPage = function () {
             this.state.city = t.cache.cities[lowerCaseCity];
         }
 
+        // вывод предупреждения по предоплате.
+        var currentDate = new Date();
+        // месяц с 0 по 11
+        // начиная с 18 декабря
+        if (currentDate.getMonth() === 11 && currentDate.getDate() >= 18) {
+            // для всех городов кроме спб, мск
+            if (this.state.city !== 'Москва' && this.state.city !== 'Санкт-Петербург') {
+                $('.new_year_restriction').show();
+            }
+        }
+
         this.Courier.getInfoForCity(this.state.city, this.order, function(deliveryInfo) {
             // прячу все варианты с доставкой и показываю те, которые есть
             $('.delivery-row').hide();
@@ -612,7 +625,27 @@ var CheckoutPage = function () {
         // https://otpravka.pochta.ru/specification#/nogroup-rate_calculate
         // и возмонжо можно посчитать на этапе выбора города...
 
-        callback();
+        // если не почта или вес более 10 кг - сразу дальше
+        if (this.state.deliveryId != '3' || this.order.weight > 10) {
+            callback();
+            return;
+        }
+
+        var t = this;
+        // а если почта - считаем доставку
+        this.Courier.getPostDeliveryCost({
+            index: this.state.d_3_post,
+            address: this.state.address,
+            weight: this.order.weight || 0,
+            price: this.order.amount || 0,
+        }, function(info) {
+            // посчитали
+            t.state.deliveryCostPost.cost.raw = info.price;
+            callback();
+        }, function() {
+            // ошибка - будет выставлена сумма 0
+            callback();
+        });
     };
 
     /**
@@ -628,6 +661,8 @@ var CheckoutPage = function () {
                     this.addCustomDeliveryTax(this.state.deliveryCostPvz.cost.Cdek.raw);
                 } else if (Point.operator === 'Boxberry') {
                     this.addCustomDeliveryTax(this.state.deliveryCostPvz.cost.Boxberry.raw);
+                } else if (Point.operator === 'Gp') {
+                    this.addCustomDeliveryTax(this.state.deliveryCostPvz.cost.Gp.raw);
                 } else {
                     this.addCustomDeliveryTax(this.state.deliveryCostPvz.cost.raw);
                 }
@@ -862,7 +897,8 @@ var GlavpunktMap = function() {
         });
 
         // обычно зума 10 достаточно, если точек мало - скорее всего город маленький и зум надо побольше
-        var newZoom = deliveryInfo.code === 'spb' ? 7 : 10;
+        // var newZoom = deliveryInfo.code === 'spb' ? 7 : 10;
+        var newZoom = 10;
         if (this.GeoCollection.getLength() === 1) {
             newZoom = 13;
         }

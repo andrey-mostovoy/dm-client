@@ -426,6 +426,10 @@
     margin-left: 150px;
     margin-top: 10px;
     position: absolute;
+    line-height: 18px;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 @media (max-width: 767px) {
@@ -469,6 +473,10 @@
     text-align: center;
     margin: 20px 0;
     font-weight: bolder;
+}
+
+.page_text h1 {
+    text-align: center;
 }
 
 /* ---- */
@@ -1019,6 +1027,12 @@ button.accordion.active {
 }
 .delivery_address_row input {
     width: 87%;
+}
+
+.new_year_restriction {
+    display: none;
+    color: coral;
+    font-weight: bold;
 }
 
 #pickedPoint {
@@ -1579,7 +1593,10 @@ button.accordion.active {
     position: absolute;
     top: 0;
     left: 0;
-    cursor: default
+    cursor: default;
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .ui-menu {
