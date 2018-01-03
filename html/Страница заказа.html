@@ -129,7 +129,7 @@
                                     <? if ($ORDER_FIELD_9$) ?>
                                         <h3>$ORDER_FIELD_9$.00 руб.</h3>
                                     <?else?>
-                                        <h3>$ORDER_AMOUNT$</h3>
+                                        <h3 id="orderAmountHeader">$ORDER_AMOUNT$</h3>
                                     <?endif?>
                                     <input class="tinkoffPayRow" type="submit" value="Оплатить"
                                            style="width:160px;display:inline-block;">
@@ -151,7 +151,7 @@
                             <input class="tinkoffPayRow" type="hidden" placeholder="Сумма предоплаты заказа" name="amount" required value="<?$ORDER_FIELD_9$?>" />
                             <input class="tinkoffPayRow" type="hidden" placeholder="Описание заказа" name="description" value="Предоплата заказа №<?$ORDER_CODE$?> интернет-магазин Домик-мечты.рф" />
                         <?else?>
-                            <input class="tinkoffPayRow" type="hidden" placeholder="Сумма заказа" name="amount" required value="<?$ORDER_AMOUNT_RAW$?>" />
+                            <input class="tinkoffPayRow" type="hidden" placeholder="Сумма заказа" name="amount" id="orderAmountField" required value="<?$ORDER_AMOUNT_RAW$?>" />
                             <input class="tinkoffPayRow" type="hidden" placeholder="Описание заказа" name="description" value="Оплата заказа №<?$ORDER_CODE$?> интернет-магазин Домик-мечты.рф" />
                         <?endif?>
 
@@ -287,6 +287,16 @@
 <script src="/js/scripts.js"></script>
 <script type="text/javascript">
     $('.order_field_descr').remove();
+
+    var preorderPay = parseInt($ORDER_FIELD_9$) || 0;
+    if (!preorderPay) {
+        var discount = parseFloat($ORDER_DISCOUNT_RAW$) || 0;
+        if (discount) {
+            var newOrderAmount = ($ORDER_AMOUNT_RAW$ - Math.abs(discount)).toFixed(2);
+            $('#orderAmountHeader').text(newOrderAmount + ' руб.');
+            $('#orderAmountField').val(newOrderAmount);
+        }
+    }
 </script>
 
 </body>

@@ -294,8 +294,14 @@ var CheckoutPage = function() {
             // $('.order_total_pay_title').hide();
             // $('.order_total_pay_title_no_delivery').show();
         } else {
-            // ставлю сумму в интерфейсе
-            $('#deliveryAmount .order_tax').text(cost + '.00 руб.');
+            // ставлю сумму в интерфейсе подтверждения заказа
+            var text = cost + '.00 руб.';
+            if (this.order.weight > 10) {
+                // если вес больше 10 то сумма доставки будет отличаться.
+                text = 'Посылки общим весом более 10кг уточняется менеджером';
+                $('input[name="custom_delivery_tax"]').val(0);
+            }
+            $('#deliveryAmount .order_tax').text(text);
             // показываю стоимость доставки
             $('#deliveryAmount').show();
             // меняю текст про стоимость заказа
@@ -488,14 +494,14 @@ var CheckoutPage = function() {
             $('.delivery-row').hide();
             $('.delivery-row.not-available').show();
 
+            var prefix = t.order.weight > 10 ? 'от ' : '';
+
             $.each(deliveryInfo, function(delivery, info) {
                 $('#delivery-block-' + delivery).show();
                 $('#delivery-block-no-' + delivery).hide();
 
                 switch (delivery) {
                     case 'pvz':
-                        t.state.deliveryCostPvz = info;
-
                         // скрываю цену всех операторов.
                         $('.operator-cost').hide();
                         // скрываю период доставки всех операторов.
@@ -503,28 +509,35 @@ var CheckoutPage = function() {
 
                         // условие ниже - это спб или москва
                         if (info.cost.raw) {
+                            info.cost.text = prefix + info.cost.text;
                             $('#raw_cost').text(info.cost.text);
                             $('#raw_period').text(info.period.text);
                             $('.operator-raw').show();
                         } else if (info.cost.Gp) {
+                            info.cost.Gp.text = prefix + info.cost.Gp.text;
                             $('#raw_cost').text(info.cost.Gp.text);
                             $('#raw_period').text(info.period.Gp.text);
                             $('.operator-raw').show();
                         } else {
                             // а тут остальные города.
                             if (info.cost.Boxberry) {
+                                info.cost.Boxberry.text = prefix + info.cost.Boxberry.text;
                                 $('#boxberry_cost').text(info.cost.Boxberry.text);
                                 $('#boxberry_period').text(info.period.Boxberry.text);
                                 $('.operator-boxberry').show();
                             }
                             if (info.cost.Cdek) {
+                                info.cost.Cdek.text = prefix + info.cost.Cdek.text;
                                 $('#cdek_cost').text(info.cost.Cdek.text);
                                 $('#cdek_period').text(info.period.Cdek.text);
                                 $('.operator-cdek').show();
                             }
                         }
+
+                        t.state.deliveryCostPvz = info;
                         break;
                     case 'courier':
+                        info.cost.text = prefix + info.cost.text;
                         $('#courier_cost').text(info.cost.text);
                         $('#courier_period').text(info.period.text);
                         t.state.deliveryCostCourier = info;
