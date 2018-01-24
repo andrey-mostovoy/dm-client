@@ -350,15 +350,15 @@ var CourierGlavPunkt = function() {
             paymentType: 'cash'
         };
         if (typeof params.serv === 'undefined' && this.isSpbOrMsc(params.cityTo)) {
-            defaultParams.serv = 'выдача';
+            defaultParams.serv = t.serv.pvz;
         }
         var options = $.extend({}, defaultParams, params || {});
         this.send('api/get_tarif', options, function(response) {
             if (response.result === 'ok') {
                 var tarif = response.tarif;
                 var cost = tarif;
-                if (options.serv === t.serv.pvz) {
-                    cost = t.addServicesCost(cost);
+                if (options.serv == t.serv.pvz) {
+                    cost = t.addServicesCost(cost, options.price);
                 }
                 cost = t.setMinCost(options, cost);
                 cost = t.round(cost);
@@ -410,7 +410,7 @@ var CourierGlavPunkt = function() {
         var options = $.extend({}, defaultParams, params || {});
         this.send('api/get_pochta_tarif', options, function(response) {
             if (response.result === 'ok') {
-                var cost = t.addServicesCost(response.tarifTotal);
+                var cost = t.addServicesCost(response.tarifTotal, options.price);
                 cost = t.round(cost);
                 console.log('Тариф (доставка почтой):', response.tarifTotal, 'Цена:', cost);
                 var callbackParams = {
@@ -433,12 +433,13 @@ var CourierGlavPunkt = function() {
 
     /**
      * Добавляет процент на кассовое обслуживание и еще на что-то 3 процента.
-     * @param {number} cost
+     * @param {number} cost сумма доставки
+     * @param {number} price сумма заказа
      * @return {number}
      */
-    this.addServicesCost = function(cost) {
+    this.addServicesCost = function(cost, price) {
         var percent = 3.5;
-        var servicePrice = cost * percent / 100;
+        var servicePrice = price * percent / 100;
         return cost + servicePrice;
     };
 

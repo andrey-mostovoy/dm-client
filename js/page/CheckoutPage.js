@@ -286,6 +286,12 @@ var CheckoutPage = function() {
         // запись стоимости доставки в поле custom_delivery_tax
         $('input[name="custom_delivery_tax"]').val(cost);
 
+        if (cost > 700) {
+            $('.delivery_notice').show();
+        } else {
+            $('.delivery_notice').hide();
+        }
+
         // обновим стоимость доставки в информационном поле
         if (cost === 0) {
             // скрываю стоимость доставки

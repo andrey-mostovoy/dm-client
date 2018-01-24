@@ -847,6 +847,13 @@ ul.cinf_list li p {
 }
 
 .our_work {
+    display: none;
+    margin-top: 10px;
+    color: coral;
+}
+
+.delivery_notice {
+    display: none;
     margin-top: 10px;
     color: coral;
 }
