@@ -141,7 +141,7 @@
 }
 
 #nav .uMenuRoot > li {
-    width: 234px;
+    width: 292px;
     text-align: center;
 }
 
@@ -164,6 +164,11 @@
     text-align: center;
 }
 
+@media (max-width: 1279px) {
+    #header .cnt {
+        padding: 0 !important;
+    }
+}
 @media (max-width: 1170px) {
     .main_banner img {
         width: 100%;
@@ -893,6 +898,31 @@ ul.cinf_list li p {
     margin-top: 15px;
 }
 
+.checkout_form_block_button .error {
+    display: inline-block;
+    color: red;
+}
+
+.checkout_form_block_button .loader_wrapper {
+    display: inline-block;
+    margin-bottom: -13px;
+}
+
+.checkout_form_block_button .loader {
+    display: none;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid mediumpurple;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: loader-spin 1s linear infinite;
+}
+
+@keyframes loader-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 #checkout-form input.error {
     border-color: red;
 }
@@ -920,13 +950,19 @@ button.accordion.active {
 
 #checkout-form div.panel {
     display: none;
-    padding: 18px !important;
+    padding: 0 18px 18px !important;
     background-color: white;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
 }
 
 #checkout-form div.panel .wrapper {
+    margin-bottom: 10px;
+}
+
+#checkout-form div.panel p.description {
+    font-size: 18px;
+    color: black;
     margin-bottom: 10px;
 }
 
@@ -1000,15 +1036,19 @@ button.accordion.active {
 }
 
 .delivery-row-period {
-    margin: 5px 0 0 16px;
+    margin: 0 0 7px 16px;
 }
 
-.delivery-row-period.operator-boxberry {
+.delivery-row-period {
     margin-bottom: 8px;
 }
 
 #cdek_cost {
     margin-left: 27px;
+}
+
+#hermes_cost {
+    margin-left: 18px;
 }
 
 .delivery-row.not-available {
@@ -1202,6 +1242,11 @@ button.accordion.active {
 /* ---- */
 
 /* Планшеты альбомно */
+@media (max-width: 1267px) {
+    #nav .uMenuRoot > li {
+        width: 25%;
+    }
+}
 @media (max-width: 1169px) {
     .g_button a {
         font-size: 13px;

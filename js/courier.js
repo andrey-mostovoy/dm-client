@@ -361,6 +361,7 @@ var CourierGlavPunkt = function() {
                     cost = t.addServicesCost(cost, options.price);
                 }
                 cost = t.setMinCost(options, cost);
+                cost = t.setMaxCost(options, cost);
                 cost = t.round(cost);
                 console.log('Тариф (' + options.serv + '):', tarif, 'Цена:', cost);
                 if (typeof callback === 'function') {
@@ -476,6 +477,26 @@ var CourierGlavPunkt = function() {
     };
 
     /**
+     * Ставим нашу максимальную цену в определенных случаях
+     * @param {object} options
+     * @param {number} cost
+     */
+    this.setMaxCost = function(options, cost) {
+        var spbMaxPrice = 270;
+        var mskMaxPrice = 350;
+
+        if (options.serv === this.serv.pvz) {
+            if (this.isMsc(options.cityTo) && cost > mskMaxPrice) {
+                cost = mskMaxPrice;
+            } else if (this.isSpb(options.cityTo) && cost > spbMaxPrice) {
+                cost = spbMaxPrice;
+            }
+        }
+
+        return cost;
+    };
+
+    /**
      * Возвращает полную информацию по доставке для указанного города.
      *
      * <pre>
@@ -493,11 +514,16 @@ var CourierGlavPunkt = function() {
      *          text: '160 руб.',
      *          raw: 160,
      *        },
+     *        Hermes: {
+     *          text: '100 руб.',
+     *          raw: 100,
+     *        },
      *      },
      *      period: {
      *        text: '3 - 6 дней.',
      *        Cdek: '3 - 4 дня.',
      *        Boxberry: '4 - 6 дней.',
+     *        Hermes: '3 - 4 дня.',
      *      },
      *    },
      *    courier: {

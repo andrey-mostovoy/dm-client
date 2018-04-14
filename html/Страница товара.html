@@ -58,7 +58,7 @@
                         <h1 class="gp_name">$ENTRY_TITLE$ $MODER_PANEL_RIGHT$</h1>
                         <div class="gp_price_rate">
                             <span class="gp_price">$PRICE$ <?if($PRICE_OLD$)?><s>$PRICE_OLD$</s><?endif?></span>
-                            <span class="gp_rate"><?$RSTARS$('21','/img/rate.png','1','float')?></span>
+                            <!--<span class="gp_rate"><?$RSTARS$('21','/img/rate.png','1','float')?></span>-->
                         </div>
                         <div class="gp_brief">
                             $BRIEF$
@@ -174,7 +174,7 @@
                 </div>
                 <?endif?>
 
-                <?if ($RELATED_ENTRIES$) ?>
+                <?if ($RELATED_ENTRIES$(4))?>
                 <div class="og">
                     <h4>Похожие товары</h4>
                     <?$RELATED_ENTRIES$(4)?>

@@ -180,6 +180,8 @@
 
                         <div class="checkout_form_block_button">
                             <button type="button" onclick="Page.nextDelivery()">Далее</button>
+                            <div class="loader_wrapper"><div class="loader"></div></div>
+                            <div class="error"></div>
                         </div>
                     </div>
 
@@ -254,6 +256,12 @@
                                     <div class="delivery-row-period operator-period operator-cdek">
                                         <span id="cdek_period"></span>
                                     </div>
+                                    <div class="delivery-row-cost operator-cost operator-hermes">
+                                        Hermes <span id="hermes_cost"></span>
+                                    </div>
+                                    <div class="delivery-row-period operator-period operator-hermes">
+                                        <span id="hermes_period"></span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="delivery-row not-available" id="delivery-block-no-pvz">
@@ -296,6 +304,8 @@
                         <div class="checkout_form_block_button">
                             <button type="button" onclick="Page.backContact()">Назад</button>
                             <button type="button" onclick="Page.nextAddress()">Далее</button>
+                            <div class="loader_wrapper"><div class="loader"></div></div>
+                            <div class="error"></div>
                         </div>
                     </div>
                     <?endif?>
@@ -363,6 +373,8 @@
                         <div class="checkout_form_block_button">
                             <button type="button" onclick="Page.backDelivery()">Назад</button>
                             <button type="button" onclick="Page.nextPayment()">Далее</button>
+                            <div class="loader_wrapper"><div class="loader"></div></div>
+                            <div class="error"></div>
                         </div>
                     </div>
 
@@ -375,6 +387,8 @@
                         <div class="checkout_form_block_button">
                             <button type="button" onclick="Page.backAddress()">Назад</button>
                             <button type="button" onclick="Page.nextTotal()">Далее</button>
+                            <div class="loader_wrapper"><div class="loader"></div></div>
+                            <div class="error"></div>
                         </div>
                     </div>
 

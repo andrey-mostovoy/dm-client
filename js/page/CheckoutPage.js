@@ -255,6 +255,8 @@ var CheckoutPage = function() {
      * @param {Event} event
      */
     this.onPickupPointSelect = function(event) {
+        this.hideError();
+
         var $item = $(event.target);
         this.state.d_1_id = $item.data('id');
 
@@ -264,6 +266,8 @@ var CheckoutPage = function() {
             cost = this.state.deliveryCostPvz.cost.Cdek.text;
         } else if (Point.operator === 'Boxberry') {
             cost = this.state.deliveryCostPvz.cost.Boxberry.text;
+        } else if (Point.operator === 'Hermes') {
+            cost = this.state.deliveryCostPvz.cost.Hermes.text;
         } else {
             cost = this.state.deliveryCostPvz.cost.text;
         }
@@ -487,6 +491,7 @@ var CheckoutPage = function() {
         // вывод предупреждения по предоплате.
         var currentDate = new Date();
         // месяц с 0 по 11
+        // ....
         // начиная с 18 декабря
         if (currentDate.getMonth() === 11 && currentDate.getDate() >= 18) {
             // для всех городов кроме спб, мск
@@ -513,7 +518,7 @@ var CheckoutPage = function() {
                         // скрываю период доставки всех операторов.
                         $('.operator-period').hide();
 
-                        // условие ниже - это спб или москва
+                        // условие ниже - это спб или москва (без указания оператора)
                         if (info.cost.raw) {
                             info.cost.text = prefix + info.cost.text;
                             $('#raw_cost').text(info.cost.text);
@@ -537,6 +542,12 @@ var CheckoutPage = function() {
                                 $('#cdek_cost').text(info.cost.Cdek.text);
                                 $('#cdek_period').text(info.period.Cdek.text);
                                 $('.operator-cdek').show();
+                            }
+                            if (info.cost.Hermes) {
+                                info.cost.Hermes.text = prefix + info.cost.Hermes.text;
+                                $('#hermes_cost').text(info.cost.Hermes.text);
+                                $('#hermes_period').text(info.period.Hermes.text);
+                                $('.operator-hermes').show();
                             }
                         }
 
@@ -610,6 +621,7 @@ var CheckoutPage = function() {
                 // самовывоз
                 if (this.state.d_1_id < 0) {
                     // еще не выбрали пункт
+                    callback();
                     return;
                 }
                 var Point = this.state.d_1_points[this.state.d_1_id];
@@ -680,7 +692,9 @@ var CheckoutPage = function() {
                     this.addCustomDeliveryTax(this.state.deliveryCostPvz.cost.Cdek.raw);
                 } else if (Point.operator === 'Boxberry') {
                     this.addCustomDeliveryTax(this.state.deliveryCostPvz.cost.Boxberry.raw);
-                } else if (Point.operator === 'Gp') {
+                } else if (Point.operator === 'Hermes') {
+                    this.addCustomDeliveryTax(this.state.deliveryCostPvz.cost.Hermes.raw);
+                } else if (Point.operator === 'Gp' && this.state.deliveryCostPvz.cost.Gp) {
                     this.addCustomDeliveryTax(this.state.deliveryCostPvz.cost.Gp.raw);
                 } else {
                     this.addCustomDeliveryTax(this.state.deliveryCostPvz.cost.raw);
@@ -716,6 +730,24 @@ var CheckoutPage = function() {
         });
     };
 
+    this.showLoader = function() {
+        $('.checkout_form_block_button .loader').show();
+    };
+
+    this.hideLoader = function() {
+        $('.checkout_form_block_button .loader').hide();
+    };
+
+    this.showError = function(panelId, text) {
+        var $error = this.getField(panelId).next('.panel').find('.checkout_form_block_button .error');
+        $error.text(text);
+        $error.show();
+    };
+
+    this.hideError = function() {
+        $('.checkout_form_block_button .error').hide();
+    };
+
     /**
      * Переход из указания контактной информации к способам доставки
      * @return {boolean}
@@ -724,6 +756,9 @@ var CheckoutPage = function() {
         var t = this;
         var result = true;
 
+        this.hideError();
+        this.showLoader();
+
         // валидируем поля контактных данных
         this.getField('ch_contact').next('.panel').find('input:visible').each(function() {
             t.setState($(this));
@@ -731,10 +766,13 @@ var CheckoutPage = function() {
         });
 
         if (!result) {
+            this.hideLoader();
+            this.showError('ch_contact', 'Заполните обязательные поля');
             return false;
         }
 
         this.beforeShowDeliveryBlock(function() {
+            t.hideLoader();
             t.accordionPanelToggle('ch_contact');
             t.accordionPanelToggle('ch_delivery', function() {
                 if (!t.state.deliveryId) {
@@ -752,6 +790,8 @@ var CheckoutPage = function() {
      * @return {boolean}
      */
     this.nextAddress = function() {
+        this.hideError();
+
         if (!this.state.deliveryId) {
             return false;
         }
@@ -772,6 +812,9 @@ var CheckoutPage = function() {
     this.nextPayment = function() {
         var t = this;
 
+        this.hideError();
+        this.showLoader();
+
         if (this.state.deliveryId != 1) {
             var result = true;
 
@@ -782,12 +825,19 @@ var CheckoutPage = function() {
             });
 
             if (!result) {
+                this.hideLoader();
+                this.showError('ch_address', 'Заполните обязательные поля');
+
                 return false;
             }
         }
 
         this.beforeShowPaymentBlock(function() {
+            t.hideLoader();
             if (!t.state.address) {
+                if (t.state.deliveryId == 1) {
+                    t.showError('ch_address', 'Укажите пункт самовывоза');
+                }
                 return;
             }
 
@@ -802,6 +852,8 @@ var CheckoutPage = function() {
      * @return {boolean}
      */
     this.nextTotal = function() {
+        this.hideError();
+
         if (!this.state.paymentId) {
             return false;
         }
@@ -817,24 +869,28 @@ var CheckoutPage = function() {
     };
 
     this.backPayment = function() {
+        this.hideError();
         this.accordionPanelToggle('ch_total');
         this.accordionPanelToggle('ch_payment');
         return false;
     };
 
     this.backAddress = function() {
+        this.hideError();
         this.accordionPanelToggle('ch_payment');
         this.accordionPanelToggle('ch_address');
         return false;
     };
 
     this.backDelivery = function() {
+        this.hideError();
         this.accordionPanelToggle('ch_address');
         this.accordionPanelToggle('ch_delivery');
         return false;
     };
 
     this.backContact = function() {
+        this.hideError();
         this.accordionPanelToggle('ch_delivery');
         this.accordionPanelToggle('ch_contact');
         return false;
@@ -953,6 +1009,8 @@ var GlavpunktMap = function() {
             options.preset = 'islands#darkGreenIcon';
         } else if (Point.operator === 'Boxberry') {
             options.preset = 'islands#violetIcon';
+        } else if (Point.operator === 'Hermes') {
+            options.preset = 'islands#yellowIcon';
         }
 
         return new window.ymaps.Placemark(
@@ -994,6 +1052,8 @@ var GlavpunktMap = function() {
             body.push('<p>Пункт выдачи <strong>CDEK</strong></p>');
         } else if (Point.operator === 'Boxberry') {
             body.push('<p>Пункт выдачи <strong>Boxberry</strong></p>');
+        } else if (Point.operator === 'Hermes') {
+            body.push('<p>Пункт выдачи <strong>Hermes</strong></p>');
         }
 
         body.push('<p>');
@@ -1002,6 +1062,8 @@ var GlavpunktMap = function() {
             body.push(deliveryInfo.cost.Cdek.text);
         } else if (Point.operator === 'Boxberry') {
             body.push(deliveryInfo.cost.Boxberry.text);
+        } else if (Point.operator === 'Hermes') {
+            body.push(deliveryInfo.cost.Hermes.text);
         } else {
             body.push(deliveryInfo.cost.text);
         }
