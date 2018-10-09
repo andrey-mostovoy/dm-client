@@ -1082,6 +1082,12 @@ button.accordion.active {
     font-weight: bold;
 }
 
+#courierError {
+    display: none;
+    color: red;
+    font-weight: bold;
+}
+
 #pickedPoint {
     margin: 25px;
     padding: 0;
@@ -1358,7 +1364,14 @@ button.accordion.active {
         background-color: mediumpurple !important;
     }
 }
+/* ---- */
 
+/* управление заказами */
+@media (max-width: 767px) {
+    .forumIcoTd {
+        display: table-cell;
+    }
+}
 /* ---- */
 
 /*  */

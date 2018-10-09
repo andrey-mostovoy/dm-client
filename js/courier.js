@@ -35,6 +35,10 @@ var CourierGlavPunkt = function() {
     this.pickupPointsCacheKey = 'gpd';
     this.courierCitiesCacheKey = 'gcc';
     this.cacheTtl = 1440; // сутки
+    /**
+     * @type {Array} Стек колбеков для сетевых ошибок отправки запросов.
+     */
+    this.failCallbackStack = [];
 
     /**
      * Это спб?
@@ -71,10 +75,24 @@ var CourierGlavPunkt = function() {
      * @param {Function} onFail Callback при сетевой ошибке. Аргументы: jqXHR, textStatus, errorThrown
      */
     this.send = function(method, params, onDone, onFail) {
+        var t = this;
         params = params || {};
         onDone = onDone || function() {};
-        onFail = onFail || function() {};
+        onFail = function(jqXHR, textStatus, errorThrown) {
+            typeof onFail === 'function' && onFail(jqXHR, textStatus, errorThrown);
+            $.each(t.failCallbackStack, function(index, onFailCallback) {
+                onFailCallback(jqXHR, textStatus, errorThrown);
+            });
+        };
         $.getJSON(this.baseUrl + method, params).done(onDone).fail(onFail);
+    };
+
+    /**
+     * Добавляет колбек на ошибку отправки запроса в главпункт
+     * @param {Function} onFail Callback при сетевой ошибке. Аргументы: jqXHR, textStatus, errorThrown
+     */
+    this.addFailCallback = function(onFail) {
+        this.failCallbackStack.push(onFail);
     };
 
     /**
@@ -363,7 +381,7 @@ var CourierGlavPunkt = function() {
                 cost = t.setMinCost(options, cost);
                 cost = t.setMaxCost(options, cost);
                 cost = t.round(cost);
-                console.log('Тариф (' + options.serv + '):', tarif, 'Цена:', cost);
+                console.log('Тариф', options.cityTo, '(' + options.serv + '):', 'Тариф:', tarif, 'Цена:', cost);
                 if (typeof callback === 'function') {
                     callback({
                         price: cost,
@@ -371,18 +389,18 @@ var CourierGlavPunkt = function() {
                     }, options.punktId);
                 }
             } else if (response.result === 'error') {
-                console.log('Ошибка подсчета тарифа (' + options.serv + ')', response.message);
+                console.log('Ошибка подсчета тарифа', options.cityTo, '(' + options.serv + ')', response.message);
                 if (typeof errback === 'function') {
                     errback(response);
                 }
             } else {
-                console.log('Ошибка подсчета тарифа (' + options.serv + ') (неверный ответ от сервера)', response);
+                console.log('Ошибка подсчета тарифа', options.cityTo, '(' + options.serv + ') (неверный ответ от сервера)', response);
                 if (typeof errback === 'function') {
                     errback(response);
                 }
             }
         }, function(jqXHR, textStatus, errorThrown) {
-            console.log('Ошибка подсчета тарифа (' + options.serv + ') (неверный ответ от сервера)', textStatus);
+            console.log('Ошибка подсчета тарифа', options.cityTo, '(' + options.serv + ') (неверный ответ от сервера)', textStatus);
             if (typeof errback === 'function') {
                 errback(textStatus);
             }
@@ -413,21 +431,21 @@ var CourierGlavPunkt = function() {
             if (response.result === 'ok') {
                 var cost = t.addServicesCost(response.tarifTotal, options.price);
                 cost = t.round(cost);
-                console.log('Тариф (доставка почтой):', response.tarifTotal, 'Цена:', cost);
+                console.log('Тариф', options.address, '(доставка почтой):', response.tarifTotal, 'Цена:', cost);
                 var callbackParams = {
                     price: cost,
                     period: response.period
                 };
                 typeof callback === 'function' && callback(callbackParams);
             } else if (response.result === 'error') {
-                console.log('Ошибка подсчета тарифа (доставка почтой)', response.message);
+                console.log('Ошибка подсчета тарифа', options.address, '(доставка почтой)', response.message);
                 typeof errback === 'function' && errback(response);
             } else {
-                console.log('Ошибка подсчета тарифа (доставка почтой) (неверный ответ от сервера)', response);
+                console.log('Ошибка подсчета тарифа', options.address, '(доставка почтой) (неверный ответ от сервера)', response);
                 typeof errback === 'function' && errback(response);
             }
         }, function(jqXHR, textStatus, errorThrown) {
-            console.log('Ошибка подсчета тарифа (доставка почтой) (неверный ответ от сервера)', textStatus);
+            console.log('Ошибка подсчета тарифа', options.address, '(доставка почтой) (неверный ответ от сервера)', textStatus);
             typeof errback === 'function' && errback(textStatus);
         });
     };

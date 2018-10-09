@@ -52,8 +52,7 @@
                     </tr>
                 </table>
 
-                <div id="cont-$MODULE_ID$-$PAGE_ID$"
-                <?if($PAGE_ID$!='invoices')?> style="position:relative;"<?endif?>>
+                <div id="cont-$MODULE_ID$-$PAGE_ID$" <?if($PAGE_ID$!='invoices')?> style="position:relative;"<?endif?>>
 
                 <?if($ORDERS_GEOMAP$)?>
                 <div style="float:right;">$ORDERS_GEOMAP$</div>
@@ -141,7 +140,7 @@
                 <?endif?>
 
                 <?if($PAGE_ID$=='checkout')?>
-                <?if($NUM_ENTRIES$)?>
+                <?if($NUM_ENTRIES$ && 1)?>
                 <p class="our_work">
                     Для Вашего удобства мы улучшаем наш сайт! Если у Вас возникли сложности с оформлением заказа, пожалуйста, позвоните по номеру 8(800) 222-67-12 (звонок бесплатный)
                 </p>
@@ -191,6 +190,11 @@
                         <p class="description">Выберете удобный способ доставки</p>
                         <p class="new_year_restriction">
                             Внимание! С 18 до 31 декабря доставка осуществляется только по предоплате за заказ. Спасибо за понимание.
+                        </p>
+                        <p id="courierError">
+                            Внимание! В связи с техническими проблемами возможно недоступны варианты доставки курьером или самовывоз.
+                            <br/>
+                            Приносим свои извинения и просим связаться с нами по телефону либо оставить заявку на обратный звонок для оформления заказа.
                         </p>
 
                         <div class="delivery-list-wrapper">
@@ -377,18 +381,19 @@
                             <div class="error"></div>
                         </div>
                     </div>
-
-                    <button type="button" class="accordion" id="ch_payment">Способ оплаты</button>
-                    <div class="panel">
-                        <div class="wrapper">
-                            <p class="description">Выберете удобный способ оплаты</p>
-                            $PAYMENT_LIST$
-                        </div>
-                        <div class="checkout_form_block_button">
-                            <button type="button" onclick="Page.backAddress()">Назад</button>
-                            <button type="button" onclick="Page.nextTotal()">Далее</button>
-                            <div class="loader_wrapper"><div class="loader"></div></div>
-                            <div class="error"></div>
+                    <div style="display: none;">
+                        <button type="button" class="accordion" id="ch_payment">Способ оплаты</button>
+                        <div class="panel">
+                            <div class="wrapper">
+                                <p class="description">Выберете удобный способ оплаты</p>
+                                $PAYMENT_LIST$
+                            </div>
+                            <div class="checkout_form_block_button">
+                                <button type="button" onclick="Page.backAddress()">Назад</button>
+                                <button type="button" onclick="Page.nextTotal()">Далее</button>
+                                <div class="loader_wrapper"><div class="loader"></div></div>
+                                <div class="error"></div>
+                            </div>
                         </div>
                     </div>
 
@@ -404,9 +409,11 @@
                                 <td>
                                     <h4><!--<s4607>-->Стоимость доставки<!--</s>--></h4>
                                     $ORDER_TAX$
+                                    <!--
                                     <p class="delivery_notice">
-                                        При стоимости доставки более 700 руб. заказы отправляются только по предоплате! Минимальный размер предоплаты равен стоимости доставки.
+                                    При стоимости доставки более 700 руб. заказы отправляются только по предоплате! Минимальный размер предоплаты равен стоимости доставки.
                                     </p>
+                                    -->
                                 </td>
                             </tr>
                             <?if($ORDER_DISCOUNT$)?>
@@ -432,7 +439,7 @@
 
                         $ORDER_INFO$
                         <div id="order-submit">
-                            <button type="button" onclick="Page.backPayment()">Назад</button>
+                            <button type="button" onclick="Page.backAddress()">Назад</button>
                             $ORDER_BUTTON$
                         </div>
                     </div>
@@ -443,9 +450,15 @@
                 -->
                 <!-- end checkout -->
                 <?else?>
+                <?if(0)?>
+                <div style="text-align:center; line-height:30px; padding:30px;">
+                    <h3 style="color: red;">Заказы временно не принимаются! Приносим свои извинения за оказанные неудобства.</h3>
+                </div>
+                <?else?>
                 <div style="text-align:center; line-height:30px; padding-bottom:30px;"><h3><!--<s5434>-->Ваша корзина
                     пуста<!--</s>--></h3>[ <a href="/shop"><!--<s4451>-->Продолжить покупки<!--</s>--></a> ]
                 </div>
+                <?endif?>
                 <!-- end checkout 2 -->
                 <?endif?>
                 <!-- end checkout 3 -->
@@ -500,6 +513,7 @@ $GLOBAL_BFOOTER$
 <?if($NUM_ENTRIES$)?>
 <script type="text/javascript">Page.setOrderInfo($ORDER_WEIGHT$, $ORDER_AMOUNT_RAW$);</script>
 <?endif?>
+<script type="text/javascript">Page.setUserGroup($GROUP_ID$);</script>
 <!--
 <script type="text/javascript" src="/js/giftForOrder.js"></script>
 -->
