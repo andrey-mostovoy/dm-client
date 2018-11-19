@@ -52,7 +52,8 @@
                     </tr>
                 </table>
 
-                <div id="cont-$MODULE_ID$-$PAGE_ID$" <?if($PAGE_ID$!='invoices')?> style="position:relative;"<?endif?>>
+                <div id="cont-$MODULE_ID$-$PAGE_ID$"
+                <?if($PAGE_ID$!='invoices')?> style="position:relative;"<?endif?>>
 
                 <?if($ORDERS_GEOMAP$)?>
                 <div style="float:right;">$ORDERS_GEOMAP$</div>
@@ -150,6 +151,9 @@
                     <input type="hidden" name="payment_id" value="1" id="payment_id">
                     <input type="hidden" name="delivery_id" value="2" id="delivery_id">
                     <input type="hidden" name="custom_delivery_tax" value="" id="custom_delivery_tax">
+
+                    <input type="hidden" name="fld10" value="" id="order-fld-10">
+                    <input type="hidden" name="fld11" value="" id="order-fld-11">
 
                     <button type="button" class="accordion" id="ch_contact">Контактная информация</button>
                     <div class="panel">

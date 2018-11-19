@@ -1096,6 +1096,13 @@ button.accordion.active {
     margin-bottom: 14px;
 }
 
+.glavPunktMapMenu {
+    padding: 0;
+}
+.glavPunktMapMenu > li {
+    display: inline-flex;
+}
+
 /* Планшеты альбомно */
 @media (max-width: 1169px) {
     .checkout_left {

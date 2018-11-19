@@ -15,6 +15,7 @@ var CourierGlavPunkt = function() {
         pvz: 'выдача',
         pvzRU: 'выдача по РФ',
         courier: 'курьерская доставка',
+        pochta: 'почта',
     };
     this._city = {
         msc: 'Москва',
@@ -457,7 +458,8 @@ var CourierGlavPunkt = function() {
      * @return {number}
      */
     this.addServicesCost = function(cost, price) {
-        var percent = 3.5;
+        // var percent = 3.5; // 0.95% уже накидывается в стоимости по апи в отличии от показываемой в интерфейсе создания заказа в ГП
+        var percent = 2.55;
         var servicePrice = price * percent / 100;
         return cost + servicePrice;
     };
@@ -481,7 +483,7 @@ var CourierGlavPunkt = function() {
 
         if (options.serv === this.serv.courier) {
             if (this.isSpb(options.cityTo)) {
-                minPrice = 280;
+                minPrice = 300;
             }
         } else {
             if (this.isMsc(options.cityTo)) {
@@ -855,8 +857,81 @@ var CourierGlavPunkt = function() {
     /**
      * https://glavpunkt.ru/apidoc/takepkgs.html#id2
      */
-    this.createOrder = function() {
-        // this.
+    this.createOrder = function(orderInfoResponse) {
+        var orders = [];
+        for (var i in orderInfoResponse.orders) {
+            var orderInfo = orderInfoResponse.orders[i];
+
+            var order = {
+                sku: orderInfo.nom,
+                price: orderInfo.payment.topay.replace(' руб.', ''),
+                weight: orderInfo.weight,
+                buyer_fio: orderInfo.fields[4],
+                buyer_phone: orderInfo.fields[1],
+                comment: orderInfo.fields[5],
+                items_count: 1, // Количество мест в заказе
+            };
+
+            switch (orderInfo.delivery.id) {
+                case '1':
+                    if (this.isSpbOrMsc(orderInfo.fields[8])) {
+                        order.serv = this.serv.pvz;
+                        order.dst_punkt_id = ''; // код пункта
+                    } else {
+                        order.serv = this.serv.pvzRU;
+                        order.delivery_rf = {
+                            city_id: orderInfo.fields[10], // код города
+                            pvz_id: orderInfo.fields[11], // код пункта
+                        };
+                    }
+                    break;
+                case '2':
+                    order.serv = this.serv.courier;
+                    order.delivery = {
+                        city: orderInfo.fields[10], // код города
+                        address: orderInfo.fields[2],
+                        // date: "25.11.2016",
+                        // time: "с 10 до 18",
+                    };
+                    break;
+                case '3':
+                    order.serv = this.serv.pochta;
+                    order.pochta = {
+                        address: orderInfo.fields[2],
+                    };
+                    break;
+                default:
+                    console.log('NO CASE FOR DELIVERY');
+                    continue;
+            }
+
+            orders.push(order);
+        }
+        console.log(orders);
+return;
+        $.ajax({
+            method: 'post',
+            url: this.baseUrl + 'api/take_pkgs',
+            data: {
+                login : this.login,     // логин интернет-магазина
+                token : this.token,     // token для авторизации
+                comments_client : '', // комментарий к накладной
+                punkt_id : 'Mezhdunarodnaia-B6k1', // Пункт отгрузки заказов, если вы сами привозите их на ПВЗ
+                pickup_needed: 0, // Если нужен забор заказов, передайте в этом поле 1 (Отменяет параметр punkt_id!)
+                orders : orders,
+                // Не обязательно. Заполняйте следующий блок, только если вам нужна услуга "Забор заказов":
+                // pickup_params: {
+                //     date: '2017-09-22', // Дата забора
+                //     interval: '10:00-18:00', // Интервал забора
+                //     address: 'Алтайская д18, кв99', // Адрес забора
+                //     comment: 'тел для связи' // Рекомендуем указывать здесь контактный телефон и другую полезную информацию
+                //     city: 'SPB' // Город забора. Доступные значения:  SPB/MSK Внимание! Если город не указан, используется значение по-умолчанию: SPB
+                // },
+            },
+            success: function(response) {
+                //
+            }
+        });
     };
 };
 CourierGlavPunkt.prototype = new Courier();

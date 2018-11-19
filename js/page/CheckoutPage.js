@@ -55,6 +55,8 @@ var CheckoutPage = function() {
         address: '',
         paymentId: '',
         comment: '',
+        cityCode: '',
+        pvzCode: '',
         // далее поля разбитые на составляющие для удобства, но соединяемые в одно из верхних, например, адресс
         d_2_street: '', // улица
         d_2_house: '', // дом
@@ -83,6 +85,8 @@ var CheckoutPage = function() {
         email: 'order-fld-6',
         city: 'order-fld-8',
         address: 'order-fld-2',
+        cityCode: 'order-fld-10',
+        pvzCode: 'order-fld-11',
         d2street: 'js_d_2_street',
         d2house: 'js_d_2_house',
         d2block: 'js_d_2_block',
@@ -153,6 +157,7 @@ var CheckoutPage = function() {
                 this.state.phone = $field.val();
                 break;
             case this.fieldIds.email:
+                $field.val($field.val().trim());
                 this.state.email = $field.val();
                 break;
             case this.fieldIds.city:
@@ -313,6 +318,11 @@ var CheckoutPage = function() {
             cost = this.state.deliveryCostPvz.cost.text;
         }
 
+        this.state.pvzCode = Point.id;
+        if (Point.city_id) {
+            this.state.cityCode = Point.city_id;
+        }
+
         $('#pickup_address').text(Point.address);
         $('#pickup_work_time').text(Point.work_time);
         $('#pickup_phone').text(Point.phone);
@@ -331,14 +341,6 @@ var CheckoutPage = function() {
         // запись стоимости доставки в поле custom_delivery_tax
         $('input[name="custom_delivery_tax"]').val(cost);
 
-        if (cost >= this.MAX_DELIVERY_COST) {
-            // $('.delivery_notice').show();
-            $('#order-button').hide();
-        } else {
-            // $('.delivery_notice').hide();
-            $('#order-button').show();
-        }
-
         // обновим стоимость доставки в информационном поле
         if (cost === 0) {
             // скрываю стоимость доставки
@@ -353,6 +355,13 @@ var CheckoutPage = function() {
                 // если вес больше 10 то сумма доставки будет отличаться.
                 text = 'Посылки общим весом более 10кг уточняется менеджером';
                 $('input[name="custom_delivery_tax"]').val(0);
+            } else if (cost >= this.MAX_DELIVERY_COST && !this.user.isAdmin()) {
+                // $('.delivery_notice').show();
+                $('#order-button').hide();
+                text = 'Сумма доставки слишком высока. Свяжитесь с нашим менеджером.';
+            } else {
+                // $('.delivery_notice').hide();
+                $('#order-button').show();
             }
             $('#deliveryAmount .order_tax').text(text);
             // показываю стоимость доставки
@@ -551,7 +560,7 @@ var CheckoutPage = function() {
             var prefix = t.order.weight > 10 ? 'от ' : '';
 
             var deliveryCostHandle = function(delivery, cost, onOK) {
-                if (cost >= t.MAX_DELIVERY_COST) {
+                if (cost >= t.MAX_DELIVERY_COST && !t.user.isAdmin()) {
                     $('#delivery-block-' + delivery).hide();
                     $('#delivery-block-no-' + delivery).show();
                 } else {
@@ -613,6 +622,7 @@ var CheckoutPage = function() {
                         }
 
                         t.state.deliveryCostPvz = info;
+                        t.state.cityCode = info.code;
                         break;
                     case 'courier':
                         deliveryCostHandle(delivery, info.cost.raw, function() {
@@ -621,6 +631,7 @@ var CheckoutPage = function() {
                             $('#courier_period').text(info.period.text);
                         });
                         t.state.deliveryCostCourier = info;
+                        t.state.cityCode = info.code;
                         break;
                     case 'post':
                         // что бы показать всегда почту - нужно сделать так, да
@@ -773,6 +784,9 @@ var CheckoutPage = function() {
                 this.addCustomDeliveryTax(this.state.deliveryCostPost.cost.raw);
                 break;
         }
+
+        this.getField(this.fieldIds.cityCode).val(this.state.cityCode);
+        this.getField(this.fieldIds.pvzCode).val(this.state.pvzCode);
 
         callback();
     };
@@ -1059,12 +1073,19 @@ var GlavpunktMap = function() {
             if (deliveryInfo.cost[deliveryPoint.operator]) {
                 cost = deliveryInfo.cost[deliveryPoint.operator].raw;
             }
-            if (cost >= window.Page.MAX_DELIVERY_COST) {
+            if (cost >= window.Page.MAX_DELIVERY_COST && !window.Page.user.isAdmin()) {
                 // не ставим точки пунктов, где доставка дороже указанной.
                 return;
             }
+
+            // какая-то ущербная точка
+            if (deliveryPoint.id == 'PV755') {
+                return;
+            }
+
             // создаем точку на карте
             var Placemark = t._createMapPlacemark(index, deliveryPoint, deliveryInfo);
+            // добавляем в коллекцию
             t.GeoCollection.add(Placemark);
             if (window.Page.user.isAdmin()) {
                 // создаем пункт меню и добавляем в общий список.
@@ -1205,10 +1226,24 @@ var GlavpunktMap = function() {
      * @private
      */
     this._createAndAppendMapMenu = function(Placemark, Point) {
+        if (Point.operator === 'Boxberry') {
+            // ненужно
+            return;
+        }
         var t = this;
-        var menuItem = $('<li><a href="#">' + Point.address + ' (' + Point.operator + ')</a></li>');
+        var subMenuClass = 'subMenu' + Point.operator;
+        if ($('.' + subMenuClass, this.menu).length == 0) {
+            var subMenu = $('<li>' + Point.operator + ':<ul class="' + subMenuClass + '"></ul></li>');
+            if (Point.operator === 'Hermes') {
+                subMenu.prependTo(this.menu);
+            } else {
+                subMenu.appendTo(this.menu);
+            }
+        }
+        var appendToMenu = $('.' + subMenuClass, this.menu);
+        var menuItem = $('<li><a href="#">' + Point.address + '</a></li>');
         menuItem
-            .appendTo(this.menu)
+            .appendTo(appendToMenu)
             // При клике по пункту меню открываем/закрываем баллун у метки.
             .find('a')
             .bind('click', function () {

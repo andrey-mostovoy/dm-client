@@ -44,6 +44,8 @@ var InvoicesPage = function() {
      *
      */
     this.onCreateGlavpunktOrder = function() {
+        var t = this;
+
         // получим выделенные чекбоксы.
         var ids = $.map($('.col_checkbox input[type=checkbox]:checked'), function(item) { return $(item).attr('name'); });
 
@@ -65,10 +67,17 @@ var InvoicesPage = function() {
                     success: function(response) {
                         console.log(response);
 
-                        if (response.success.count != ids.length) {
-                            console.log('order count and selected checkbox is not equal');
+                        if (!response.success) {
+                            alert('ERROR: no success');
                             return;
                         }
+
+                        if (response.success.count != ids.length) {
+                            alert('ERROR: order count and selected checkbox is not equal');
+                            return;
+                        }
+
+                        t.Courier.createOrder(response.success);
                     }
                 });
             }
