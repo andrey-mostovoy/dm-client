@@ -859,12 +859,12 @@ var CourierGlavPunkt = function() {
      */
     this.createOrder = function(orderInfoResponse) {
         var orders = [];
+        var requestCounts = orderInfoResponse.orders.length;
         for (var i in orderInfoResponse.orders) {
             var orderInfo = orderInfoResponse.orders[i];
 
             var order = {
                 sku: orderInfo.nom,
-                price: orderInfo.payment.topay.replace(' руб.', ''),
                 weight: orderInfo.weight,
                 buyer_fio: orderInfo.fields[4],
                 buyer_phone: orderInfo.fields[1],
@@ -876,7 +876,7 @@ var CourierGlavPunkt = function() {
                 case '1':
                     if (this.isSpbOrMsc(orderInfo.fields[8])) {
                         order.serv = this.serv.pvz;
-                        order.dst_punkt_id = ''; // код пункта
+                        order.dst_punkt_id = orderInfo.fields[11]; // код пункта
                     } else {
                         order.serv = this.serv.pvzRU;
                         order.delivery_rf = {
@@ -886,12 +886,25 @@ var CourierGlavPunkt = function() {
                     }
                     break;
                 case '2':
+                    var comment = orderInfo.fields[5] || '';
+                    var splited = comment.substr(comment.indexOf('Доставка') + 9).trim().split(' с ');
+                    var splitedDate = splited[0].split('.');
+                    var date = {
+                        d: splitedDate[0],
+                        m: splitedDate[1] || (new Date().getMonth() + 1),
+                        y: splitedDate[2] || (new Date().getFullYear()),
+                        toString: function() {
+                            return this.d + '.' + this.m + '.' + this.y;
+                        },
+                    };
+                    var time = splited[1];
+
                     order.serv = this.serv.courier;
                     order.delivery = {
                         city: orderInfo.fields[10], // код города
                         address: orderInfo.fields[2],
-                        // date: "25.11.2016",
-                        // time: "с 10 до 18",
+                        date: date.toString(),
+                        time: time ? ('с ' + time) : 'с 10 до 18',
                     };
                     break;
                 case '3':
@@ -901,37 +914,94 @@ var CourierGlavPunkt = function() {
                     };
                     break;
                 default:
-                    console.log('NO CASE FOR DELIVERY');
+                    console.error('NO CASE FOR DELIVERY');
                     continue;
             }
 
             orders.push(order);
+
+            // получим части
+            $.ajax({
+                method: 'post',
+                url: '/php/order/glavpunkt/GlavpunktOrder.php',
+                data: {
+                    method: 'orderUrl',
+                    orderHash: orderInfo.order_hash,
+                },
+                success: function(requestUrl) {
+                    $.ajax({
+                        method: 'get',
+                        url: requestUrl,
+                        success: function(response) {
+                            requestCounts -= 1;
+                            console.log(response);
+
+                            if (!response.success) {
+                                alert('ERROR: no success');
+                                return;
+                            }
+
+                            for (var ii in orders) {
+                                if (orders[ii].sku == response.success.order_nom) {
+                                    orders[ii].price = response.success.order_data.order_amount.amount_raw + response.success.order_data.order_discount.discount_raw;
+                                    orders[ii].client_delivery_price = response.success.order_data.order_delivery.tax.tax_raw;
+
+                                    orders[ii]['parts'] = [];
+                                    for (var j in response.success.order_goods.goods) {
+                                        orders[ii]['parts'].push({
+                                            name: response.success.order_goods.goods[j].name.replace(/"/g, "'"),
+                                            price: response.success.order_goods.goods[j].price.price_raw,
+                                            num: response.success.order_goods.goods[j].cnt,
+                                        });
+                                    }
+
+                                    if (requestCounts == 0) {
+                                        // все получили номенклатуру... отправим уже наконец в главпункт
+                                        sendToGlavpunkt();
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                    });
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert('ERROR: ' + errorThrown);
+                },
+            });
         }
-        console.log(orders);
-return;
-        $.ajax({
-            method: 'post',
-            url: this.baseUrl + 'api/take_pkgs',
-            data: {
-                login : this.login,     // логин интернет-магазина
-                token : this.token,     // token для авторизации
+
+        sendToGlavpunkt = function() {
+            var orderData = {
                 comments_client : '', // комментарий к накладной
                 punkt_id : 'Mezhdunarodnaia-B6k1', // Пункт отгрузки заказов, если вы сами привозите их на ПВЗ
-                pickup_needed: 0, // Если нужен забор заказов, передайте в этом поле 1 (Отменяет параметр punkt_id!)
+                // pickup_needed: 0, // Если нужен забор заказов, передайте в этом поле 1 (Отменяет параметр punkt_id!)
                 orders : orders,
-                // Не обязательно. Заполняйте следующий блок, только если вам нужна услуга "Забор заказов":
-                // pickup_params: {
-                //     date: '2017-09-22', // Дата забора
-                //     interval: '10:00-18:00', // Интервал забора
-                //     address: 'Алтайская д18, кв99', // Адрес забора
-                //     comment: 'тел для связи' // Рекомендуем указывать здесь контактный телефон и другую полезную информацию
-                //     city: 'SPB' // Город забора. Доступные значения:  SPB/MSK Внимание! Если город не указан, используется значение по-умолчанию: SPB
-                // },
-            },
-            success: function(response) {
-                //
-            }
-        });
+            };
+
+            console.log(orderData);
+
+            $.ajax({
+                method: 'post',
+                url: '/php/order/glavpunkt/GlavpunktOrder.php',
+                data: {
+                    method: 'order',
+                    orderData: JSON.stringify(orderData),
+                },
+                success: function(response) {
+                    response = JSON.parse(response);
+                    if (response.result == 'error') {
+                        alert('ERROR: ' + response.message);
+                    }
+                    if (response.result == 'ok') {
+                        alert('OK: https://glavpunkt.ru/zayavka-zakaz.html?id=' + response.docnum);
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert('ERROR: ' + errorThrown);
+                },
+            });
+        };
     };
 };
 CourierGlavPunkt.prototype = new Courier();

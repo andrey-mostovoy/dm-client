@@ -314,6 +314,8 @@ var CheckoutPage = function() {
             cost = this.state.deliveryCostPvz.cost.Boxberry.text;
         } else if (Point.operator === 'Hermes') {
             cost = this.state.deliveryCostPvz.cost.Hermes.text;
+        } else if (Point.operator === 'Logsis') {
+            cost = this.state.deliveryCostPvz.cost.Logsis.text;
         } else {
             cost = this.state.deliveryCostPvz.cost.text;
         }
@@ -619,6 +621,14 @@ var CheckoutPage = function() {
                                     $('.operator-hermes').show();
                                 });
                             }
+                            if (info.cost.Logsis) {
+                                deliveryCostHandle(delivery, info.cost.Logsis.raw, function() {
+                                    info.cost.Logsis.text = prefix + info.cost.Logsis.text;
+                                    $('#logsis_cost').text(info.cost.Logsis.text);
+                                    $('#logsis_period').text(info.period.Logsis.text);
+                                    $('.operator-logsis').show();
+                                });
+                            }
                         }
 
                         t.state.deliveryCostPvz = info;
@@ -771,6 +781,8 @@ var CheckoutPage = function() {
                     this.addCustomDeliveryTax(this.state.deliveryCostPvz.cost.Boxberry.raw);
                 } else if (Point.operator === 'Hermes') {
                     this.addCustomDeliveryTax(this.state.deliveryCostPvz.cost.Hermes.raw);
+                } else if (Point.operator === 'Logsis') {
+                    this.addCustomDeliveryTax(this.state.deliveryCostPvz.cost.Logsis.raw);
                 } else if (Point.operator === 'Gp' && this.state.deliveryCostPvz.cost.Gp) {
                     this.addCustomDeliveryTax(this.state.deliveryCostPvz.cost.Gp.raw);
                 } else {
@@ -1137,6 +1149,8 @@ var GlavpunktMap = function() {
             options.preset = 'islands#violetIcon';
         } else if (Point.operator === 'Hermes') {
             options.preset = 'islands#blueIcon';
+        } else if (Point.operator === 'Logsis') {
+            options.preset = 'islands#oliveIcon';
         }
 
         return new window.ymaps.Placemark(
@@ -1180,6 +1194,8 @@ var GlavpunktMap = function() {
             body.push('<p>Пункт выдачи <strong>Boxberry</strong></p>');
         } else if (Point.operator === 'Hermes') {
             body.push('<p>Пункт выдачи <strong>Hermes</strong></p>');
+        } else if (Point.operator === 'Logsis') {
+            body.push('<p>Пункт выдачи <strong>LOGSIS</strong></p>');
         }
 
         body.push('<p>');
@@ -1190,6 +1206,8 @@ var GlavpunktMap = function() {
             body.push(deliveryInfo.cost.Boxberry.text);
         } else if (Point.operator === 'Hermes') {
             body.push(deliveryInfo.cost.Hermes.text);
+        } else if (Point.operator === 'Logsis') {
+            body.push(deliveryInfo.cost.Logsis.text);
         } else {
             body.push(deliveryInfo.cost.text);
         }

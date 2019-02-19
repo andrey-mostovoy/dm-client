@@ -100,6 +100,14 @@ function getBalloonHeader(Point) {
 function getBalloonBody(Point) {
     var body = [
         '<p>',
+        '<b>Код</b>',
+        '<br/>',
+        Point.id,
+        '<p>',
+        '<b>Оператор</b>',
+        '<br/>',
+        Point.operator,
+        '<p>',
         '<b>Адрес</b>',
         '<br/>'
     ];

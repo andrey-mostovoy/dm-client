@@ -1043,11 +1043,19 @@ button.accordion.active {
     margin-bottom: 8px;
 }
 
+#boxberry_cost {
+    margin-left: 4px;
+}
+
 #cdek_cost {
-    margin-left: 27px;
+    margin-left: 31px;
 }
 
 #hermes_cost {
+    margin-left: 14px;
+}
+
+#logsis_cost {
     margin-left: 18px;
 }
 

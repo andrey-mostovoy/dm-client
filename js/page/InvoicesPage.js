@@ -58,6 +58,7 @@ var InvoicesPage = function() {
             method: 'post',
             url: '/php/order/glavpunkt/GlavpunktOrder.php',
             data: {
+                method: 'url',
                 ids: ids.join(',')
             },
             success: function(requestUrl) {
@@ -80,7 +81,7 @@ var InvoicesPage = function() {
                         t.Courier.createOrder(response.success);
                     }
                 });
-            }
+            },
         });
     };
 };
