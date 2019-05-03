@@ -98,13 +98,18 @@
 
 
 <?if($PAGE_ID$ != 'invoices')?>
-<!-- VK Widget -->
+<!-- VK Widget
 <script type="text/javascript" src="//vk.com/js/api/openapi.js?139"></script>
 <div id="vk_community_messages"></div>
 <script type="text/javascript">
-    setTimeout(function() {
-        VK.Widgets.CommunityMessages("vk_community_messages", 133590381, {tooltipButtonText: "Готовы ответить на ваши вопросы!"});
-    }, 300);
+ setTimeout(function() {
+ VK.Widgets.CommunityMessages("vk_community_messages", 133590381, {tooltipButtonText: "Готовы ответить на ваши вопросы!"});
+ }, 300);
 
 </script>
+ end -->
+
+<!-- Tinkoff chat -->
+<script src="https://w.tb.ru/open-messenger/widget?cId=5-7DQTA6H6"></script>
+<!-- end -->
 <?endif?>

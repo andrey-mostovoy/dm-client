@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c26f745e-2bd4-4f3f-9df2-f51219c9472c" name="Default" comment="накопившееся комит">
+    <list default="true" id="c26f745e-2bd4-4f3f-9df2-f51219c9472c" name="Default" comment="add logsis operator">
+      <change afterPath="$PROJECT_DIR$/html/Страница с сообщениями.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/css/customView/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/customView/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/Страница служебных форм.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/Страница служебных форм.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/courier.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/courier.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/page/CheckoutPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/page/CheckoutPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/page/InvoicesPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/page/InvoicesPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/page/MapPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/page/MapPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/global/нижняя часть сайта.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/global/нижняя часть сайта.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,18 +16,9 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/page/InvoicesPage.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="615">
-              <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/courier.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2955">
+            <state relative-caret-position="10035">
               <caret line="669" column="36" selection-start-line="669" selection-start-column="36" selection-end-line="669" selection-end-column="36" />
             </state>
           </provider>
@@ -39,7 +27,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/page/MapPage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="274">
+            <state relative-caret-position="1515">
               <caret line="106" column="26" selection-start-line="106" selection-start-column="26" selection-end-line="106" selection-end-column="26" />
             </state>
           </provider>
@@ -48,8 +36,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/page/CheckoutPage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="233">
-              <caret line="1249" column="9" lean-forward="true" selection-start-line="1249" selection-start-column="9" selection-end-line="1249" selection-end-column="9" />
+            <state relative-caret-position="18735">
+              <caret line="1249" column="9" selection-start-line="1249" selection-start-column="9" selection-end-line="1249" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -57,8 +45,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/css/customView/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="1046" column="19" selection-start-line="1046" selection-start-column="19" selection-end-line="1046" selection-end-column="19" />
+            <state relative-caret-position="286">
+              <caret line="1332" column="20" lean-forward="true" selection-start-line="1332" selection-start-column="20" selection-end-line="1332" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -66,11 +54,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/html/global/нижняя часть сайта.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
-              <caret line="44" column="28" selection-start-line="44" selection-start-column="28" selection-end-line="44" selection-end-column="28" />
+            <state relative-caret-position="209">
+              <caret line="86" column="18" lean-forward="true" selection-start-line="86" selection-start-column="18" selection-end-line="86" selection-end-column="18" />
               <folding>
                 <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#0;n#footer#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/html/Страница с сообщениями.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
             </state>
           </provider>
         </entry>
@@ -105,20 +102,14 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/html/Страница служебных форм.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="149">
-              <caret line="264" column="47" lean-forward="true" selection-start-line="264" selection-start-column="47" selection-end-line="264" selection-end-column="47" />
+            <state relative-caret-position="3960">
+              <caret line="264" column="47" selection-start-line="264" selection-start-column="47" selection-end-line="264" selection-end-column="47" />
               <folding>
                 <element signature="e#1179#1207#0" expanded="true" />
                 <element signature="e#1818#1838#0" expanded="true" />
                 <element signature="e#1948#1983#0" expanded="true" />
                 <element signature="e#2954#3008#0" expanded="true" />
                 <element signature="e#4228#4273#0" expanded="true" />
-                <element signature="e#18529#18551#0" expanded="true" />
-                <element signature="e#22440#22462#0" expanded="true" />
-                <element signature="e#25094#25116#0" expanded="true" />
-                <element signature="e#26475#26533#0" expanded="true" />
-                <element signature="e#26559#26578#0" expanded="true" />
-                <element signature="e#26734#26799#0" expanded="true" />
                 <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
             </state>
@@ -136,11 +127,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>&quot;function&quot; &amp;&amp;</find>
-      <find>Тариф</find>
-      <find>debugger</find>
-      <find>cache</find>
-      <find>.cache.</find>
       <find>setMinCost</find>
       <find>.menu</find>
       <find>_createAndAppendMapMenu</find>
@@ -166,6 +152,11 @@
       <find>operat</find>
       <find>operator</find>
       <find>boxbe</find>
+      <find>#boxberry_cost</find>
+      <find>uMenuRoot</find>
+      <find>1px solid #d8d8d8</find>
+      <find>#nav .uMenuV ul li</find>
+      <find>.uMenuV ul li</find>
     </findStrings>
     <replaceStrings>
       <replace>3</replace>
@@ -195,12 +186,13 @@
         <option value="$PROJECT_DIR$/html/Страница товара.html" />
         <option value="$PROJECT_DIR$/html/global/head.html" />
         <option value="$PROJECT_DIR$/html/Главная страница.html" />
-        <option value="$PROJECT_DIR$/html/global/нижняя часть сайта.html" />
         <option value="$PROJECT_DIR$/js/page/InvoicesPage.js" />
         <option value="$PROJECT_DIR$/js/courier.js" />
         <option value="$PROJECT_DIR$/js/page/MapPage.js" />
         <option value="$PROJECT_DIR$/html/Страница служебных форм.html" />
         <option value="$PROJECT_DIR$/js/page/CheckoutPage.js" />
+        <option value="$PROJECT_DIR$/html/global/нижняя часть сайта.html" />
+        <option value="$PROJECT_DIR$/html/Страница с сообщениями.html" />
         <option value="$PROJECT_DIR$/css/customView/main.css" />
       </list>
     </option>
@@ -218,7 +210,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -242,27 +233,11 @@
               <item name="dm-client" type="462c0819:PsiDirectoryNode" />
               <item name="html" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="dm-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="dm-client" type="462c0819:PsiDirectoryNode" />
-              <item name="html" type="462c0819:PsiDirectoryNode" />
-              <item name="global" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="dm-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="dm-client" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="dm-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="dm-client" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="page" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -272,8 +247,16 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/html" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/html" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -367,7 +350,9 @@
       <workItem from="1543870292736" duration="421000" />
       <workItem from="1543952878619" duration="804000" />
       <workItem from="1549472215411" duration="501000" />
-      <workItem from="1550600409105" duration="1520000" />
+      <workItem from="1550600409105" duration="1794000" />
+      <workItem from="1551010263925" duration="393000" />
+      <workItem from="1556893427487" duration="1910000" />
     </task>
     <task id="LOCAL-00001" summary="продолжение разработки нового вида страницы заказа">
       <created>1509836663692</created>
@@ -460,22 +445,28 @@
       <option name="project" value="LOCAL" />
       <updated>1542655786526</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="add logsis operator">
+      <created>1550602539797</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1550602539797</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="186853000" />
+    <option name="totallyTimeSpent" value="189430000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="873" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="DB Browser" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.34666666" visible="true" weight="0.30472103" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.34666666" visible="true" weight="0.31330472" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info id="Version Control" order="3" sideWeight="0.6533333" side_tool="true" visible="true" weight="0.30472103" />
-      <window_info anchor="bottom" id="DB Execution Console" />
+      <window_info id="Version Control" order="3" sideWeight="0.6533333" side_tool="true" visible="true" weight="0.31330472" />
+      <window_info id="DB Browser" order="4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32904884" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -488,6 +479,7 @@
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" order="10" />
       <window_info anchor="bottom" id="File Transfer" order="11" visible="true" weight="0.3277849" />
+      <window_info anchor="bottom" id="DB Execution Console" order="12" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -523,7 +515,8 @@
     <MESSAGE value="добавился еще оператор самовывоза - гермес.&#10;Добавлены лоадеры и тексты ошибок на странице заказа&#10;Разные правки и дополнения" />
     <MESSAGE value="фильтрация пунктов выдачи в зависимости от стоимости доставки&#10;обработка ошибки запросов апи" />
     <MESSAGE value="накопившееся комит" />
-    <option name="LAST_COMMIT_MESSAGE" value="накопившееся комит" />
+    <MESSAGE value="add logsis operator" />
+    <option name="LAST_COMMIT_MESSAGE" value="add logsis operator" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/html/Страница служебных форм - old.html" />
@@ -599,13 +592,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/html/global/нижняя часть сайта.html">
+    <entry file="file://$PROJECT_DIR$/js/page/InvoicesPage.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="44" column="28" selection-start-line="44" selection-start-column="28" selection-end-line="44" selection-end-column="28" />
-          <folding>
-            <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#0;n#footer#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="615">
+          <caret line="41" selection-start-line="41" selection-end-line="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/courier.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="10035">
+          <caret line="669" column="36" selection-start-line="669" selection-start-column="36" selection-end-line="669" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/page/MapPage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1515">
+          <caret line="106" column="26" selection-start-line="106" selection-start-column="26" selection-end-line="106" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/page/CheckoutPage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18735">
+          <caret line="1249" column="9" selection-start-line="1249" selection-start-column="9" selection-end-line="1249" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -630,59 +641,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/courier.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2955">
-          <caret line="669" column="36" selection-start-line="669" selection-start-column="36" selection-end-line="669" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/page/MapPage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="106" column="26" selection-start-line="106" selection-start-column="26" selection-end-line="106" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/page/InvoicesPage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/html/Страница служебных форм.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="264" column="47" lean-forward="true" selection-start-line="264" selection-start-column="47" selection-end-line="264" selection-end-column="47" />
+        <state relative-caret-position="3960">
+          <caret line="264" column="47" selection-start-line="264" selection-start-column="47" selection-end-line="264" selection-end-column="47" />
           <folding>
             <element signature="e#1179#1207#0" expanded="true" />
             <element signature="e#1818#1838#0" expanded="true" />
             <element signature="e#1948#1983#0" expanded="true" />
             <element signature="e#2954#3008#0" expanded="true" />
             <element signature="e#4228#4273#0" expanded="true" />
-            <element signature="e#18529#18551#0" expanded="true" />
-            <element signature="e#22440#22462#0" expanded="true" />
-            <element signature="e#25094#25116#0" expanded="true" />
-            <element signature="e#26475#26533#0" expanded="true" />
-            <element signature="e#26559#26578#0" expanded="true" />
-            <element signature="e#26734#26799#0" expanded="true" />
             <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/page/CheckoutPage.js">
+    <entry file="file://$PROJECT_DIR$/html/global/нижняя часть сайта.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="1249" column="9" lean-forward="true" selection-start-line="1249" selection-start-column="9" selection-end-line="1249" selection-end-column="9" />
+        <state relative-caret-position="209">
+          <caret line="86" column="18" lean-forward="true" selection-start-line="86" selection-start-column="18" selection-end-line="86" selection-end-column="18" />
+          <folding>
+            <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#0;n#footer#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/html/Страница с сообщениями.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/css/customView/main.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="1046" column="19" selection-start-line="1046" selection-start-column="19" selection-end-line="1046" selection-end-column="19" />
+        <state relative-caret-position="286">
+          <caret line="1332" column="20" lean-forward="true" selection-start-line="1332" selection-start-column="20" selection-end-line="1332" selection-end-column="20" />
         </state>
       </provider>
     </entry>

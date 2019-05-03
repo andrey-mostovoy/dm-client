@@ -141,7 +141,7 @@
 }
 
 #nav .uMenuRoot > li {
-    width: 292px;
+    width: 234px;
     text-align: center;
 }
 
@@ -1327,6 +1327,11 @@ button.accordion.active {
 
     #top_nav .uMenuV ul li {
         border-top: 1px solid #d8d8d8;
+    }
+
+    #nav .uMenuV ul li {
+        width: 100%;
+        text-align: left;
     }
 
     #top_nav .uMenuV > ul > li:first-child {
