@@ -1,0 +1,40 @@
+<?if($CID$ != 14)?>
+<div class="g_img">
+    <a href="javascript:void(0)" onclick="_quickView(this)" title="$NAME$" data-link="$ENTRY_URL$">
+        <img src="$THUMB$" id="$BLOCK_PREF$-gphoto-$ID$" alt="$NAME$">
+    </a>
+    <span class="gnew" data-date="$ADD_DATE$">Новинка</span>
+    <?if($OTHER7$)?><span class="ggift"><?if($OTHER7$ != 1)?>$OTHER7$<?else?>+ подарок<?endif?></span><?endif?>
+    <?if($PRICE_OLD$)?><span class="gsale">АКЦИЯ</span><?endif?>
+    <!--
+     <?if(!$OPTIONS$)?>
+     <a class="g_more_btn buy" href="javascript:void(0)" onclick="javascript:buyNow('$ID$','$BLOCK_PREF$');" title="Купить сейчас"><i class="fa fa-shopping-basket"></i></a>
+     <?else?>
+     <a class="g_more_btn buy disabled" href="javascript:void(0)" title="Выберите цвет"><i class="fa fa-shopping-basket"></i></a>
+     <?endif?>
+     <a class="g_more_btn qv" href="javascript:void(0)" onclick="_quickView(this)" title="Быстрый просмотр" data-link="$ENTRY_URL$"><i class="fa fa-search"></i></a>
+    -->
+    $2WISHLIST$
+</div>
+<div class="g_info">
+    <div class="g_name"><a href="$ENTRY_URL$">$NAME$</a></div>
+    <div class="g_price_rate oh">
+        <div class="g_price">$PRICE$ <?if($PRICE_OLD$)?><s>$PRICE_OLD$</s><?endif?></div>
+        <div class="g_rate"><?$RSTARS$('21','/img/rate.png','1','float')?></div>
+    </div>
+    <div class="g_brief">
+        $BRIEF$
+    </div>
+    <div class="g_button">
+        <?if($STOCK$ || $OTHER8$)?>
+        <?if(!$OPTIONS$)?>
+        <a href="javascript:void(0)" onclick="javascript:add2Basket('$ID$','$BLOCK_PREF$');"><?if($OTHER8$)?>Под заказ<?else?>В корзину<?endif?></a>
+        <?else?>
+        <a href="$ENTRY_URL$">Выбрать цвет</a>
+        <?endif?>
+        <?else?>
+        <div class="no-stock-in-catalog">Нет в наличии</div>
+        <?endif?>
+    </div>
+</div>
+<?endif?>

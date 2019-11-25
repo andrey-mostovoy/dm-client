@@ -38,6 +38,7 @@
 
                         <img class="gphoto big" src="$THUMB$" alt="$ENTRY_TITLE$" onclick="_bldCont1($ID$, this.getAttribute('idx'));" id="ipreview" idx="0" title="Кликните для увеличения изображения">
                         <span class="gnew" data-date="$ADD_DATE$">НОВИНКА</span>
+                        <?if($OTHER7$)?><span class="ggift"><?if($OTHER7$ != 1)?>$OTHER7$<?else?>+ подарок<?endif?></span><?endif?>
                         <?if($PRICE_OLD$)?><span class="gsale">АКЦИЯ</span><?endif?>
                         <div class="oh">
                             <?if($SMALL_1$)?>
@@ -97,13 +98,12 @@
                                 <?if($BRAND$)?><li><span class="opt"><!--<s4379>-->Производитель<!--</s>-->:</span> <span class="val"><a href="/shop/search/?query=$BRAND$" class="manuf_link">$BRAND$</a></span></li><?endif?>
                                 <?if($OTHER1$)?><li><span class="opt"><!--<s6660>-->Торговая марка<!--</s>-->:</span> <span class="val">$OTHER1$</span></li><?endif?>
                                 <?if($ART_NO$)?><li style="display: none"><span class="opt"><!--<s4749>-->Артикул<!--</s>-->:</span> <span class="val art">$ART_NO$</span></li><?endif?>
-                                <?if($OTHER7$)?><li><span class="opt"><!--<s6666>-->Страна - обладатель бренда<!--</s>-->:</span> <span class="val">$OTHER7$</span></li><?endif?>
                                 <?if($OTHER2$)?><li><span class="opt"><!--<s6661>-->Страна<!--</s>-->:</span> <span class="val">$OTHER2$</span></li><?endif?>
                                 <?if($OTHER3$)?><li><span class="opt"><!--<s6662>-->Состав<!--</s>-->:</span> <span class="val">$OTHER3$</span></li><?endif?>
                                 <?if($OTHER4$)?><li><span class="opt"><!--<s6663>-->Размер упаковки<!--</s>-->:</span> <span class="val">$OTHER4$</span></li><?endif?>
                                 <?if($OTHER5$)?><li><span class="opt"><!--<s6664>-->Размер<!--</s>-->:</span> <span class="val">$OTHER5$</span></li><?endif?>
                                 <?if($WEIGHT$)?><li><span class="opt"><!--<s4751>-->Вес<!--</s>-->:</span> <span class="val">$WEIGHT$ кг.</span></li><?endif?>
-                                <?if($OTHER6$)?><li><span class="opt"><!--<s6665>-->Сертификат<!--</s>-->:</span> <span class="val">$OTHER6$</span></li><?endif?>
+                                <li><span class="opt"><!--<s6665>-->Сертификат<!--</s>-->:</span> <span class="val">EAC</span></li>
                                 <?if($WARR$)?><li><span class="opt"><!--<s4376>-->Гарантия<!--</s>-->:</span> <span class="val">$WARR$</span></li><?endif?>
                                 <?if($UNIT$)?><li style="display: none"><span class="opt">Единица:</span> <span class="val">$UNIT$</span></li><?endif?>
                                 <?if($ENTRY_TYPE$ == 1)?><li><span class="opt"><!--<s5119>-->Размер<!--</s>-->:</span> <span class="val">$FILE_SIZE$</span></li><?endif?>

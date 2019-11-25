@@ -43,6 +43,16 @@ var CheckoutPage = function() {
     };
 
     /**
+     * Тип доставки6 самовывоз, курьер, почта
+     * @type {{post: number, pvz: number, courier: number}}
+     */
+    this.deliveryTypes = {
+        pvz: 1,
+        courier: 2,
+        post: 3,
+    };
+
+    /**
      * Данные заказа. Заполняются по ходу прохождения "визарда"
      * @type {{name: string, phone: string, email: string, city: string, deliveryId: string, address: string, paymentId: string, comment: string, d_2_street: string, d_2_house: string, d_2_block: string, d_2_apartment: string, d_3_region: string, d_3_street: string, d_3_house: string, d_3_block: string, d_3_apartment: string, d_3_post: string, deliveryCostPvz: {}, deliveryCostCourier: {}, deliveryCostPost: {}, d_1_points: Array, d_1_id: number}}
      */
@@ -73,6 +83,7 @@ var CheckoutPage = function() {
         deliveryCostPost: {}, // информация по стоимости доставки почтой
         d_1_points: [], // пункты самовывоза в городе
         d_1_id: -1, // выбранный индекс пункта самовывоза из списка d_1_points
+        deliveryPeriod: '', // информация про период доставки
     };
 
     /**
@@ -87,6 +98,7 @@ var CheckoutPage = function() {
         address: 'order-fld-2',
         cityCode: 'order-fld-10',
         pvzCode: 'order-fld-11',
+        deliveryPeriod: 'order-fld-12',
         d2street: 'js_d_2_street',
         d2house: 'js_d_2_house',
         d2block: 'js_d_2_block',
@@ -308,22 +320,29 @@ var CheckoutPage = function() {
 
         var Point = this.state.d_1_points[this.state.d_1_id];
         var cost;
+        var deliveryPeriod;
         if (Point.operator === 'Cdek') {
             cost = this.state.deliveryCostPvz.cost.Cdek.text;
+            deliveryPeriod = this.state.deliveryCostPvz.period.Cdek.text;
         } else if (Point.operator === 'Boxberry') {
             cost = this.state.deliveryCostPvz.cost.Boxberry.text;
+            deliveryPeriod = this.state.deliveryCostPvz.period.Boxberry.text;
         } else if (Point.operator === 'Hermes') {
             cost = this.state.deliveryCostPvz.cost.Hermes.text;
+            deliveryPeriod = this.state.deliveryCostPvz.period.Hermes.text;
         } else if (Point.operator === 'Logsis') {
             cost = this.state.deliveryCostPvz.cost.Logsis.text;
+            deliveryPeriod = this.state.deliveryCostPvz.period.Logsis.text;
         } else {
             cost = this.state.deliveryCostPvz.cost.text;
+            deliveryPeriod = this.state.deliveryCostPvz.period.text;
         }
 
         this.state.pvzCode = Point.id;
         if (Point.city_id) {
             this.state.cityCode = Point.city_id;
         }
+        this.state.deliveryPeriod = deliveryPeriod;
 
         $('#pickup_address').text(Point.address);
         $('#pickup_work_time').text(Point.work_time);
@@ -677,6 +696,10 @@ var CheckoutPage = function() {
         // показываю нужную
         $('#address-delivery-' + this.state.deliveryId).show();
 
+        if (this.state.deliveryId == this.deliveryTypes.courier) {
+            this.state.deliveryPeriod = this.state.deliveryCostCourier.period.text || '';
+        }
+
         // если доставка не самовывозом - можно уже перейти дальше
         if (this.state.deliveryId != 1) {
             callback();
@@ -703,6 +726,7 @@ var CheckoutPage = function() {
      */
     this.beforeShowPaymentBlock = function(callback) {
         // сформируем адрес
+        // а также заполним сопутствующие данные.
         switch (this.state.deliveryId) {
             case '1':
                 // самовывоз
@@ -713,6 +737,8 @@ var CheckoutPage = function() {
                 }
                 var Point = this.state.d_1_points[this.state.d_1_id];
                 this.state.address = Point.address;
+
+                // период доставки заполнится при выборе пункта самовывоза
                 break;
             case '2':
                 // курьер
@@ -722,6 +748,8 @@ var CheckoutPage = function() {
                     this.state.d_2_block ? ('к. ' + this.state.d_2_block + ', ') : '',
                     this.state.d_2_apartment ? ('кв. ' + this.state.d_2_apartment) : '',
                 ].join('');
+
+                this.state.deliveryPeriod = this.state.deliveryCostCourier.period.text || '';
                 break;
             case '3':
                 // почта рф
@@ -733,6 +761,8 @@ var CheckoutPage = function() {
                     this.state.d_3_block ? ('к. ' + this.state.d_3_block + ', ') : '',
                     this.state.d_3_apartment ? ('кв. ' + this.state.d_3_apartment) : '',
                 ].join('');
+
+                // период доставки для почты будет посчитан дальше
                 break;
         }
 
@@ -759,6 +789,8 @@ var CheckoutPage = function() {
         }, function(info) {
             // посчитали
             t.state.deliveryCostPost.cost.raw = info.price;
+            // период доставки
+            t.state.deliveryPeriod = info.period;
             callback();
         }, function() {
             // ошибка - будет выставлена сумма 0
@@ -799,6 +831,7 @@ var CheckoutPage = function() {
 
         this.getField(this.fieldIds.cityCode).val(this.state.cityCode);
         this.getField(this.fieldIds.pvzCode).val(this.state.pvzCode);
+        this.getField(this.fieldIds.deliveryPeriod).val(this.state.deliveryPeriod);
 
         callback();
     };

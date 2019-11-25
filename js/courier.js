@@ -381,7 +381,10 @@ var CourierGlavPunkt = function() {
                 }
                 cost = t.setMinCost(options, cost);
                 cost = t.setMaxCost(options, cost);
-                cost = t.round(cost);
+                // до конца октября акция
+                if (options.serv !== t.serv.pvz || !t.isSpbOrMsc(options.cityTo) || new Date() > new Date('2019-10-25')) {
+                    cost = t.round(cost);
+                }
                 console.log('Тариф', options.cityTo, '(' + options.serv + '):', 'Тариф:', tarif, 'Цена:', cost);
                 if (typeof callback === 'function') {
                     callback({
@@ -485,6 +488,9 @@ var CourierGlavPunkt = function() {
             if (this.isSpb(options.cityTo)) {
                 minPrice = 300;
             }
+        } else if (options.serv === this.serv.pvz && this.isSpbOrMsc(options.cityTo) && new Date() < new Date('2019-10-25')) {
+            // до конца октября акция
+            minPrice = 99;
         } else {
             if (this.isMsc(options.cityTo)) {
                 minPrice = 230;
@@ -506,6 +512,11 @@ var CourierGlavPunkt = function() {
         var mskMaxPrice = 350;
 
         if (options.serv === this.serv.pvz) {
+            // до конца октября акция
+            if (this.isSpbOrMsc(options.cityTo) && new Date() < new Date('2019-10-25')) {
+                spbMaxPrice = 99;
+                mskMaxPrice = 99;
+            }
             if (this.isMsc(options.cityTo) && cost > mskMaxPrice) {
                 cost = mskMaxPrice;
             } else if (this.isSpb(options.cityTo) && cost > spbMaxPrice) {
@@ -868,22 +879,23 @@ var CourierGlavPunkt = function() {
                 weight: orderInfo.weight,
                 buyer_fio: orderInfo.fields[4],
                 buyer_phone: orderInfo.fields[1],
+                buyer_email: (orderInfo.fields[6] !== 'domik-mechti@yandex.ru') ? orderInfo.fields[6] : '',
                 comment: orderInfo.fields[5],
                 items_count: 1, // Количество мест в заказе
             };
 
             switch (orderInfo.delivery.id) {
                 case '1':
-                    if (this.isSpbOrMsc(orderInfo.fields[8])) {
+                    // if (this.isSpbOrMsc(orderInfo.fields[8])) {
                         order.serv = this.serv.pvz;
-                        order.dst_punkt_id = orderInfo.fields[11]; // код пункта
-                    } else {
-                        order.serv = this.serv.pvzRU;
-                        order.delivery_rf = {
-                            city_id: orderInfo.fields[10], // код города
-                            pvz_id: orderInfo.fields[11], // код пункта
-                        };
-                    }
+                        order.pvz_id = orderInfo.fields[11]; // код пункта
+                    // } else {
+                    //     order.serv = this.serv.pvzRU;
+                    //     order.delivery_rf = {
+                    //         city_id: orderInfo.fields[10], // код города
+                    //         pvz_id: orderInfo.fields[11], // код пункта
+                    //     };
+                    // }
                     break;
                 case '2':
                     var comment = orderInfo.fields[5] || '';
@@ -894,17 +906,22 @@ var CourierGlavPunkt = function() {
                         m: splitedDate[1] || (new Date().getMonth() + 1),
                         y: splitedDate[2] || (new Date().getFullYear()),
                         toString: function() {
-                            return this.d + '.' + this.m + '.' + this.y;
+                            if (!this.y || !this.m || !this.d) {
+                                return '';
+                            }
+                            return this.y + '-' + this.m + '-' + this.d;
                         },
                     };
-                    var time = splited[1];
+                    var time = splited[1] || '';
+                    var splitedTime = time.split(' до ');
 
                     order.serv = this.serv.courier;
                     order.delivery = {
                         city: orderInfo.fields[10], // код города
                         address: orderInfo.fields[2],
                         date: date.toString(),
-                        time: time ? ('с ' + time) : 'с 10 до 18',
+                        time_from: (splitedTime[0] || '10') + ':00',
+                        time_to: (splitedTime[1] || '18') + ':00',
                     };
                     break;
                 case '3':
@@ -934,7 +951,7 @@ var CourierGlavPunkt = function() {
                         url: requestUrl,
                         success: function(response) {
                             requestCounts -= 1;
-                            console.log(response);
+                            console.log('order process 2', response);
 
                             if (!response.success) {
                                 alert('ERROR: no success');
@@ -944,13 +961,14 @@ var CourierGlavPunkt = function() {
                             for (var ii in orders) {
                                 if (orders[ii].sku == response.success.order_nom) {
                                     orders[ii].price = response.success.order_data.order_amount.amount_raw + response.success.order_data.order_discount.discount_raw;
-                                    orders[ii].client_delivery_price = response.success.order_data.order_delivery.tax.tax_raw;
+                                    orders[ii].insurance_val = orders[ii].price;
 
                                     orders[ii]['parts'] = [];
                                     for (var j in response.success.order_goods.goods) {
                                         orders[ii]['parts'].push({
                                             name: response.success.order_goods.goods[j].name.replace(/"/g, "'"),
                                             price: response.success.order_goods.goods[j].price.price_raw,
+                                            insurance_val: response.success.order_goods.goods[j].price.price_raw,
                                             num: response.success.order_goods.goods[j].cnt,
                                         });
                                     }
@@ -973,13 +991,14 @@ var CourierGlavPunkt = function() {
 
         sendToGlavpunkt = function() {
             var orderData = {
-                comments_client : '', // комментарий к накладной
-                punkt_id : 'Mezhdunarodnaia-B6k1', // Пункт отгрузки заказов, если вы сами привозите их на ПВЗ
-                // pickup_needed: 0, // Если нужен забор заказов, передайте в этом поле 1 (Отменяет параметр punkt_id!)
+                shipment_options: {
+                    method: 'self_delivery', // Метод отгрузки self_delivery - самопривоз, или pickup - забор.
+                    punkt_id : 'Mezhdunarodnaia-B6k1', // Пункт отгрузки заказов, если вы сами привозите их на ПВЗ
+                },
                 orders : orders,
             };
 
-            console.log(orderData);
+            console.log('order process 3', orderData);
 
             $.ajax({
                 method: 'post',

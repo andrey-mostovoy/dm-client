@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c26f745e-2bd4-4f3f-9df2-f51219c9472c" name="Default" comment="add logsis operator">
-      <change afterPath="$PROJECT_DIR$/html/Страница с сообщениями.html" afterDir="false" />
+    <list default="true" id="c26f745e-2bd4-4f3f-9df2-f51219c9472c" name="Default" comment="add more menu and feedback vk widget">
+      <change afterPath="$PROJECT_DIR$/html/Вид товара в каталоге.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/html/Гостевая книга/Страница с сообщениями.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/html/Каталог товаров.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/css/customView/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/customView/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/global/верхняя часть сайта.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/global/верхняя часть сайта.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/html/global/нижняя часть сайта.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/global/нижняя часть сайта.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/Страница служебных форм.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/Страница служебных форм.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/Страница товара.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/Страница товара.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/courier.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/courier.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/page/CheckoutPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/page/CheckoutPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/page/InvoicesPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/page/InvoicesPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/scripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/scripts.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,234 +22,25 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/courier.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="10035">
-              <caret line="669" column="36" selection-start-line="669" selection-start-column="36" selection-end-line="669" selection-end-column="36" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/page/MapPage.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1515">
-              <caret line="106" column="26" selection-start-line="106" selection-start-column="26" selection-end-line="106" selection-end-column="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/page/CheckoutPage.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18735">
-              <caret line="1249" column="9" selection-start-line="1249" selection-start-column="9" selection-end-line="1249" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/css/customView/main.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="1332" column="20" lean-forward="true" selection-start-line="1332" selection-start-column="20" selection-end-line="1332" selection-end-column="20" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/html/global/нижняя часть сайта.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="86" column="18" lean-forward="true" selection-start-line="86" selection-start-column="18" selection-end-line="86" selection-end-column="18" />
-              <folding>
-                <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#0;n#footer#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/html/Страница с сообщениями.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/html/global/head.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="194" selection-start-line="16" selection-end-line="16" selection-end-column="194" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/html/Страница заказа.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4020">
-              <caret line="268" selection-start-line="268" selection-end-line="268" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/html/Главная страница.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" column="37" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/html/Страница служебных форм.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3960">
-              <caret line="264" column="47" selection-start-line="264" selection-start-column="47" selection-end-line="264" selection-end-column="47" />
-              <folding>
-                <element signature="e#1179#1207#0" expanded="true" />
-                <element signature="e#1818#1838#0" expanded="true" />
-                <element signature="e#1948#1983#0" expanded="true" />
-                <element signature="e#2954#3008#0" expanded="true" />
-                <element signature="e#4228#4273#0" expanded="true" />
-                <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+  <component name="ComposerSettings">
+    <execution>
+      <executable />
+    </execution>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JavaScript File" />
+        <option value="HTML File" />
       </list>
     </option>
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>setMinCost</find>
-      <find>.menu</find>
-      <find>_createAndAppendMapMenu</find>
-      <find>valida</find>
-      <find>.validate</find>
-      <find>statistics/tagsstatistics/tags</find>
-      <find>setMaxCost</find>
-      <find>fa-vk</find>
-      <find>font-a</find>
-      <find>font-aw</find>
-      <find>fab</find>
-      <find>order_tax</find>
-      <find>MAX_DELIVERY_COST</find>
-      <find>9ddca6f6080010662606d00766b3a0a3</find>
-      <find>take_pkgs</find>
-      <find>$.ajax</find>
-      <find>$ORDER_FIELD_</find>
-      <find>.state</find>
-      <find>fieldIds</find>
-      <find>orderUrl</find>
-      <find>client_delivery_price</find>
-      <find>comment.substr</find>
-      <find>operat</find>
-      <find>operator</find>
-      <find>boxbe</find>
-      <find>#boxberry_cost</find>
-      <find>uMenuRoot</find>
-      <find>1px solid #d8d8d8</find>
-      <find>#nav .uMenuV ul li</find>
-      <find>.uMenuV ul li</find>
-    </findStrings>
-    <replaceStrings>
-      <replace>3</replace>
-      <replace>deliveryCostPvz</replace>
-      <replace>var</replace>
-      <replace>Передача в курьерскую службу:</replace>
-      <replace>checkout_form_block_button</replace>
-    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/html/Страница служебных форм - old.html" />
-        <option value="$PROJECT_DIR$/js/plugins.js" />
-        <option value="$PROJECT_DIR$/js/delivery/info.js" />
-        <option value="$PROJECT_DIR$/js/deliveryMap.js" />
-        <option value="$PROJECT_DIR$/js/page/ProductPage.js" />
-        <option value="$PROJECT_DIR$/js/scripts.js" />
-        <option value="$PROJECT_DIR$/.idea/workspace.xml" />
-        <option value="$PROJECT_DIR$/js/page/Invoices.js" />
-        <option value="$PROJECT_DIR$/html/Страница заказа.html" />
-        <option value="$PROJECT_DIR$/html/global/верхняя часть сайта.html" />
-        <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/html/Страница товара.html" />
-        <option value="$PROJECT_DIR$/html/global/head.html" />
-        <option value="$PROJECT_DIR$/html/Главная страница.html" />
-        <option value="$PROJECT_DIR$/js/page/InvoicesPage.js" />
-        <option value="$PROJECT_DIR$/js/courier.js" />
-        <option value="$PROJECT_DIR$/js/page/MapPage.js" />
-        <option value="$PROJECT_DIR$/html/Страница служебных форм.html" />
-        <option value="$PROJECT_DIR$/js/page/CheckoutPage.js" />
-        <option value="$PROJECT_DIR$/html/global/нижняя часть сайта.html" />
-        <option value="$PROJECT_DIR$/html/Страница с сообщениями.html" />
-        <option value="$PROJECT_DIR$/css/customView/main.css" />
-      </list>
-    </option>
-  </component>
-  <component name="PhpServers">
-    <servers />
-  </component>
-  <component name="ProjectFrameBounds">
-    <option name="y" value="23" />
-    <option name="width" value="1440" />
-    <option name="height" value="873" />
-  </component>
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="dm-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="dm-client" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="dm-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="dm-client" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="dm-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="dm-client" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-              <item name="customView" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="dm-client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="dm-client" type="462c0819:PsiDirectoryNode" />
-              <item name="html" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-    </panes>
-  </component>
+  <component name="ProjectId" id="1QQbad4WdBeCnvvamSc1d24BF4s" />
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
@@ -352,7 +152,21 @@
       <workItem from="1549472215411" duration="501000" />
       <workItem from="1550600409105" duration="1794000" />
       <workItem from="1551010263925" duration="393000" />
-      <workItem from="1556893427487" duration="1910000" />
+      <workItem from="1556893427487" duration="1992000" />
+      <workItem from="1558735456942" duration="777000" />
+      <workItem from="1560063225417" duration="77000" />
+      <workItem from="1567705836116" duration="2762000" />
+      <workItem from="1568142228375" duration="153000" />
+      <workItem from="1570480174993" duration="798000" />
+      <workItem from="1570560495292" duration="2122000" />
+      <workItem from="1570819638968" duration="694000" />
+      <workItem from="1571088691410" duration="3902000" />
+      <workItem from="1571169603910" duration="573000" />
+      <workItem from="1571593717278" duration="1405000" />
+      <workItem from="1571660872519" duration="679000" />
+      <workItem from="1571940363159" duration="146000" />
+      <workItem from="1572936607777" duration="367000" />
+      <workItem from="1574624615134" duration="4046000" />
     </task>
     <task id="LOCAL-00001" summary="продолжение разработки нового вида страницы заказа">
       <created>1509836663692</created>
@@ -452,40 +266,15 @@
       <option name="project" value="LOCAL" />
       <updated>1550602539797</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="add more menu and feedback vk widget">
+      <created>1556900376098</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1556900376101</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
-  </component>
-  <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="189430000" />
-  </component>
-  <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="873" extended-state="0" />
-    <editor active="true" />
-    <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.34666666" visible="true" weight="0.31330472" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info id="Version Control" order="3" sideWeight="0.6533333" side_tool="true" visible="true" weight="0.31330472" />
-      <window_info id="DB Browser" order="4" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32904884" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
-      <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="10" />
-      <window_info anchor="bottom" id="File Transfer" order="11" visible="true" weight="0.3277849" />
-      <window_info anchor="bottom" id="DB Execution Console" order="12" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Remote Host" order="3" weight="0.3297568" />
-      <window_info anchor="right" id="Database" order="4" />
-    </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -516,169 +305,7 @@
     <MESSAGE value="фильтрация пунктов выдачи в зависимости от стоимости доставки&#10;обработка ошибки запросов апи" />
     <MESSAGE value="накопившееся комит" />
     <MESSAGE value="add logsis operator" />
-    <option name="LAST_COMMIT_MESSAGE" value="add logsis operator" />
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/html/Страница служебных форм - old.html" />
-    <entry file="file://$PROJECT_DIR$/js/page/ProductPage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" column="18" selection-start-line="27" selection-start-column="18" selection-end-line="27" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/plugins.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="33" column="25" selection-start-line="33" selection-start-column="25" selection-end-line="33" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/EcmaScript.js" />
-    <entry file="file://$PROJECT_DIR$/js/delivery/info.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2745">
-          <caret line="183" column="9" selection-start-line="183" selection-start-column="9" selection-end-line="183" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/scripts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" column="28" selection-start-line="26" selection-start-column="28" selection-end-line="26" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="840">
-          <caret line="56" column="9" selection-start-line="56" selection-start-column="9" selection-end-line="56" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/html/global/верхняя часть сайта.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="29" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/html/Страница товара.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="900">
-          <caret line="60" column="35" selection-end-line="227" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/css/font-awesome.min.css" />
-    <entry file="file://$PROJECT_DIR$/js/deliveryMap.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8175">
-          <caret line="545" column="8" selection-start-line="545" selection-start-column="8" selection-end-line="545" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es5.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10005">
-          <caret line="680" column="4" selection-start-line="680" selection-start-column="4" selection-end-line="680" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/page/InvoicesPage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="41" selection-start-line="41" selection-end-line="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/courier.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10035">
-          <caret line="669" column="36" selection-start-line="669" selection-start-column="36" selection-end-line="669" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/page/MapPage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1515">
-          <caret line="106" column="26" selection-start-line="106" selection-start-column="26" selection-end-line="106" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/page/CheckoutPage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18735">
-          <caret line="1249" column="9" selection-start-line="1249" selection-start-column="9" selection-end-line="1249" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/html/global/head.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="194" selection-start-line="16" selection-end-line="16" selection-end-column="194" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/html/Страница заказа.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4020">
-          <caret line="268" selection-start-line="268" selection-end-line="268" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/html/Главная страница.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="37" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/html/Страница служебных форм.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3960">
-          <caret line="264" column="47" selection-start-line="264" selection-start-column="47" selection-end-line="264" selection-end-column="47" />
-          <folding>
-            <element signature="e#1179#1207#0" expanded="true" />
-            <element signature="e#1818#1838#0" expanded="true" />
-            <element signature="e#1948#1983#0" expanded="true" />
-            <element signature="e#2954#3008#0" expanded="true" />
-            <element signature="e#4228#4273#0" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/html/global/нижняя часть сайта.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="86" column="18" lean-forward="true" selection-start-line="86" selection-start-column="18" selection-end-line="86" selection-end-column="18" />
-          <folding>
-            <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#0;n#footer#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/html/Страница с сообщениями.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/css/customView/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="1332" column="20" lean-forward="true" selection-start-line="1332" selection-start-column="20" selection-end-line="1332" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
+    <MESSAGE value="add more menu and feedback vk widget" />
+    <option name="LAST_COMMIT_MESSAGE" value="add more menu and feedback vk widget" />
   </component>
 </project>

@@ -66,7 +66,7 @@ var InvoicesPage = function() {
                     method: 'get',
                     url: requestUrl,
                     success: function(response) {
-                        console.log(response);
+                        console.log('order process 1', response);
 
                         if (!response.success) {
                             alert('ERROR: no success');

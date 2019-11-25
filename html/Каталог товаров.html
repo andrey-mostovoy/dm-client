@@ -1,0 +1,119 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta property="og:title" content="Домик мечты" />
+    <meta property="og:description" content="Кукольные домики скидки" />
+    <meta property="og:image" content="http://домик-мечты.рф/_sh/00/29.jpg" />
+    <meta name="yandex-verification" content="128b4eab3f835ed2" />
+
+    <title><?if($META_TITLE$)?>$META_TITLE$<?else?>$CAT_NAME$ - $MODULE_NAME$ - $SITE_NAME$<?endif?></title>
+    <?if($META_DESCRIPTION$)?>
+    $META_DESCRIPTION$
+    <?endif?>
+
+    <link type="text/css" rel="StyleSheet" href="/_st/my.css" />
+
+    <link href='https://fonts.googleapis.com/css?family=PT+Sans+Caption:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.css">
+    <script>
+        var _ucoz_uriId = '$URI_ID$',
+            _ucoz_pageId = '$PAGE_ID$',
+            _ucoz_moduleId = '$MODULE_ID$',
+            _ucoz_date = '$DATE$';
+    </script>
+
+    <link type="text/css" rel="stylesheet" href="/css/customView/main.css">
+
+</head>
+<body id="body">
+<div id="loader"></div>
+<div id="wrapper">
+
+    $GLOBAL_AHEADER$
+
+    <!-- хлебные крошки -->
+    <div class="path cnt clr">
+        <i class="fa fa-home"></i>
+        $SHOP_PATH$
+    </div>
+
+    <!-- основная часть -->
+    <div id="middle">
+        <div class="cnt clr">
+            <!-- <middle> -->
+            <div id="content">
+
+                <!-- <body> -->
+                <?if($CAT_NAME$)?>
+                <h1>$CAT_NAME$</h1>
+                <?endif?>
+
+                <div class="category_wrapper">
+                    <?if($CAT_IMG$)?>
+                    <div class="category_img">
+                        <img src="$CAT_IMG$" />
+                    </div>
+                    <?endif?>
+
+                    <?if($CAT_DESCR$)?>
+                    <div class="category_descr">
+                        $CAT_DESCR$
+                    </div>
+                    <?endif?>
+                </div>
+
+                <div class="goods-settings clr">
+                    <div class="goods-view-mode">
+                        <span class="goods-view-mode-grid" title="Вид отображения: сетка"><i class="fa fa-th"></i></span>
+                        <span class="goods-view-mode-list" title="Вид отображения: список"><i class="fa fa-th-list"></i></span>
+                    </div>
+                    <div class="goods-sorter">
+                        <?$DRAW_BLOCK$('SORT_SELECTOR','slist')?>
+                    </div>
+                </div>
+                <?if($FILTER_SELECTOR$ && ($PAGE_ID$ != 'allgoods'))?><hr /><?$DRAW_BLOCK$('FILTER_SELECTOR','flist')?><?endif?>
+                <div id="goods_cont">
+                    $BODY$
+                </div>
+                <div align="center">
+                    $PAGE_MORE$
+                    <?$DRAW_BLOCK$('PAGE_PREV','pprev')?>
+                    <?$DRAW_BLOCK$('PAGE_SELECTOR','plist')?>
+                    <?$DRAW_BLOCK$('PAGE_NEXT','pnext')?>
+                </div>
+                <!-- </body> -->
+
+            </div>
+
+            <!-- сайдбар -->
+            <aside id="sidebar">
+
+                $GLOBAL_CATEGORIES$
+
+                $GLOBAL_BANNER$
+
+                $GLOBAL_CLEFTER$
+
+            </aside>
+
+            <!-- </middle> -->
+        </div>
+    </div>
+
+    <!-- нижняя часть -->
+    $GLOBAL_BFOOTER$
+
+</div>
+
+
+<!-- qv -->
+<div id="qv_container"><div id="qv_overlay"></div><div id="qv_window"></div><span id="qv_close" class="fa fa-close" title="Закрыть"></span></div>
+<!-- /qv -->
+
+<script src="/js/plugins.js"></script>
+<script src="/js/scripts.js"></script>
+
+</body>
+</html>

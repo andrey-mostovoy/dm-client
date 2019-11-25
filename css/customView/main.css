@@ -507,6 +507,26 @@
     font-size: 14px;
 }
 
+.ggift {
+    left: 10px;
+    background-color: red;
+    display: block;
+    position: absolute;
+    bottom: 0;
+    line-height: 20px;
+    font-size: 14px;
+    font-family: verdana;
+    text-transform: uppercase;
+    color: #fff;
+    z-index: 3;
+    padding: 2px 6px;
+    border-radius: 2px;
+}
+
+.gp_images .ggift {
+    top: 186px;
+    bottom: unset;
+}
 /* ---- */
 
 /* Кнопки в корзину */
@@ -681,6 +701,19 @@ ul.cinf_list li p {
     display: inline-block;
     float: right;
     max-width: 329px !important;
+}
+
+.kitTable {
+    width: 100%;
+}
+
+.kitTable tr td:first-child, .kitTable tr th:first-child {
+    width: 120px;
+}
+
+.kitTable img {
+    width: auto !important;
+    height: auto !important;
 }
 
 /* ---- */
