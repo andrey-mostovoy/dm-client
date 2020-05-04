@@ -628,7 +628,7 @@ var CourierGlavPunkt = function() {
             result.pvz.code = cityCode;
 
             t.getPickupPoints(cityCode, function (pickupPointList) {
-                if (city === 'Москва' || city === 'Санкт-Петербург') {
+                if (city === 'Санкт-Петербург') {
                     t.getDeliveryCost({
                         punktId: pickupPointList[0].id,
                         cityTo: city,
@@ -868,7 +868,7 @@ var CourierGlavPunkt = function() {
     /**
      * https://glavpunkt.ru/apidoc/takepkgs.html#id2
      */
-    this.createOrder = function(orderInfoResponse) {
+    this.createOrder = async function(orderInfoResponse) {
         var orders = [];
         var requestCounts = orderInfoResponse.orders.length;
         for (var i in orderInfoResponse.orders) {
@@ -918,7 +918,7 @@ var CourierGlavPunkt = function() {
                     order.serv = this.serv.courier;
                     order.delivery = {
                         city: orderInfo.fields[10], // код города
-                        address: orderInfo.fields[2],
+                        address: orderInfo.fields[8] + ', ' + orderInfo.fields[2],
                         date: date.toString(),
                         time_from: (splitedTime[0] || '10') + ':00',
                         time_to: (splitedTime[1] || '18') + ':00',
@@ -960,8 +960,9 @@ var CourierGlavPunkt = function() {
 
                             for (var ii in orders) {
                                 if (orders[ii].sku == response.success.order_nom) {
-                                    orders[ii].price = response.success.order_data.order_amount.amount_raw + response.success.order_data.order_discount.discount_raw;
-                                    orders[ii].insurance_val = orders[ii].price;
+                                    // orders[ii].price = response.success.order_data.order_amount.amount_raw + response.success.order_data.order_discount.discount_raw;
+                                    orders[ii].price = response.success.order_data.order_topay.topay_raw;
+                                    orders[ii].insurance_val = response.success.order_data.order_amount.amount_raw + response.success.order_data.order_discount.discount_raw;
 
                                     orders[ii]['parts'] = [];
                                     for (var j in response.success.order_goods.goods) {
@@ -973,9 +974,46 @@ var CourierGlavPunkt = function() {
                                         });
                                     }
 
+                                    orders[ii]['parts'].push({
+                                        name: 'Стоимость доставки',
+                                        price: response.success.order_data.order_delivery.tax.tax_raw,
+                                        insurance_val: 0,
+                                        // num: 1
+                                    });
+
+
                                     if (requestCounts == 0) {
                                         // все получили номенклатуру... отправим уже наконец в главпункт
-                                        sendToGlavpunkt();
+                                        var orderData = {
+                                            shipment_options: {
+                                                method: 'self_delivery', // Метод отгрузки self_delivery - самопривоз, или pickup - забор.
+                                                punkt_id : 'Mezhdunarodnaia-B6k1', // Пункт отгрузки заказов, если вы сами привозите их на ПВЗ
+                                            },
+                                            orders : orders,
+                                        };
+
+                                        console.log('order process 3', orderData);
+
+                                        $.ajax({
+                                            method: 'post',
+                                            url: '/php/order/glavpunkt/GlavpunktOrder.php',
+                                            data: {
+                                                method: 'order',
+                                                orderData: JSON.stringify(orderData),
+                                            },
+                                            success: function(response) {
+                                                response = JSON.parse(response);
+                                                if (response.result == 'error') {
+                                                    alert('ERROR: ' + response.message);
+                                                }
+                                                if (response.result == 'ok') {
+                                                    alert('OK: https://glavpunkt.ru/zayavka-zakaz.html?id=' + response.docnum);
+                                                }
+                                            },
+                                            error: function(jqXHR, textStatus, errorThrown) {
+                                                alert('ERROR: ' + errorThrown + ' ' + textStatus);
+                                            },
+                                        });
                                     }
                                     break;
                                 }
@@ -984,43 +1022,13 @@ var CourierGlavPunkt = function() {
                     });
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                    alert('ERROR: ' + errorThrown);
+                    alert('ERROR: ' + errorThrown + ' ' + textStatus);
                 },
             });
+
+            // что бы сервер uCoz не отрезал слишком частые запросы
+            await new Promise(r => setTimeout(r, 500));
         }
-
-        sendToGlavpunkt = function() {
-            var orderData = {
-                shipment_options: {
-                    method: 'self_delivery', // Метод отгрузки self_delivery - самопривоз, или pickup - забор.
-                    punkt_id : 'Mezhdunarodnaia-B6k1', // Пункт отгрузки заказов, если вы сами привозите их на ПВЗ
-                },
-                orders : orders,
-            };
-
-            console.log('order process 3', orderData);
-
-            $.ajax({
-                method: 'post',
-                url: '/php/order/glavpunkt/GlavpunktOrder.php',
-                data: {
-                    method: 'order',
-                    orderData: JSON.stringify(orderData),
-                },
-                success: function(response) {
-                    response = JSON.parse(response);
-                    if (response.result == 'error') {
-                        alert('ERROR: ' + response.message);
-                    }
-                    if (response.result == 'ok') {
-                        alert('OK: https://glavpunkt.ru/zayavka-zakaz.html?id=' + response.docnum);
-                    }
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    alert('ERROR: ' + errorThrown);
-                },
-            });
-        };
     };
 };
 CourierGlavPunkt.prototype = new Courier();
