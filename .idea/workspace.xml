@@ -1,19 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="c26f745e-2bd4-4f3f-9df2-f51219c9472c" name="Default" comment="last changes">
+    <list default="true" id="c26f745e-2bd4-4f3f-9df2-f51219c9472c" name="Default" comment="update git ignore">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/courier.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/courier.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/page/MapPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/page/MapPage.js" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ComposerSettings">
-    <execution>
-      <executable />
-    </execution>
+    <execution />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -26,7 +48,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="hiddenUrls">
+      <set>
+        <option value="git@github.com:andrey-mostovoy/dm-client.git" />
+      </set>
+    </option>
+  </component>
   <component name="ProjectId" id="1QQbad4WdBeCnvvamSc1d24BF4s" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="true" />
@@ -45,18 +78,6 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/html" />
     </key>
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -155,6 +176,10 @@
       <workItem from="1571940363159" duration="146000" />
       <workItem from="1572936607777" duration="367000" />
       <workItem from="1574624615134" duration="4419000" />
+      <workItem from="1574676482812" duration="32000" />
+      <workItem from="1588543150238" duration="1561000" />
+      <workItem from="1588545283628" duration="5386000" />
+      <workItem from="1588589143448" duration="1015000" />
     </task>
     <task id="LOCAL-00001" summary="продолжение разработки нового вида страницы заказа">
       <created>1509836663692</created>
@@ -268,11 +293,25 @@
       <option name="project" value="LOCAL" />
       <updated>1574673633927</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="update git ignore">
+      <created>1574676510924</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1574676510924</updated>
+    </task>
+    <task id="LOCAL-00018" summary="update create order">
+      <created>1588551550310</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1588551550310</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.History.Properties">
     <option name="COLUMN_ORDER">
@@ -283,6 +322,18 @@
         <option value="1" />
       </list>
     </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
@@ -302,6 +353,26 @@
     <MESSAGE value="add logsis operator" />
     <MESSAGE value="add more menu and feedback vk widget" />
     <MESSAGE value="last changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="last changes" />
+    <MESSAGE value="update git ignore" />
+    <MESSAGE value="update create order" />
+    <option name="LAST_COMMIT_MESSAGE" value="update create order" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="362" y="155" key="CommitChangelistDialog2" timestamp="1588551569868">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="362" y="155" key="CommitChangelistDialog2/0.23.1440.877@0.23.1440.877" timestamp="1588551569868" />
+    <state x="347" y="79" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1588546480441">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="347" y="79" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.23.1440.877@0.23.1440.877" timestamp="1588546480441" />
+    <state x="427" y="216" width="586" height="490" key="find.popup" timestamp="1588550767105">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="427" y="216" width="586" height="490" key="find.popup/0.23.1440.877@0.23.1440.877" timestamp="1588550767105" />
+    <state x="385" y="213" key="search.everywhere.popup" timestamp="1588545934811">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="385" y="213" key="search.everywhere.popup/0.23.1440.877@0.23.1440.877" timestamp="1588545934811" />
   </component>
 </project>

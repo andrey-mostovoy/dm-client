@@ -18,7 +18,7 @@ function init () {
         center: [55.76, 37.64],
         zoom: 10
     }, {
-        searchControlProvider: 'yandex#search'
+        searchControlProvider: 'yandex#map'
     });
     var objectManager = new ymaps.ObjectManager({
         clusterize: false,

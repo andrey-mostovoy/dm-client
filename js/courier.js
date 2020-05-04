@@ -878,8 +878,8 @@ var CourierGlavPunkt = function() {
                 sku: orderInfo.nom,
                 weight: orderInfo.weight,
                 buyer_fio: orderInfo.fields[4],
-                buyer_phone: orderInfo.fields[1],
-                buyer_email: (orderInfo.fields[6] !== 'domik-mechti@yandex.ru') ? orderInfo.fields[6] : '',
+                buyer_phone: orderInfo.fields[1].indexOf('8') === 0 ? (7 + orderInfo.fields[1].substr(1)) : orderInfo.fields[1],
+                // buyer_email: (orderInfo.fields[6] !== 'domik-mechti@yandex.ru') ? orderInfo.fields[6] : '',
                 comment: orderInfo.fields[5],
                 items_count: 1, // Количество мест в заказе
             };
