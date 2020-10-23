@@ -1092,6 +1092,10 @@ button.accordion.active {
     margin-left: 18px;
 }
 
+#dpd_cost {
+    margin-left: 39px;
+}
+
 .delivery-row.not-available {
     background-color: whitesmoke;
     padding: 30px 10px;

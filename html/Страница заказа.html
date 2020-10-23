@@ -86,11 +86,9 @@
                         <td>
                             <b>$DELIVERY$</b><div style="padding-top:5px">$DELIVERY_DESCR$</div>
                         </td>
-                        <?if($ORDER_TAX_RAW$ || $GROUP_ID$ == 4)?>
                         <td style="text-align:right;padding-left:20px; font-size:16px;">
                             <?if($ORDER_TAX_EDIT$)?>$ORDER_TAX_EDIT$<?else?>$ORDER_TAX$<?endif?>
                         </td>
-                        <?endif?>
                     </tr>
                 </table>
                 <?endif?>
@@ -103,9 +101,9 @@
                             style="text-align:right;padding-left:20px;font-size:16px;">
                             <?if($ORDER_DISCOUNT$)?><strike>$ORDER_TOTAL$</strike><br><?endif?>
                             <? if($ORDER_STATUS$ == 'Оплачивается') ?>
-                                $ORDER_TOPAY$
+                            $ORDER_TOPAY$
                             <? else ?>
-                                <span style="font-weight: bold;text-transform: uppercase;color: black;">$ORDER_TOPAY$</span>
+                            <span style="font-weight: bold;text-transform: uppercase;color: black;">$ORDER_TOPAY$</span>
                             <?endif?>
                         </td>
                     </tr>
@@ -113,29 +111,29 @@
 
                 <form name="TinkoffPayForm" class="TinkoffPayForm" onsubmit="pay(this); return false;">
                     <? if($ORDER_STATUS$ == 'Оплачивается') ?>
-                        <? if ($ORDER_FIELD_9$) ?>
-                            <h2>Предоплата заказа</h2>
-                        <?else?>
-                            <h2><!--<s4604>-->Оплата заказа<!--</s>--><?if($ORDER_TAX_RAW$ && $ORDER_STATUS$ == 'Оплачивается')?> (без стоимости доставки)<?endif?></h2>
-                        <?endif?>
-                        <table border="0" cellpadding="0" cellspacing="0" width="100%" class="orderPay">
-                            <tr valign="top">
-                                <td width="20">&nbsp;</td>
-                                <?if($PAY_NOW$)?>
-                                <td style="text-align:right;padding-left:20px;"><h3>$ORDER_TOPAY_CURR$</h3>$PAY_NOW$</td>
-                                <?endif?>
+                    <? if ($ORDER_FIELD_9$) ?>
+                    <h2>Предоплата заказа</h2>
+                    <?else?>
+                    <h2><!--<s4604>-->Оплата заказа<!--</s>--><?if($ORDER_TAX_RAW$ && $ORDER_STATUS$ == 'Оплачивается')?> (без стоимости доставки)<?endif?></h2>
+                    <?endif?>
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="orderPay">
+                        <tr valign="top">
+                            <td width="20">&nbsp;</td>
+                            <?if($PAY_NOW$)?>
+                            <td style="text-align:right;padding-left:20px;"><h3>$ORDER_TOPAY_CURR$</h3>$PAY_NOW$</td>
+                            <?endif?>
 
-                                <td style="text-align:right;padding-left:20px;">
-                                    <? if ($ORDER_FIELD_9$) ?>
-                                        <h3>$ORDER_FIELD_9$.00 руб.</h3>
-                                    <?else?>
-                                        <h3 id="orderAmountHeader">$ORDER_AMOUNT$</h3>
-                                    <?endif?>
-                                    <input class="tinkoffPayRow" type="submit" value="Оплатить"
-                                           style="width:160px;display:inline-block;">
-                                </td>
-                            </tr>
-                        </table>
+                            <td style="text-align:right;padding-left:20px;">
+                                <? if ($ORDER_FIELD_9$) ?>
+                                <h3>$ORDER_FIELD_9$.00 руб.</h3>
+                                <?else?>
+                                <h3 id="orderAmountHeader">$ORDER_AMOUNT$</h3>
+                                <?endif?>
+                                <input class="tinkoffPayRow" type="submit" value="Оплатить"
+                                       style="width:160px;display:inline-block;">
+                            </td>
+                        </tr>
+                    </table>
                     <?endif?>
 
                     <?if($ORDER_FIELDS$)?>
@@ -148,19 +146,19 @@
                         <input class="tinkoffPayRow" type="hidden" name="language" value="ru" />
                         <input class="tinkoffPayRow" type="hidden" placeholder="Номер заказа" name="order" value="<?$ORDER_CODE$?>" />
                         <? if ($ORDER_FIELD_9$) ?>
-                            <input class="tinkoffPayRow" type="hidden" placeholder="Сумма предоплаты заказа" name="amount" required value="<?$ORDER_FIELD_9$?>" />
-                            <input class="tinkoffPayRow" type="hidden" placeholder="Описание заказа" name="description" value="Предоплата заказа №<?$ORDER_CODE$?> интернет-магазин Домик-мечты.рф" />
+                        <input class="tinkoffPayRow" type="hidden" placeholder="Сумма предоплаты заказа" name="amount" required value="<?$ORDER_FIELD_9$?>" />
+                        <input class="tinkoffPayRow" type="hidden" placeholder="Описание заказа" name="description" value="Предоплата заказа №<?$ORDER_CODE$?> интернет-магазин Домик-мечты.рф" />
                         <?else?>
-                            <input class="tinkoffPayRow" type="hidden" placeholder="Сумма заказа" name="amount" id="orderAmountField" required value="<?$ORDER_AMOUNT_RAW$?>" />
-                            <input class="tinkoffPayRow" type="hidden" placeholder="Описание заказа" name="description" value="Оплата заказа №<?$ORDER_CODE$?> интернет-магазин Домик-мечты.рф" />
+                        <input class="tinkoffPayRow" type="hidden" placeholder="Сумма заказа" name="amount" id="orderAmountField" required value="<?$ORDER_AMOUNT_RAW$?>" />
+                        <input class="tinkoffPayRow" type="hidden" placeholder="Описание заказа" name="description" value="Оплата заказа №<?$ORDER_CODE$?> интернет-магазин Домик-мечты.рф" />
                         <?endif?>
 
                         <div class="order-fname"><?$ORDER_FNAME_4$?></div>
                         <div class="order-field">
                             <? if($GROUP_ID$ == 4) ?>
-                                $ORDER_FIELD_EDIT_4$
+                            $ORDER_FIELD_EDIT_4$
                             <?else?>
-                                <input class="tinkoffPayRow" type="text" placeholder="ФИО плательщика" name="name" value="<?$ORDER_FIELD_4$?>" />
+                            <input class="tinkoffPayRow" type="text" placeholder="ФИО плательщика" name="name" value="<?$ORDER_FIELD_4$?>" />
                             <? endif ?>
                         </div>
 

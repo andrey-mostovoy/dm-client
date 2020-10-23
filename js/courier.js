@@ -11,6 +11,7 @@ var CourierGlavPunkt = function() {
     this.baseUrl = '//glavpunkt.ru/';
     this.login = 'domikm';
     this.token = '9ddca6f6080010662606d00766b3a0a3';
+    this.FREE_DELIVERY_STR = 'БЕСПЛАТНО';
     this.serv = {
         pvz: 'выдача',
         pvzRU: 'выдача по РФ',
@@ -47,7 +48,7 @@ var CourierGlavPunkt = function() {
      * @return {boolean}
      */
     this.isSpb = function(city) {
-        return this._city.spb === city;
+        return this._city.spb === city || city.toLowerCase() === 'spb';
     };
 
     /**
@@ -56,7 +57,7 @@ var CourierGlavPunkt = function() {
      * @return {boolean}
      */
     this.isMsc = function(city) {
-        return this._city.msc === city;
+        return this._city.msc === city || city.toLowerCase() === 'msk';
     };
 
     /**
@@ -380,12 +381,16 @@ var CourierGlavPunkt = function() {
                     cost = t.addServicesCost(cost, options.price);
                 }
                 cost = t.setMinCost(options, cost);
-                cost = t.setMaxCost(options, cost);
+                // cost = t.setMaxCost(options, cost);
                 // до конца октября акция
                 if (options.serv !== t.serv.pvz || !t.isSpbOrMsc(options.cityTo) || new Date() > new Date('2019-10-25')) {
                     cost = t.round(cost);
                 }
-                console.log('Тариф', options.cityTo, '(' + options.serv + '):', 'Тариф:', tarif, 'Цена:', cost);
+                // а теперь еще корректировки
+                cost = t._correctDeliveryCost(options, cost);
+
+                console.log('Тариф', options.cityTo, options.operator || '', '(' + options.serv + '):', 'Тариф:', tarif, 'Цена:', cost);
+
                 if (typeof callback === 'function') {
                     callback({
                         price: cost,
@@ -393,18 +398,18 @@ var CourierGlavPunkt = function() {
                     }, options.punktId);
                 }
             } else if (response.result === 'error') {
-                console.log('Ошибка подсчета тарифа', options.cityTo, '(' + options.serv + ')', response.message);
+                console.log('Ошибка подсчета тарифа', options.cityTo, options.operator || '', '(' + options.serv + ')', response.message);
                 if (typeof errback === 'function') {
                     errback(response);
                 }
             } else {
-                console.log('Ошибка подсчета тарифа', options.cityTo, '(' + options.serv + ') (неверный ответ от сервера)', response);
+                console.log('Ошибка подсчета тарифа', options.cityTo, options.operator || '', '(' + options.serv + ') (неверный ответ от сервера)', response);
                 if (typeof errback === 'function') {
                     errback(response);
                 }
             }
         }, function(jqXHR, textStatus, errorThrown) {
-            console.log('Ошибка подсчета тарифа', options.cityTo, '(' + options.serv + ') (неверный ответ от сервера)', textStatus);
+            console.log('Ошибка подсчета тарифа', options.cityTo, options.operator || '', '(' + options.serv + ') (неверный ответ от сервера)', textStatus);
             if (typeof errback === 'function') {
                 errback(textStatus);
             }
@@ -601,7 +606,7 @@ var CourierGlavPunkt = function() {
                 code: '',
                 cost: {
                     text: '',
-                    raw: 0,
+                    raw: undefined,
                 },
                 period: {
                     text: '',
@@ -678,6 +683,7 @@ var CourierGlavPunkt = function() {
                             cityTo: cityCode,
                             weight: order.weight,
                             price: order.amount,
+                            operator: pickupPoint['operator'],
                         }, function (info, punktId) {
                             result.pvz.cost[pickupPoint['operator']] = {
                                 text: t._getDeliveryCostString(info.price),
@@ -700,6 +706,45 @@ var CourierGlavPunkt = function() {
                 }
             });
         });
+    };
+
+    /**
+     * Корректировка стоимости доставки
+     * @param options
+     * @param deliveryPrice
+     * @return {Number|number}
+     * @private
+     */
+    this._correctDeliveryCost = function(options, deliveryPrice) {
+        var city = options.cityTo;
+        var operator = options.operator || '';
+
+        // по москве
+        if (this.isMsc(city)) {
+            if (operator === 'Cdek' || operator === 'Dpd') {
+                if (deliveryPrice > 300 && deliveryPrice <= 450) {
+                    return 300;
+                } else if (deliveryPrice > 450 && deliveryPrice <= 550) {
+                    return 350;
+                } else if (deliveryPrice > 550 && deliveryPrice <= 650) {
+                    return 400;
+                } else if (deliveryPrice > 650 && deliveryPrice <= 750) {
+                    return 500;
+                } else if (deliveryPrice > 750) {
+                    return deliveryPrice - 150;
+                }
+            }
+        }
+
+        // по питеру
+        if (this.isSpb(city)) {
+            // доставка до пвз с ценой более 3500
+            if (options.serv === this.serv.pvz && options.price >= 3500) {
+                return 0;
+            }
+        }
+
+        return deliveryPrice;
     };
 
     /**

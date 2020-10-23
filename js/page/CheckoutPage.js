@@ -134,6 +134,9 @@ var CheckoutPage = function() {
         // выставим выбранный переключатель варианта оплаты
         this.state.paymentId = $('.payment-item:checked').val();
 
+        // город при загрузке страницы очищаем
+        $('#order-fld-8').val('');
+
         this.bindEvents();
         this.run();
     };
@@ -333,6 +336,9 @@ var CheckoutPage = function() {
         } else if (Point.operator === 'Logsis') {
             cost = this.state.deliveryCostPvz.cost.Logsis.text;
             deliveryPeriod = this.state.deliveryCostPvz.period.Logsis.text;
+        } else if (Point.operator === 'Dpd') {
+            cost = this.state.deliveryCostPvz.cost.Dpd.text;
+            deliveryPeriod = this.state.deliveryCostPvz.period.Dpd.text;
         } else {
             cost = this.state.deliveryCostPvz.cost.text;
             deliveryPeriod = this.state.deliveryCostPvz.period.text;
@@ -363,20 +369,21 @@ var CheckoutPage = function() {
         $('input[name="custom_delivery_tax"]').val(cost);
 
         // обновим стоимость доставки в информационном поле
-        if (cost === 0) {
+        // if (cost === 0) {
             // скрываю стоимость доставки
-            $('#deliveryAmount').hide();
+            // $('#deliveryAmount').hide();
             // меняю текст про стоимость заказа
             // $('.order_total_pay_title').hide();
             // $('.order_total_pay_title_no_delivery').show();
-        } else {
+        // } else {
             // ставлю сумму в интерфейсе подтверждения заказа
             var text = cost + '.00 руб.';
-            if (this.order.weight > 10) {
-                // если вес больше 10 то сумма доставки будет отличаться.
-                text = 'Посылки общим весом более 10кг уточняется менеджером';
-                $('input[name="custom_delivery_tax"]').val(0);
-            } else if (cost >= this.MAX_DELIVERY_COST && !this.user.isAdmin()) {
+            // if (this.order.weight > 10) {
+            //     // если вес больше 10 то сумма доставки будет отличаться.
+            //     text = 'Посылки общим весом более 10кг уточняется менеджером';
+            //     $('input[name="custom_delivery_tax"]').val(0);
+            // } else
+            if (cost >= this.MAX_DELIVERY_COST && !this.user.isAdmin()) {
                 // $('.delivery_notice').show();
                 $('#order-button').hide();
                 text = 'Сумма доставки слишком высока. Свяжитесь с нашим менеджером.';
@@ -390,7 +397,7 @@ var CheckoutPage = function() {
             // меняю текст про стоимость заказа
             // $('.order_total_pay_title').show();
             // $('.order_total_pay_title_no_delivery').hide();
-        }
+        // }
     };
 
     /**
@@ -578,7 +585,7 @@ var CheckoutPage = function() {
             $('.delivery-row').hide();
             $('.delivery-row.not-available').show();
 
-            var prefix = t.order.weight > 10 ? 'от ' : '';
+            var prefix = t.order.weight > 100 ? 'от ' : '';
 
             var deliveryCostHandle = function(delivery, cost, onOK) {
                 if (cost >= t.MAX_DELIVERY_COST && !t.user.isAdmin()) {
@@ -599,7 +606,7 @@ var CheckoutPage = function() {
                         // скрываю период доставки всех операторов.
                         $('.operator-period').hide();
 
-                        if (info.cost.raw) {
+                        if (info.cost.raw !== undefined) {
                             // это спб или москва (без указания оператора)
                             deliveryCostHandle(delivery, info.cost.raw, function() {
                                 info.cost.text = prefix + info.cost.text;
@@ -607,7 +614,7 @@ var CheckoutPage = function() {
                                 $('#raw_period').text(info.period.text);
                                 $('.operator-raw').show();
                             });
-                        } else if (info.cost.Gp) {
+                        } else if (info.cost.Gp !== undefined) {
                             deliveryCostHandle(delivery, info.cost.Gp.raw, function() {
                                 info.cost.Gp.text = prefix + info.cost.Gp.text;
                                 $('#raw_cost').text(info.cost.Gp.text);
@@ -616,7 +623,7 @@ var CheckoutPage = function() {
                             });
                         } else {
                             // а тут остальные города.
-                            if (info.cost.Boxberry) {
+                            if (info.cost.Boxberry !== undefined) {
                                 deliveryCostHandle(delivery, info.cost.Boxberry.raw, function() {
                                     info.cost.Boxberry.text = prefix + info.cost.Boxberry.text;
                                     $('#boxberry_cost').text(info.cost.Boxberry.text);
@@ -624,7 +631,7 @@ var CheckoutPage = function() {
                                     $('.operator-boxberry').show();
                                 });
                             }
-                            if (info.cost.Cdek) {
+                            if (info.cost.Cdek !== undefined) {
                                 deliveryCostHandle(delivery, info.cost.Cdek.raw, function() {
                                     info.cost.Cdek.text = prefix + info.cost.Cdek.text;
                                     $('#cdek_cost').text(info.cost.Cdek.text);
@@ -632,7 +639,7 @@ var CheckoutPage = function() {
                                     $('.operator-cdek').show();
                                 });
                             }
-                            if (info.cost.Hermes) {
+                            if (info.cost.Hermes !== undefined) {
                                 deliveryCostHandle(delivery, info.cost.Hermes.raw, function() {
                                     info.cost.Hermes.text = prefix + info.cost.Hermes.text;
                                     $('#hermes_cost').text(info.cost.Hermes.text);
@@ -640,12 +647,20 @@ var CheckoutPage = function() {
                                     $('.operator-hermes').show();
                                 });
                             }
-                            if (info.cost.Logsis) {
+                            if (info.cost.Logsis !== undefined) {
                                 deliveryCostHandle(delivery, info.cost.Logsis.raw, function() {
                                     info.cost.Logsis.text = prefix + info.cost.Logsis.text;
                                     $('#logsis_cost').text(info.cost.Logsis.text);
                                     $('#logsis_period').text(info.period.Logsis.text);
                                     $('.operator-logsis').show();
+                                });
+                            }
+                            if (info.cost.Dpd !== undefined) {
+                                deliveryCostHandle(delivery, info.cost.Dpd.raw, function() {
+                                    info.cost.Dpd.text = prefix + info.cost.Dpd.text;
+                                    $('#dpd_cost').text(info.cost.Dpd.text);
+                                    $('#dpd_period').text(info.period.Dpd.text);
+                                    $('.operator-dpd').show();
                                 });
                             }
                         }
@@ -815,6 +830,8 @@ var CheckoutPage = function() {
                     this.addCustomDeliveryTax(this.state.deliveryCostPvz.cost.Hermes.raw);
                 } else if (Point.operator === 'Logsis') {
                     this.addCustomDeliveryTax(this.state.deliveryCostPvz.cost.Logsis.raw);
+                } else if (Point.operator === 'Dpd') {
+                    this.addCustomDeliveryTax(this.state.deliveryCostPvz.cost.Dpd.raw);
                 } else if (Point.operator === 'Gp' && this.state.deliveryCostPvz.cost.Gp) {
                     this.addCustomDeliveryTax(this.state.deliveryCostPvz.cost.Gp.raw);
                 } else {
@@ -1184,6 +1201,8 @@ var GlavpunktMap = function() {
             options.preset = 'islands#blueIcon';
         } else if (Point.operator === 'Logsis') {
             options.preset = 'islands#oliveIcon';
+        } else if (Point.operator === 'Dpd') {
+            options.preset = 'islands#redIcon';
         }
 
         return new window.ymaps.Placemark(
@@ -1229,6 +1248,8 @@ var GlavpunktMap = function() {
             body.push('<p>Пункт выдачи <strong>Hermes</strong></p>');
         } else if (Point.operator === 'Logsis') {
             body.push('<p>Пункт выдачи <strong>LOGSIS</strong></p>');
+        } else if (Point.operator === 'Dpd') {
+            body.push('<p>Пункт выдачи <strong>DPD</strong></p>');
         }
 
         body.push('<p>');
@@ -1241,6 +1262,8 @@ var GlavpunktMap = function() {
             body.push(deliveryInfo.cost.Hermes.text);
         } else if (Point.operator === 'Logsis') {
             body.push(deliveryInfo.cost.Logsis.text);
+        } else if (Point.operator === 'Dpd') {
+            body.push(deliveryInfo.cost.Dpd.text);
         } else {
             body.push(deliveryInfo.cost.text);
         }
