@@ -24,15 +24,10 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c26f745e-2bd4-4f3f-9df2-f51219c9472c" name="Default" comment="modify order create">
+    <list default="true" id="c26f745e-2bd4-4f3f-9df2-f51219c9472c" name="Default" comment="changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/css/customView/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/customView/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/Вид товара в каталоге.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/Вид товара в каталоге.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/Страница заказа.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/Страница заказа.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/Страница служебных форм.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/Страница служебных форм.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/Страница товара.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/Страница товара.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/courier.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/courier.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/page/CheckoutPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/page/CheckoutPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html/global/верхняя часть сайта.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/global/верхняя часть сайта.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -191,6 +186,10 @@
       <workItem from="1601234394786" duration="309000" />
       <workItem from="1603311451426" duration="5690000" />
       <workItem from="1603481158710" duration="4271000" />
+      <workItem from="1603488054395" duration="76000" />
+      <workItem from="1603663358251" duration="3439000" />
+      <workItem from="1603699088788" duration="1390000" />
+      <workItem from="1603746326363" duration="846000" />
     </task>
     <task id="LOCAL-00001" summary="продолжение разработки нового вида страницы заказа">
       <created>1509836663692</created>
@@ -325,7 +324,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588590322422</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="changes">
+      <created>1603488078165</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1603488078165</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -374,12 +380,17 @@
     <MESSAGE value="update git ignore" />
     <MESSAGE value="update create order" />
     <MESSAGE value="modify order create" />
-    <option name="LAST_COMMIT_MESSAGE" value="modify order create" />
+    <MESSAGE value="changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="changes" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="197" y="138" width="991" height="623" key="find.popup" timestamp="1603484892523">
+    <state x="362" y="155" key="CommitChangelistDialog2" timestamp="1603488077483">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state x="197" y="138" width="991" height="623" key="find.popup/0.23.1440.877@0.23.1440.877" timestamp="1603484892523" />
+    <state x="362" y="155" key="CommitChangelistDialog2/0.23.1440.877@0.23.1440.877" timestamp="1603488077483" />
+    <state x="197" y="138" width="991" height="623" key="find.popup" timestamp="1603701373109">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="197" y="138" width="991" height="623" key="find.popup/0.23.1440.877@0.23.1440.877" timestamp="1603701373109" />
   </component>
 </project>

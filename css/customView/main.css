@@ -1296,7 +1296,29 @@ button.accordion.active {
 .b_popular .g_price s {
     display: block;
 }
+/* ---- */
 
+/*free delivery block in top menu*/
+.free-delivery {
+    display: inline-block;
+    font-size: 15px;
+    margin-left: 40px;
+    position: absolute;
+}
+.free-delivery .free-delivery-icon {
+    display: inline-block;
+}
+.free-delivery .free-delivery-icon .fa-truck {
+    font-size: 35px;
+}
+.free-delivery .free-delivery-text {
+    display: inline-block;
+    line-height: 20px;
+    width: 220px;
+}
+.free-delivery .free-delivery-text span {
+    border-bottom: #666 1px dashed;
+}
 /* ---- */
 
 /* Планшеты альбомно */
@@ -1325,7 +1347,7 @@ button.accordion.active {
 /* Планшеты книжно, моб альбомно */
 @media (max-width: 991px) {
     .top_nav {
-        margin-left: -20px;
+        margin-left: -30px;
     }
 
     .g_button a {
@@ -1388,9 +1410,21 @@ button.accordion.active {
 /* ---- */
 
 /* Мобильные устройства */
+@media (max-width: 780px) {
+    .top_nav {
+        margin-left: 0;
+    }
+    .free-delivery {
+        font-size: 13px;
+    }
+    .free-delivery .free-delivery-text {
+        width: 190px;
+    }
+}
 @media (max-width: 500px) {
     #top {
         height: 40px;
+        text-align: justify;
     }
 
     #top .top_account {
@@ -1411,6 +1445,16 @@ button.accordion.active {
 
     #logo {
         margin: 0;
+    }
+}
+@media (max-width: 370px) {
+    .free-delivery {
+        margin-left: 0;
+        font-size: 11px;
+    }
+
+    .free-delivery .free-delivery-text {
+        width: 160px;
     }
 }
 /* ---- */
