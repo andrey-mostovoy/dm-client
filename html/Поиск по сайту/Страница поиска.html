@@ -3,14 +3,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <title>$MODULE_NAME$ - $SITE_NAME$</title>
+    <title><?if($SEARCH_QUERY$)?>$SEARCH_QUERY$ - <?endif?>Поиск</title>
     <link type="text/css" rel="StyleSheet" href="/_st/my.css" />
-    <meta name="description" content="Оставьте отзывы и предложения по работе интернет-магазина Домик-мечты.рф">
+
     <link href='https://fonts.googleapis.com/css?family=PT+Sans+Caption:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/owl.carousel.css">
     <script type="text/javascript" src="/js/customView/main.js"></script>
     <link type="text/css" rel="stylesheet" href="/css/customView/main.css">
+
+    $MYINF_6$
 
 </head>
 <body id="body">
@@ -39,15 +41,8 @@
             <!-- <middle> -->
             <div id="content">
 
-                <!-- <body> --><table border="0" cellpadding="0" cellspacing="0" width="100%">
-                <tr>
-                    <td width="80%"><a href="$HOME_PAGE_LINK$"><!--<s5176>-->Главная<!--</s>--></a> &raquo; <!--<s3197>-->Гостевая книга<!--</s>--></td>
-                </tr>
-            </table><hr />
-
-                <div id="feedback_vk"></div>
-
-            <!-- </body> -->
+                <!-- <body> --><div style="padding:0 0 5px 0;">$SEARCHFORM$</div><div style="padding:4px 4px 0 4px;"><!--<s5248>-->Результаты <b>$NUM_SHOWN$</b> из <b>$NUM_ENTRIES$</b> по запросу <b>$SEARCH_QUERY$</b><!--</s>--></div><hr/>
+                $BODY$<div align="center">$PAGE_SELECTOR$</div><!-- </body> -->
 
             </div>
 
@@ -79,8 +74,8 @@
 <script src="/js/plugins.js"></script>
 <script src="/js/scripts.js"></script>
 
-<script src="https://feedback.kupiapp.ru/widget/widget.js" type="text/javascript"></script>
-<script type="text/javascript">document.addEventListener("DOMContentLoaded", feedback_vk.init({id:'feedback_vk', gid:133590381}));</script>
-
 </body>
 </html>
+
+
+

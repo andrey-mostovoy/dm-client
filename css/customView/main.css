@@ -848,6 +848,29 @@ ul.cinf_list li p {
     margin-bottom: 10px;
 }
 
+.category_descr-wrapper {
+    margin-top: 30px;
+}
+.category_descr-wrapper h1,
+.category_descr-wrapper h2,
+.category_descr-wrapper h3,
+.category_descr-wrapper h4,
+.category_descr-wrapper h5 {
+    margin-top: 20px;
+}
+.category_descr-wrapper a {
+    text-decoration: underline;
+}
+.category_descr-wrapper {
+    display: -webkit-box;
+    -webkit-line-clamp: 12;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+#category_descr_show_more {
+    display: none;
+    cursor: pointer;
+}
 /* ---- */
 
 /* Страница ошибки */

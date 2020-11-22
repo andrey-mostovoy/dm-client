@@ -12,7 +12,7 @@
     $META_DESCRIPTION$
     <?endif?>
 
-    <link type="text/css" rel="StyleSheet" href="/_st/my.css" />
+    <link type="text/css" rel="stylesheet" href="/_st/my.css" />
 
     <link href='https://fonts.googleapis.com/css?family=PT+Sans+Caption:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/css/font-awesome.min.css">
@@ -25,6 +25,8 @@
     </script>
 
     <link type="text/css" rel="stylesheet" href="/css/customView/main.css">
+
+    $MYINF_6$
 
 </head>
 <body id="body">
@@ -50,19 +52,9 @@
                 <h1>$CAT_NAME$</h1>
                 <?endif?>
 
-                <div class="category_wrapper">
-                    <?if($CAT_IMG$)?>
-                    <div class="category_img">
-                        <img src="$CAT_IMG$" />
-                    </div>
-                    <?endif?>
 
-                    <?if($CAT_DESCR$)?>
-                    <div class="category_descr">
-                        $CAT_DESCR$
-                    </div>
-                    <?endif?>
-                </div>
+
+
 
                 <div class="goods-settings clr">
                     <div class="goods-view-mode">
@@ -73,7 +65,9 @@
                         <?$DRAW_BLOCK$('SORT_SELECTOR','slist')?>
                     </div>
                 </div>
+
                 <?if($FILTER_SELECTOR$ && ($PAGE_ID$ != 'allgoods'))?><hr /><?$DRAW_BLOCK$('FILTER_SELECTOR','flist')?><?endif?>
+
                 <div id="goods_cont">
                     $BODY$
                 </div>
@@ -83,6 +77,22 @@
                     <?$DRAW_BLOCK$('PAGE_SELECTOR','plist')?>
                     <?$DRAW_BLOCK$('PAGE_NEXT','pnext')?>
                 </div>
+
+                <div class="category_wrapper">
+                    <?if($CAT_IMG$)?>
+                    <div class="category_img">
+                        <img src="$CAT_IMG$" />
+                    </div>
+                    <?endif?>
+
+                    <?if($CAT_DESCR$)?>
+                    <div class="category_descr category_descr-wrapper">
+                        $CAT_DESCR$
+                    </div>
+                    <span id="category_descr_show_more">Подробнее</span>
+                    <?endif?>
+                </div>
+
                 <!-- </body> -->
 
             </div>

@@ -1,0 +1,154 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="robots" content="noindex, nofollow">
+    <title>$TITLE$ - $_USERNAME$ - $MODULE_NAME$ - $SITE_NAME$</title>
+    <link type="text/css" rel="StyleSheet" href="/_st/my.css" />
+
+    <link href='https://fonts.googleapis.com/css?family=PT+Sans+Caption:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.css">
+    <script>
+        var _ucoz_uriId = '$URI_ID$',
+            _ucoz_pageId = '$PAGE_ID$',
+            _ucoz_moduleId = '$MODULE_ID$',
+            _ucoz_date = '$DATE$';
+    </script>
+
+    <link type="text/css" rel="stylesheet" href="/css/customView/main.css">
+
+    $MYINF_6$
+
+</head>
+<body id="body">
+<div id="loader"></div>
+<div id="wrapper">
+
+    $GLOBAL_AHEADER$
+
+    <!-- хлебные крошки -->
+    <div class="path cnt clr">
+        <i class="fa fa-home"></i>
+        <a href="/">Главная страница</a> <i class="fa fa-angle-right"></i>
+        <?if($MODULE_NAME$)?>
+        $MODULE_NAME$
+        <?else?>
+        $TITLE_BAR$
+        <?endif?>
+        <?if($SEARCH_QUERY$)?>
+        $SEARCH_QUERY$
+        <?endif?>
+    </div>
+
+    <!-- основная часть -->
+    <div id="middle">
+        <div class="cnt clr">
+            <!-- <middle> -->
+            <div id="content">
+
+                <!-- <body> -->
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td>$SHOP_PATH$</td>
+                        <?if($ADD_ENTRY_LINK$)?><td align="right" style="white-space: nowrap;">[ <a href="$ADD_ENTRY_LINK$"><!--<s4391>-->Добавить товар<!--</s>--></a> ]</td><?endif?>
+                    </tr>
+                </table>
+
+                <h1>$_USERNAME$</h1>
+
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr valign="top">
+
+                        <?if $_AVATAR$?><td style="padding-right:10px; width:1%">$_AVATAR$</td><?endif?>
+
+                        <td>
+
+                            <?if $_SHOP_ACTIVITY_URL$?><a href="$_SHOP_ACTIVITY_URL$"><!--<s5428>-->Товары<!--</s>--></a>&nbsp;<small>($_SHOP_ENTRIES$)</small><?endif?>
+                            <?if $_SHOP_COMM_URL$?>| <a href="$_SHOP_COMM_URL$"><!--<s4783>-->Отзывы<!--</s>--></a><?endif?>
+                            <?if $_SHOP_WISHLIST_URL$?>| <a href="$_SHOP_WISHLIST_URL$"><!--<s7231>-->Список желаний<!--</s>--></a><?endif?>
+                            <?if $_SHOP_TRANSACTIONS_URL$?><?if($_SHOP_ACTIVITY_URL$ || $_SHOP_COMM_URL$ || $_SHOP_WISHLIST_URL$)?>| <?endif?><a href="/shop/user/$USER_ID$"><!--<s4928>-->Баланс<!--</s>--></a> | <a href="$_SHOP_TRANSACTIONS_URL$"><!--<s4962>-->Движения средств<!--</s>--></a><?endif?>
+
+                            <ul class="shop-options">
+                                <?if($_ICQ$)?><li><span class="opt">ICQ:</span> <span class="val">$_ICQ$</span></li><?endif?>
+                                <?if($_AOL$)?><li><span class="opt">AOL:</span> <span class="val">$_AOL$</span></li><?endif?>
+                                <?if($_WWW$)?><li><span class="opt">WWW:</span> <span class="val"><a href="$_WWW$" target=_blank>$_WWW$</a></span></li><?endif?>
+
+                            </ul>
+
+                        </td></tr>
+                </table>
+
+                <?if($PAGE_ID$ == 'usertrans')?>
+
+                <hr />
+                <table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td>$DATE_SELECTOR$</td><td align="right">$TRANS_SELECTOR$</td></tr></table>
+                <hr />
+
+                <?endif?>
+
+                <?if($PAGE_ID$ == 'userarea')?>
+
+                <?if($BALANCE$)?></li>
+                <h3 class="postFirst" id="shop-balance"><!--<s4928>-->Баланс<!--</s>--></h3>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%"><tr>
+                    <td><div class="eTitle">$BALANCE$</div></td>
+                    <td style="text-align:right; line-height:150%">$ADD_FUNDS$</td>
+                </tr></table>
+
+                <?endif?>
+
+                <?if($WITHDRAWAL_PURSE$)?></li>
+                <h3 class="postFirst" id="shop-paymetns-purse"><!--<s4930>-->Счёт для выплаты<!--</s>--></h3>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%"><tr>
+                    <td>$WITHDRAWAL_PURSE$</td>
+                    <?if($WITHDRAWAL_LAST_DATE$)?><td style="width:1%; white-space:nowrap;"><!--<s4931>-->Последняя выплата<!--</s>-->:<div style="text-align:right;font-style:italic;">$WITHDRAWAL_LAST_DATE$, $WITHDRAWAL_LAST_TIME$</div></td><?endif?>
+                </tr></table>
+                <div class="forumDescr" style="padding:10px 0"><!--<s4935>-->Минимальная сумма для выплаты<!--</s>-->: $WITHDRAWAL_MIN$</div>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%"><tr>
+                    <td>$WITHDRAWAL_MODE$</td>
+                    <td style="width:1%; white-space:nowrap;">$WITHDRAWAL_REQUEST$</td>
+                </tr></table>
+                <?endif?>
+
+                <?endif?>
+
+                $BODY$
+
+                <?if($PAGE_SELECTOR$)?><div style="text-align:center; padding:10px;">$PAGE_SELECTOR$</div><?endif?>
+
+                <!-- </body> -->
+
+            </div>
+
+            <!-- сайдбар -->
+            <aside id="sidebar">
+
+                $GLOBAL_CATEGORIES$
+
+                $GLOBAL_BANNER$
+
+                $GLOBAL_CLEFTER$
+
+            </aside>
+
+            <!-- </middle> -->
+        </div>
+    </div>
+
+    <!-- нижняя часть -->
+    $GLOBAL_BFOOTER$
+
+</div>
+
+
+<!-- qv -->
+<div id="qv_container"><div id="qv_overlay"></div><div id="qv_window"></div><span id="qv_close" class="fa fa-close" title="Закрыть"></span></div>
+<!-- /qv -->
+
+<script src="/js/plugins.js"></script>
+<script src="/js/scripts.js"></script>
+
+</body>
+</html>

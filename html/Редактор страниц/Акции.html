@@ -1,0 +1,273 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>$SITE_NAME$ - $MODULE_NAME$</title>
+    <link type="text/css" rel="StyleSheet" href="/_st/my.css" />
+    <meta name="description" content="Информация по акционным предложениям нашего интернет-магазина">
+    <link href='https://fonts.googleapis.com/css?family=PT+Sans+Caption:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.css">
+
+    <link type="text/css" rel="stylesheet" href="/css/customView/main.css">
+    <style>
+
+        .slider{
+            height: 400px;
+            padding: 0 0 0 320px; /*That helps bring the labels down*/
+            position: relative;
+        }
+
+        @media (max-width: 800px) {
+            .slider {
+                height: 390px;
+                padding: 320px 0 0 0;
+            }
+        }
+        @media (max-width: 500px) {
+            .slider {
+                height: 640px;
+                padding: 260px 0 0 0;
+            }
+        }
+
+
+        /*Last thing remaining is to add transitions*/
+        .slider>img{
+            position: absolute;
+            left: 0; top: 0;
+            transition: all 0.5s;
+            /*Lets add a shadow*/
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.75);
+        }
+
+        .slider input[name='slide_switch'] {
+            display: none;
+        }
+
+        .slider label {
+            /*Lets add some spacing for the thumbnails*/
+            margin: 18px 0 0 18px;
+            border: 3px solid #999;
+
+            float: left;
+            cursor: pointer;
+            transition: all 0.5s;
+
+            /*Default style = low opacity*/
+            opacity: 0.6;
+        }
+
+        .slider label img{
+            display: block;
+        }
+
+        /*Time to add the click effects*/
+        .slider input[name='slide_switch']:checked+label {
+            border-color: #666;
+            opacity: 1;
+        }
+        /*Clicking any thumbnail now should change its opacity(style)*/
+        /*Time to work on the main images*/
+        .slider input[name='slide_switch'] ~ img {
+            opacity: 0;
+            transform: scale(1.1);
+        }
+        /*That hides all main images at a 110% size
+        On click the images will be displayed at normal size to complete the effect
+        */
+        .slider input[name='slide_switch']:checked+label+img {
+            opacity: 1;
+            transform: scale(1);
+        }
+        /*Clicking on any thumbnail now should activate the image related to it*/
+
+        /*We are done :)*/
+    </style>
+
+    $MYINF_6$
+</head>
+<body id="body">
+<div id="loader"></div>
+<div id="wrapper">
+
+    $GLOBAL_AHEADER$
+
+    <!-- хлебные крошки -->
+    <div class="path cnt clr">
+        <i class="fa fa-home"></i>
+        <a href="/">Главная страница</a> <i class="fa fa-angle-right"></i>
+        <?if($MODULE_NAME$)?>
+        $MODULE_NAME$
+        <?else?>
+        $TITLE_BAR$
+        <?endif?>
+        <?if($SEARCH_QUERY$)?>
+        $SEARCH_QUERY$
+        <?endif?>
+    </div>
+
+    <!-- основная часть -->
+    <div id="middle">
+        <div class="cnt clr">
+            <!-- <middle> -->
+            <div id="content">
+
+                <!-- <body> -->
+                <p style="font-size:24px;"><strong>Акции</strong></p>
+                <br/>
+                <div>
+                    <!--p>
+                   <a name="a3"></a>
+                   <strong>
+                   <span style="color: red; font-size: 16px;">Скидка за репост!</span>
+                   </strong><br/>
+                   Мы любим участников нашей группы, поэтому дарим им постоянную <strong>скидку -5%</strong>!!!<br/>
+                   Для получения промо-кода на скидку необходимо:<br/>
+                    1) состоять в группе <strong><a href="https://vk.com/domik_mechti" target="_blank">"Домик мечты"</a></strong>;<br/>
+                    2) сделать репост закрепленной записи;<br/>
+                    3) запросить <strong>промо-код у <a href="https://vk.com/mostovaya_lena" target="_blank" style="text-decoration: underline;">администратора группы</a></strong>.<br/>
+                   Каждый участник может воспользоваться скидкой сколь угодно раз. Для получения нового промо-кода необходимо повторно выполнить пункты 2 и 3.<br/>
+                   Скидки не распространяются на товары с пометкой "Акция". Скидки не суммируются.<br/><br/>
+                   <a href="https://vk.com/domik_mechti" target="_blank"><img src="/img/vk.jpg"></img></a>
+                   </p-->
+                    <p>
+                        <a name="a3"></a>
+                        <strong>
+                            <span style="color: red; font-size: 16px;">Бесплатная доставка</span>
+                        </strong><br/>
+                        <strong>Бесплатная доставка</strong> курьером по Санкт-Петербургу в пределах КАД при покупке от 3500 руб. или<br/>
+                        скидка на любой вид доставки - 300 руб. для других населенных пунктов России.<br/>
+                        <br/><br/>
+                        <a href="/index/dostavka/0-4" target="_blank"><img src="/img/rsz_dostavka.jpg"></img></a>
+                    </p><br/><br/>
+                </div>
+                <p><a name="a1"></a><strong><span style="color: red; font-size: 16px;">Кукла в подарок!</span><br/> С 1 по 31 декабря 2016 года при покупке от 2000 руб. вы можете выбрать одну из представленных кукол в подарок.</strong><br/>
+                    Выбор подарка осуществляется в корзине при оформлении заказа.<br/>
+                    Внимание! Внешний вид подарка варьируется и может отличаться от изображения.<br/>
+                    Подарки возврату и обмену не подлежат.<br/>
+                    Сроки проведения акции: акция действует до 31.12.2016.<br/>
+                    Акция может быть продлена по решению магазина.<br/>
+                    Акция может быть завершена досрочно в случае окончания подарков.
+                </p>
+                <br/>
+                <div class="slider">
+                    <!-- Кукла-малышка с ванной, Забияка -->
+                    <input type="radio" name="slide_switch" id="id1" checked="checked"/>
+                    <label for="id1">
+                        <img src="http://домик-мечты.рф/_sh/00/19s.jpg" width="100"/>
+                    </label>
+                    <img src="http://домик-мечты.рф/_sh/00/19.jpg" width="320"/>
+                    <input type="radio" name="slide_switch" id="id2"/>
+                    <label for="id2">
+                        <img src="http://домик-мечты.рф/_sh/00/19s_1.jpg" width="100"/>
+                    </label>
+                    <img src="http://домик-мечты.рф/_sh/00/19_1.jpg" width="320"/>
+                    <input type="radio" name="slide_switch" id="id3"/>
+                    <label for="id3">
+                        <img src="http://домик-мечты.рф/_sh/00/19s_2.jpg" width="100"/>
+                    </label>
+                    <img src="http://домик-мечты.рф/_sh/00/19_2.jpg" width="320"/>
+
+                    <!-- Кукла "Марианна", Забияка -->
+                    <input type="radio" name="slide_switch" id="id4"/>
+                    <label for="id4">
+                        <img src="http://домик-мечты.рф/_sh/00/22s.jpg" width="100"/>
+                    </label>
+                    <img src="http://домик-мечты.рф/_sh/00/22.jpg" width="320"/>
+                    <input type="radio" name="slide_switch" id="id6"/>
+                    <label for="id6">
+                        <img src="http://домик-мечты.рф/_sh/00/22s_2.jpg" width="100"/>
+                    </label>
+                    <img src="http://домик-мечты.рф/_sh/00/22_2.jpg" width="320"/>
+
+                    <!-- Кукла "Принцесса", Забияка -->
+                    <input type="radio" name="slide_switch" id="id10"/>
+                    <label for="id10">
+                        <img src="http://домик-мечты.рф/_sh/00/20s_1.jpg" width="100"/>
+                    </label>
+                    <img src="http://домик-мечты.рф/_sh/00/20_1.jpg" width="320"/>
+                    <input type="radio" name="slide_switch" id="id11"/>
+                    <label for="id11">
+                        <img src="http://домик-мечты.рф/_sh/00/20s_2.jpg" width="100"/>
+                    </label>
+                    <img src="http://домик-мечты.рф/_sh/00/20_2.jpg" width="320"/>
+
+                    <!-- Кукла мини "Ollie", Shantou Gepai -->
+                    <input type="radio" name="slide_switch" id="id12"/>
+                    <label for="id12">
+                        <img src="http://домик-мечты.рф/_sh/00/23s.jpg" width="100"/>
+                    </label>
+                    <img src="http://домик-мечты.рф/_sh/00/23.jpg" width="320"/>
+
+                    <!-- Кукла "Маленький доктор", Забияка -->
+                    <input type="radio" name="slide_switch" id="id13"/>
+                    <label for="id13">
+                        <img src="http://домик-мечты.рф/_sh/00/21s.jpg" width="100"/>
+                    </label>
+                    <img src="http://домик-мечты.рф/_sh/00/21.jpg" width="320"/>
+                </div>
+
+                <!-- We will use PrefixFree - a script that takes care of CSS3 vendor prefixes
+                You can download it from http://leaverou.github.com/prefixfree/ -->
+                <script src="http://thecodeplayer.com/uploads/js/prefixfree.js" type="text/javascript"></script>
+
+                <div>
+                    <p>
+                        <a name="a2"></a>
+                        <strong>
+                            <span style="color: red; font-size: 16px;">Розыгрыш зимнего домика Pinypon</span></strong>
+                        <br/>
+                        У нашего интернет-магазина появилась <strong><a href="https://vk.com/domik_mechti" target="_blank">группа в ВК</a></strong>!<br/>
+                        В связи с этим мы объявляем розыгрыш замечательного <strong><a href="/shop/47/desc/igrovoy-nabor-zimnij-domik-pinypon" target="_blank">новогоднего мини-домика Pinypon</a></strong>!<br/>
+
+                        Победитель определится <strong>25 декабря 2016</strong> года с помощью генератора случайных чисел randomPromo (<a href="http://randompromo.ru/" target="_blank">http://randompromo.ru</a>).<br/>
+                        Для участия в розыгрыше необходимо:<br/>
+                        1) состоять в группе "<strong><a href="https://vk.com/domik_mechti" target="_blank">Домик Мечты</a></strong>";<br/>
+                        2) сделать репост <strong><a href="https://vk.com/domik_mechti?w=wall-133590381_21%2Fall" target="_blank">записи розыгрыша</a></strong> и не удалять ее до окончания конкурса.<br/>
+                        Внимание! Лайки не учитываются!<br/>
+                        <strong>25 декабря 2016</strong> мы опубликуем имя победителя в комментариях под постом о розыгрыше и свяжемся с победителем для уточнения данных по доставке.<br/>
+                        Доставка домика победителю за счет интернет-магазина.<br/>
+                        Для Санкт-Петербурга доставка - курьером, для других регионов - доставка Почтой России.<br/>
+                        Заявки на участие принимаются до <strong>16 часов 25 декабря 2016</strong>.
+                        <br/><br/>
+                        <a href="/shop/47/desc/igrovoy-nabor-zimnij-domik-pinypon" target="_blank"><img src="/img/akciya2.jpg"></img></a>
+                        <br/>
+                        <br/>
+                    </p>
+                </div>
+                <!-- </body> -->
+
+            </div>
+
+            <!-- сайдбар -->
+            <aside id="sidebar">
+
+                $GLOBAL_CATEGORIES$
+
+                $GLOBAL_BANNER$
+
+                $GLOBAL_CLEFTER$
+
+            </aside>
+
+            <!-- </middle> -->
+        </div>
+    </div>
+
+    <!-- нижняя часть -->
+    $GLOBAL_BFOOTER$
+
+</div>
+
+
+<!-- qv -->
+<div id="qv_container"><div id="qv_overlay"></div><div id="qv_window"></div><span id="qv_close" class="fa fa-close" title="Закрыть"></span></div>
+<!-- /qv -->
+
+<script src="/js/plugins.js"></script>
+<script src="/js/scripts.js"></script>
+
+</body>
+</html>

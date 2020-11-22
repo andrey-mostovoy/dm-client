@@ -318,7 +318,27 @@ $(document).ready(function() {
 
     $('<button id="qv_more_button" title="Перейти на страницу товара">Подробности</button>').appendTo('#qv_container');
 
-    <!-- Yandex.Metrika counter -->
+    // на страницах категорий скрываем часть текста
+    var wrapper = document.getElementsByClassName('category_descr-wrapper')[0];
+    var observer = new ResizeObserver(function(entries) {
+        for (var entry of entries) {
+            if (entry.target.scrollHeight > entry.contentRect.height) {
+                entry.target.classList['add']('truncated');
+                $('#category_descr_show_more').show();
+            } else {
+                entry.target.classList['remove']('truncated');
+                $('#category_descr_show_more').hide();
+            }
+        }
+    });
+    observer.observe(wrapper);
+
+    $('#category_descr_show_more').on('click', function() {
+        $('.category_descr-wrapper').css('-webkit-line-clamp', 'unset');
+        $(this).hide();
+    });
+
+    // <!-- Yandex.Metrika counter -->
     (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
         m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
     (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
@@ -329,7 +349,7 @@ $(document).ready(function() {
         accurateTrackBounce:true,
         webvisor:true
     });
-    <!-- /Yandex.Metrika counter -->
+    // <!-- /Yandex.Metrika counter -->
 });
 
 
@@ -557,7 +577,7 @@ function _func_bindLinkClick() {
  * @return {boolean}
  */
 function openPolicy(event) {
-    window.open('/index?policy=1','police','scrollbars=1,top=1,left=1,width=650,height=450');
+    window.open('/index/policy','police','scrollbars=1,top=1,left=1,width=650,height=450');
     return false;
 }
 
@@ -577,7 +597,7 @@ function openObrabotkaPD(event) {
  * @return {boolean}
  */
 function openAgreement(event) {
-    window.open('/index?agreement=1','agreement','scrollbars=1,top=1,left=1,width=650,height=450');
+    window.open('/index/agreement','agreement','scrollbars=1,top=1,left=1,width=650,height=450');
     return false;
 }
 

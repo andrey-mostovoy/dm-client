@@ -1,0 +1,92 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta property="og:title" content="Домик мечты" />
+    <meta property="og:description" content="Кукольные домики" />
+    <meta property="og:image" content="http://домик-мечты.рф/_sh/00/29.jpg" />
+    <meta name="yandex-verification" content="128b4eab3f835ed2" />
+
+    <title>$SITE_NAME$ - $MODULE_NAME$</title>
+    <link type="text/css" rel="StyleSheet" href="/_st/my.css" />
+
+    <link href='https://fonts.googleapis.com/css?family=PT+Sans+Caption:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/owl.carousel.css">
+
+    <link type="text/css" rel="stylesheet" href="/css/customView/main.css">
+
+    $MYINF_6$
+</head>
+<body id="body">
+<div id="loader"></div>
+<div id="wrapper">
+
+    $GLOBAL_AHEADER$
+
+    <!-- хлебные крошки -->
+    <div class="path cnt clr">
+        <i class="fa fa-home"></i>
+        <a href="/">Главная страница</a> <i class="fa fa-angle-right"></i>
+        <?if($MODULE_NAME$)?>
+        $MODULE_NAME$
+        <?else?>
+        $TITLE_BAR$
+        <?endif?>
+        <?if($SEARCH_QUERY$)?>
+        $SEARCH_QUERY$
+        <?endif?>
+    </div>
+
+    <!-- основная часть -->
+    <div id="middle">
+        <div class="cnt clr">
+            <!-- <middle> -->
+            <div id="content">
+
+                <!-- <body> -->$CONTENT$<!-- </body> -->
+
+            </div>
+
+            <!-- сайдбар -->
+            <aside id="sidebar">
+
+                $GLOBAL_CATEGORIES$
+
+                $GLOBAL_BANNER$
+
+                $GLOBAL_CLEFTER$
+
+            </aside>
+
+            <!-- </middle> -->
+        </div>
+    </div>
+
+    <!-- нижняя часть -->
+    $GLOBAL_BFOOTER$
+
+</div>
+
+
+<!-- qv -->
+<div id="qv_container"><div id="qv_overlay"></div><div id="qv_window"></div><span id="qv_close" class="fa fa-close" title="Закрыть"></span></div>
+<!-- /qv -->
+
+<script src="/js/plugins.js"></script>
+<script src="/js/scripts.js"></script>
+<?if($URI_ID$ == 'page4')?>
+<script type="text/javascript" src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
+<script type="text/javascript" src="/js/courier.js"></script>
+<script type="text/javascript" src="/js/deliveryMap.js"></script>
+<script type="text/javascript" src="/js/shop/checkoutPage.js"></script>
+<script type="text/javascript" src="/js/delivery/deliveryPage.js"></script>
+<!--
+ <script type="text/javascript" src="/js/shop/checkout.js"></script>
+ <script type="text/javascript">deliveryMsc('map_button', false);</script>
+ <script type="text/javascript" src="http://lk.pro-cour.ru/map.js?v=1.3"></script>
+ -->
+<?endif?>
+
+</body>
+</html>
